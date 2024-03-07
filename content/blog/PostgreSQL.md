@@ -1,8 +1,6 @@
 ---
 title: Database Management
-author: Alex Perrin
 date: 2024-02-13
-Description:
 ---
 
 ## PostgreSQL

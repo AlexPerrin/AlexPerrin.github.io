@@ -1,14 +1,13 @@
 ---
 title: Writing CLI Tools
-author: Alex Perrin
 date: 2024-02-04
-description: |
-  Bash scripting doesn't have a defined way to interface with scripts. 
-  Usage strings, argument handling methods positional, shifting, and getopts
-  consider expanding for C and Python
 ---
 
 # [WIP] Writing CLI Tools
+
+Bash scripting doesn't have a defined way to interface with scripts. 
+Usage strings, argument handling methods positional, shifting, and getopts
+consider expanding for C and Python
  
 ## Usage/Help Message
 Here is an example based on the NetBSD source code style guide:

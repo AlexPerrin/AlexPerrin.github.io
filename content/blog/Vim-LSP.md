@@ -1,8 +1,6 @@
 ---
 title: Neovim Language Server Protocol (LSP)
-author: Alex Perrin
 date: 2024-03-05
-description: Install rust-analyzer
 ---
 
 # Neovim Language Server Protocol (LSP)

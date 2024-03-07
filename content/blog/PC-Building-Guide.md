@@ -1,8 +1,6 @@
 ---
 title: "PC Building Guide"
-author: Alex Perrin
 date: 2024-02-13
-description:
 draft: true
 ---
 
