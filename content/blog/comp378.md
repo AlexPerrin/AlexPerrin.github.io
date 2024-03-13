@@ -1,82 +1,11 @@
 ---
-title: Database Management
-date: 2024-02-13
+title: COMP378 Database Management
+date: 2024-03-12
 ---
 
-## PostgreSQL
+## Lab 1
 
-##### Installation
-```
-$ sudo apt install postgresql
-```
-
-##### Become the postgres user.
-```
-$ su -l postgres
-```
-
-###### [Optional] Create User
-```
-$ createuser --interactive
-```
-
-###### [Optional] Create Database
-```
-$ createdb DBNAME
-```
-
-##### Start the primary database shell.
-```
-$ psql
-```
-
-##### Some helpful commands:
-
-List all databases
-```
-=> \l
-```
-
-Connect to a particular database:
-```
-=> \c DBNAME
-```
-
-Show summary information about all tables in the current database:
-```
-=> \dt
-```
-
-List all users and their permission levels:
-```
-=> \du
-```
-
-Exit/quit the `psql` shell:
-```
-=> \q
-```
-
-## SQL
-
-### Basic Commands
-
-##### Simple SELECT Query
-```sql
-SELECT * FROM TableName;
-```
-```sql
-SELECT expressions
-FROM table
-[WHERE conditions]
-[ORDER BY expression [ ASC | DESC ]];
-```
-
-#### [TODO] The Big Six
-
-### COMP378 Database Management Lab 1
-
-##### Create database and tables
+### Create database and tables
 ```sql
 CREATE DATABASE univeristy;
 
@@ -106,7 +35,7 @@ CREATE TABLE instructor (
 );
 ```
 
-##### Populate the tables with some records
+### Populate the tables with some records
 ```sql
 INSERT INTO student 
 VALUES (10, 'Bob Smith','123 sesame street New York USA','7803333222');
@@ -133,7 +62,7 @@ INSERT INTO instructor
 VALUES ('104', 'Harris Terrien', 'School of Business');
 ```
 
-##### Query the tables contents
+### Query the tables contents
 ```sql
 SELECT * FROM student;
 ```

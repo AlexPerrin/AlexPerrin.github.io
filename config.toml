@@ -3,6 +3,6 @@ base_url = "/"
 author = "Alex Perrin"
 
 [markdown]
+render_emoji = true
 highlight_code = true
 highlight_theme = "visual-studio-dark"
-render_emoji = true
