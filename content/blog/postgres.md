@@ -56,3 +56,14 @@ Exit/quit the `psql` shell:
 ```
 => \q
 ```
+
+Clear shell output
+```
+=> \! clear
+```
+
+## Quirks with postgres
+
+[On successful completion, an INSERT command returns a command tag of the form  `INSERT oid count`](https://www.postgresql.org/docs/current/sql-insert.html#id-1.9.3.152.7)
+
+[PostgreSQL interprets " as being quotes for identifiers, ' as being quotes for strings.](https://stackoverflow.com/questions/12428496/cannot-get-simple-postgresql-insert-to-work)
