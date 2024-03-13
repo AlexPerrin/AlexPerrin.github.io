@@ -4,12 +4,13 @@ date: 2024-02-13
 draft: true
 ---
 
-### [TODO] Write up a build guide for each PCPartpicker catagory
+## [TODO] Write up a build guide for each PCPartpicker catagory
 
 Gaming PC in order of importance:
 
 Monitor, GPU, CPU, RAM, Storage, CPU Cooler, Motherboard, Power Supply, Case
 
+---
 
 Next steps: could do a NAS/Plex server build guide:
 

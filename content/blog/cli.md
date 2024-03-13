@@ -3,13 +3,12 @@ title: Writing CLI Tools
 date: 2024-02-04
 ---
 
-# [WIP] Writing CLI Tools
-
 Bash scripting doesn't have a defined way to interface with scripts. 
 Usage strings, argument handling methods positional, shifting, and getopts
 consider expanding for C and Python
  
 ## Usage/Help Message
+
 Here is an example based on the NetBSD source code style guide:
 
 `Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]`
@@ -36,6 +35,7 @@ usage() {
 ```
 
 ### Built-In Variables
+
 `$0` The Script Name
 
 `$1, $2, $3, ...` Positional Arguments
@@ -45,6 +45,7 @@ usage() {
 `$@ and $*` All the Args
 
 ### Bash Test Function
+
 [16.3 test: Check file types and compare values](https://www.gnu.org/software/coreutils/manual/html_node/test-invocation.html)
 
 `-z string` True if the length of string is zero.
@@ -66,6 +67,7 @@ usage() {
 `! TEST` boolean NOT
 
 ### Basic Conditional Parsing
+
 ```bash
 if [[ "$1" == -h ]]; then
   usage
@@ -74,6 +76,7 @@ fi
 ```
 
 ### Loop shift parsing
+
 ```bash
 handle_options() {
   while [ $# -gt 0 ]; do
@@ -108,7 +111,9 @@ handle_options() {
 ```
 
 ### `getopts`
+
 Only supports shorthand single character options aka flags
+
 ```bash
 aflag=
 bflag=
@@ -133,6 +138,7 @@ printf "Remaining arguments are: %s\n" "$*"
 ```
 
 ### `getopt`
+
 Supports short and long options
 
 ```bash
