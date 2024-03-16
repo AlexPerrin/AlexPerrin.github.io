@@ -1,7 +1,17 @@
 name: Zola Deploy Action
+
 on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -10,18 +20,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
-          path: .
-          name: github-pages
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
+          path: '.'
       - uses: actions/deploy-pages@v4
-        id: deployment
-        
