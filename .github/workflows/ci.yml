@@ -4,8 +4,10 @@ on: [push, pull_request, workflow_dispatch]
 
 permissions:
   contents: read
-  pages: write
+  deployment: write
   id-token: write
+  pages: write
+  
 
 jobs:
   deploy:
