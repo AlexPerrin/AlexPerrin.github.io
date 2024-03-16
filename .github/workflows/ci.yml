@@ -3,7 +3,7 @@ name: Zola Deploy Action
 on: [push, pull_request, workflow_dispatch]
 
 permissions:
-  contents: read
+  contents: write
   deployments: write
   id-token: write
   pages: write
