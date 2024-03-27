@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>APeronsalSite</title>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      
+<h1 class="title">
+  SQL
+</h1>
+<p class="subtitle"><strong>2024-03-11</strong></p>
+<h2 id="todo">[TODO]</h2>
+<ul>
+<li>Querrying SELECT, FROM, WHERE, ORDER BY
+<ul>
+<li>Subquerries</li>
+<li>JOINS</li>
+<li>UNIONS?</li>
+</ul>
+</li>
+<li>Triggers, stored procedures</li>
+</ul>
+<h2 id="guide">Guide</h2>
+<h3 id="constraints">Constraints</h3>
+<p>SQL constraints are used to specify rules for the data in a table.</p>
+<p>Constraints are used to limit the type of data that can go into a table. This ensures the accuracy and reliability of the data in the table. If there is any violation between the constraint and the data action, the action is aborted.</p>
+<p>Constraints can be column level or table level. Column level constraints apply to a column, and table level constraints apply to the whole table.</p>
+<p>The following constraints are commonly used in SQL:</p>
+<ul>
+<li><code>NOT NULL</code> - Ensures that a column cannot have a NULL value</li>
+<li><code>UNIQUE</code> - Ensures that all values in a column are different</li>
+<li><code>PRIMARY KEY</code> - A combination of a <code>NOT NULL</code> and <code>UNIQUE</code>. Uniquely identifies each row in a table</li>
+<li><code>FOREIGN KEY</code> - Prevents actions that would destroy links between tables</li>
+<li><code>CHECK</code> - Ensures that the values in a column satisfies a specific condition</li>
+<li><code>DEFAULT</code> - Sets a default value for a column if no value is specified</li>
+<li><code>CREATE INDEX</code> - Used to create and retrieve data from the database very quickly</li>
+</ul>
+<h4 id="syntax">Syntax</h4>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">CREATE TABLE </span><span style="color:#4271ae;">table_name</span><span> (
+</span><span>    column1 datatype </span><span style="color:#8959a8;">constraint</span><span>,
+</span><span>    column2 datatype </span><span style="color:#8959a8;">constraint</span><span>,
+</span><span>    column3 datatype </span><span style="color:#8959a8;">constraint</span><span>,
+</span><span>    ....
+</span><span>);
+</span></code></pre>
+<h4 id="data-integrity">Data Integrity</h4>
+<p>Data integrity ensures the accuracy, and consistency of data over its life-cycle. </p>
+<h4 id="referential-integrity">Referential Integrity</h4>
+<p>Referential Integrity ensures that changes to a table do not break logic constraints of other tables.</p>
+<h3 id="relations">Relations</h3>
+<h4 id="one-to-one">One-to-One</h4>
+<h4 id="one-to-many-associative">One-to-Many (Associative)</h4>
+<h3 id="denormalization">Denormalization</h3>
+<p>The process of transforming normalized relations into nonnormalized physical record specifications.</p>
+<h2 id="examples-from-khan-academy">Examples from <a href="https://www.khanacademy.org/computer-programming/new/sql">Khan Academy</a></h2>
+<h3 id="creating-tables">Creating tables</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-create-table-with-multiple-data-types/5945065256124416">Many data types</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">CREATE TABLE </span><span style="color:#4271ae;">customers</span><span> (
+</span><span>    id </span><span style="color:#8959a8;">INTEGER PRIMARY KEY</span><span>, 
+</span><span>    name </span><span style="color:#8959a8;">TEXT</span><span>, 
+</span><span>    age </span><span style="color:#8959a8;">INTEGER</span><span>, 
+</span><span>    weight </span><span style="color:#8959a8;">REAL
+</span><span>);
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-create-table-with-a-primary-key/5189331400654848">Using primary keys</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">CREATE TABLE </span><span style="color:#4271ae;">customers</span><span> (
+</span><span>    id </span><span style="color:#8959a8;">INTEGER PRIMARY KEY</span><span>, 
+</span><span>    age </span><span style="color:#8959a8;">INTEGER
+</span><span>);
+</span></code></pre>
+<h3 id="inserting-data">Inserting data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-inserting-values-in-tables/5382515271532544">Inserting data</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">INSERT INTO</span><span> customers </span><span style="color:#8959a8;">VALUES</span><span> (</span><span style="color:#f5871f;">73</span><span>, </span><span style="color:#718c00;">&quot;Brian&quot;</span><span>, </span><span style="color:#f5871f;">33</span><span>);
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-inserting-values-in-tables/5382515271532544">Inseting data for named columns</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">INSERT INTO</span><span> customers (name, age) </span><span style="color:#8959a8;">VALUES</span><span> (</span><span style="color:#718c00;">&quot;Brian&quot;</span><span>, </span><span style="color:#f5871f;">33</span><span>);
+</span></code></pre>
+<h3 id="querying-data">Querying Data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-rows/5163767537205248">Select everything</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#c82829;">* </span><span style="color:#8959a8;">FROM</span><span> customers;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-rows/5163767537205248">Select specific columns</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT</span><span> name, age </span><span style="color:#8959a8;">FROM</span><span> customers;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-with-where-conditions/6216095996444672">Filter with condition</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#c82829;">* </span><span style="color:#8959a8;">FROM</span><span> customers 
+</span><span style="color:#8959a8;">WHERE</span><span> age </span><span style="color:#3e999f;">&gt; </span><span style="color:#f5871f;">21</span><span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-with-where-conditions/6216095996444672">Filter with multiple conditions</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#c82829;">* </span><span style="color:#8959a8;">FROM</span><span> customers 
+</span><span style="color:#8959a8;">WHERE</span><span> age </span><span style="color:#3e999f;">&lt; </span><span style="color:#f5871f;">21 </span><span style="color:#3e999f;">AND</span><span> state </span><span style="color:#3e999f;">= </span><span style="color:#718c00;">&quot;NY&quot;</span><span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-filter-with-in/6529475600842752">Filter with IN</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#c82829;">* </span><span style="color:#8959a8;">FROM</span><span> customers 
+</span><span style="color:#8959a8;">WHERE</span><span> plan </span><span style="color:#3e999f;">IN</span><span> (</span><span style="color:#718c00;">&quot;free&quot;</span><span>, </span><span style="color:#718c00;">&quot;basic&quot;</span><span>);
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-select-with-order-by/6218182226477056">Order results</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#c82829;">* </span><span style="color:#8959a8;">FROM</span><span> customers
+</span><span style="color:#8959a8;">WHERE</span><span> age </span><span style="color:#3e999f;">&gt; </span><span style="color:#f5871f;">21 </span><span style="color:#8959a8;">ORDER BY</span><span> age </span><span style="color:#8959a8;">DESC</span><span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-transform-select-results-with-case/5100246984163328">Transform with CASE</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT</span><span> name, </span><span style="color:#8959a8;">CASE WHEN</span><span> age </span><span style="color:#3e999f;">&gt; </span><span style="color:#f5871f;">18 </span><span style="color:#8959a8;">THEN </span><span style="color:#718c00;">&quot;adult&quot; </span><span style="color:#8959a8;">ELSE </span><span style="color:#718c00;">&quot;minor&quot; </span><span style="color:#8959a8;">END </span><span style="color:#718c00;">&quot;type&quot; </span><span style="color:#8959a8;">FROM</span><span> customers;
+</span></code></pre>
+<h3 id="aggregating-data">Aggregating data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-select-with-aggregate-functions/4797964233080832">Aggregate functions</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#4271ae;">MAX</span><span>(age) </span><span style="color:#8959a8;">FROM</span><span> customers;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-grouping-select-results-with-group-by/5520132919132160">Grouping data</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT</span><span> gender, </span><span style="color:#4271ae;">COUNT</span><span>(</span><span style="color:#c82829;">*</span><span>) </span><span style="color:#8959a8;">FROM</span><span> students </span><span style="color:#8959a8;">GROUP BY</span><span> gender;
+</span></code></pre>
+<h3 id="updating-and-deleting-data">Updating and deleting data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-update-and-delete/5559819222253568">Updating data</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">UPDATE</span><span> customers </span><span style="color:#8959a8;">SET</span><span> age </span><span style="color:#3e999f;">= </span><span style="color:#f5871f;">44 </span><span style="color:#8959a8;">WHERE</span><span> id </span><span style="color:#3e999f;">= </span><span style="color:#f5871f;">73</span><span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-update-and-delete/5559819222253568">Deleting data</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">DELETE FROM</span><span> customers </span><span style="color:#8959a8;">WHERE</span><span> id </span><span style="color:#3e999f;">= </span><span style="color:#f5871f;">73</span><span>;
+</span></code></pre>
+<h3 id="joining-related-tables">Joining related tables</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-join-on-tables/5409956539006976">Inner Join</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#666969;">customers</span><span>.</span><span style="color:#666969;">name</span><span>, </span><span style="color:#666969;">orders</span><span>.</span><span style="color:#666969;">time </span><span style="color:#8959a8;">FROM</span><span> customers 
+</span><span style="color:#8959a8;">JOIN</span><span> orders ON </span><span style="color:#666969;">customers</span><span>.</span><span style="color:#666969;">id </span><span style="color:#3e999f;">= </span><span style="color:#666969;">order</span><span>.</span><span style="color:#666969;">customer_id</span><span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-join-on-tables/5409956539006976">Outer Join</a></p>
+<pre data-lang="sql" style="background-color:#ffffff;color:#4d4d4c;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#8959a8;">SELECT </span><span style="color:#666969;">customers</span><span>.</span><span style="color:#666969;">name</span><span>, </span><span style="color:#666969;">orders</span><span>.</span><span style="color:#666969;">item </span><span style="color:#8959a8;">FROM</span><span> customers
+</span><span style="color:#8959a8;">LEFT OUTER JOIN</span><span> orders ON </span><span style="color:#666969;">customers</span><span>.</span><span style="color:#666969;">id </span><span style="color:#3e999f;">= </span><span style="color:#666969;">orders</span><span>.</span><span style="color:#666969;">customer_id</span><span>;
+</span></code></pre>
+
+
+    </div>
+  </section>
+</body>
+
+</html>

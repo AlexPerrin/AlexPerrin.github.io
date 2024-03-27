@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>/</loc>
+    </url>
+    <url>
+        <loc>/blog/</loc>
+    </url>
+    <url>
+        <loc>/blog/cli/</loc>
+        <lastmod>2024-02-04</lastmod>
+    </url>
+    <url>
+        <loc>/blog/postgres/</loc>
+        <lastmod>2024-02-13</lastmod>
+    </url>
+    <url>
+        <loc>/blog/sql/</loc>
+        <lastmod>2024-03-11</lastmod>
+    </url>
+    <url>
+        <loc>/blog/vim-lsp/</loc>
+        <lastmod>2024-03-05</lastmod>
+    </url>
+</urlset>
