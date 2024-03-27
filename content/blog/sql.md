@@ -41,16 +41,23 @@ CREATE TABLE table_name (
 );
 ```
 
-### Primary Keys
+#### Data Integrity
+Data integrity ensures the accuracy, and consistency of data over its life-cycle. 
 
-Must be unique
+#### Referential Integrity
+Referential Integrity ensures that changes to a table do not break logic constraints of other tables.
 
-### Foreign Keys
+### Relations
 
-Must reference a Primary Key  
-[Foreign keys must be unique or will throw ERROR:  there is no unique constraint matching given keys for referenced table](https://stackoverflow.com/questions/11966419/error-there-is-no-unique-constraint-matching-given-keys-for-referenced-table-b)
+#### One-to-One
 
-## [Khan Academy](https://www.khanacademy.org/computer-programming/new/sql)
+#### One-to-Many (Associative)
+
+### Denormalization
+
+The process of transforming normalized relations into nonnormalized physical record specifications.
+
+## Examples from [Khan Academy](https://www.khanacademy.org/computer-programming/new/sql)
 
 ### Creating tables
 
