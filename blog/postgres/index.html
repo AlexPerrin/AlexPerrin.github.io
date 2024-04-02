@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>APeronsalSite</title>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      
+<h1 class="title">
+  PostgreSQL
+</h1>
+<p class="subtitle"><strong>2024-02-13</strong></p>
+<h2 id="quickstart">Quickstart</h2>
+<p>Installation</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> sudo apt install postgresql
+</span></code></pre>
+<p>Become the postgres user.</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> su</span><span style="color:#f5871f;"> -l</span><span style="color:#4271ae;"> postgres
+</span></code></pre>
+<p>[Optional] Create User</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> createuser</span><span style="color:#f5871f;"> --interactive
+</span></code></pre>
+<p>[Optional] Create Database</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> createdb DBNAME
+</span></code></pre>
+<p>Start the primary database shell.</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> psql
+</span></code></pre>
+<h2 id="psql-shell">psql shell</h2>
+<p>List all databases</p>
+<pre style="background-color:#ffffff;color:#4d4d4c;"><code><span>=&gt; \l
+</span></code></pre>
+<p>Connect to a particular database:</p>
+<pre style="background-color:#ffffff;color:#4d4d4c;"><code><span>=&gt; \c DBNAME
+</span></code></pre>
+<p>Show summary information about all tables in the current database:</p>
+<pre style="background-color:#ffffff;color:#4d4d4c;"><code><span>=&gt; \dt
+</span></code></pre>
+<p>List all users and their permission levels:</p>
+<pre style="background-color:#ffffff;color:#4d4d4c;"><code><span>=&gt; \du
+</span></code></pre>
+<p>Exit/quit the <code>psql</code> shell:</p>
+<pre style="background-color:#ffffff;color:#4d4d4c;"><code><span>=&gt; \q
+</span></code></pre>
+<p>Clear shell output</p>
+<pre style="background-color:#ffffff;color:#4d4d4c;"><code><span>=&gt; \! clear
+</span></code></pre>
+<h2 id="quirks-with-postgres">Quirks with postgres</h2>
+<p><a href="https://stackoverflow.com/questions/12428496/cannot-get-simple-postgresql-insert-to-work">PostgreSQL interprets &quot; as being quotes for identifiers, ' as being quotes for strings.</a></p>
+
+
+    </div>
+  </section>
+</body>
+
+</html>

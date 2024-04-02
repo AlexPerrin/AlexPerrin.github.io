@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>APeronsalSite</title>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      
+<h1 class="title">
+  Writing CLI Tools
+</h1>
+<p class="subtitle"><strong>2024-02-04</strong></p>
+<p>Bash scripting doesn't have a defined way to interface with scripts. 
+Usage strings, argument handling methods positional, shifting, and getopts
+consider expanding for C and Python</p>
+<h2 id="usage-help-message">Usage/Help Message</h2>
+<p>Here is an example based on the NetBSD source code style guide:</p>
+<p><code>Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]</code></p>
+<p>This would indicate that &quot;program&quot; should be called with:</p>
+<ul>
+<li>options without operands: a, D, d, e (any of which may be omitted). Note that in this case some parameters are case-sensitive</li>
+<li>exclusive options: f, g (denoted by the vertical bar)</li>
+<li>options with operands: n</li>
+<li>exclusive options with operands: b, c</li>
+<li>required arguments: req1, req2</li>
+<li>optional argument opt1, which may be used with or without opt2 (marked optional within the group by using another set of square brackets)</li>
+<li>optional argument opt2, which requires opt1</li>
+</ul>
+<h2 id="bash">Bash</h2>
+<pre data-lang="bash" style="background-color:#ffffff;color:#4d4d4c;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#4271ae;">usage</span><span>() {
+</span><span>  </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot;Usage: $</span><span style="color:#c82829;">0</span><span style="color:#718c00;"> [OPTIONS]&quot;
+</span><span>  </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot;Options:&quot;
+</span><span>  </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot; -h, --help      Display this help message&quot;
+</span><span>  </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot; -v, --verbose   Enable verbose mode&quot;
+</span><span>  </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot; -f, --file      FILE Specify an output file&quot;
+</span><span>}
+</span></code></pre>
+<h3 id="built-in-variables">Built-In Variables</h3>
+<p><code>$0</code> The Script Name</p>
+<p><code>$1, $2, $3, ...</code> Positional Arguments</p>
+<p><code>$#</code> Argument Count</p>
+<p><code>$@ and $*</code> All the Args</p>
+<h3 id="bash-test-function">Bash Test Function</h3>
+<p><a href="https://www.gnu.org/software/coreutils/manual/html_node/test-invocation.html">16.3 test: Check file types and compare values</a></p>
+<p><code>-z string</code> True if the length of string is zero.</p>
+<p><code>-n string</code> True if the length of string is nonzero.</p>
+<p><code>arg1 -eq arg2</code> equal</p>
+<p><code>arg1 -ne arg2</code> not equal</p>
+<p><code>arg1 -lt arg2</code> less then</p>
+<p><code>arg1 -le arg2</code> less then equal</p>
+<p><code>arg1 -gt arg2</code> greater then</p>
+<p><code>arg1 -ge arg2</code> greater then equal</p>
+<p><code>! TEST</code> boolean NOT</p>
+<h3 id="basic-conditional-parsing">Basic Conditional Parsing</h3>
+<pre data-lang="bash" style="background-color:#ffffff;color:#4d4d4c;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#8959a8;">if </span><span style="color:#4271ae;">[[ </span><span style="color:#718c00;">&quot;$</span><span style="color:#c82829;">1</span><span style="color:#718c00;">&quot; </span><span style="color:#3e999f;">== </span><span style="color:#f5871f;">-h </span><span style="color:#4271ae;">]]</span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">then
+</span><span>  </span><span style="color:#c82829;">usage
+</span><span>  </span><span style="color:#4271ae;">exit 0
+</span><span style="color:#8959a8;">fi
+</span></code></pre>
+<h3 id="loop-shift-parsing">Loop shift parsing</h3>
+<pre data-lang="bash" style="background-color:#ffffff;color:#4d4d4c;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#4271ae;">handle_options</span><span>() {
+</span><span>  </span><span style="color:#8959a8;">while </span><span style="color:#4271ae;">[ $</span><span style="color:#c82829;"># </span><span style="color:#f5871f;">-gt</span><span style="color:#4271ae;"> 0 ]</span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">do
+</span><span>    </span><span style="color:#8959a8;">case </span><span>$</span><span style="color:#c82829;">1 </span><span style="color:#8959a8;">in
+</span><span>      -h </span><span style="color:#3e999f;">|</span><span> --help</span><span style="color:#8959a8;">)
+</span><span>        </span><span style="color:#c82829;">usage
+</span><span>        </span><span style="color:#4271ae;">exit 0
+</span><span>        ;;
+</span><span>      -v </span><span style="color:#3e999f;">|</span><span> --verbose</span><span style="color:#8959a8;">)
+</span><span>        </span><span style="color:#c82829;">verbose_mode</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">true
+</span><span>        ;;
+</span><span>      -f </span><span style="color:#3e999f;">|</span><span> --file</span><span style="color:#3e999f;">*</span><span style="color:#8959a8;">)
+</span><span>        </span><span style="color:#8959a8;">if </span><span style="color:#3e999f;">! </span><span style="color:#c82829;">has_argument </span><span style="color:#4271ae;">$</span><span style="color:#c82829;">@</span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">then
+</span><span>          </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot;File not specified.&quot; </span><span style="color:#3e999f;">&gt;&amp;</span><span style="color:#f5871f;">2
+</span><span>          </span><span style="color:#c82829;">usage
+</span><span>          </span><span style="color:#4271ae;">exit 1
+</span><span>        </span><span style="color:#8959a8;">fi
+</span><span>
+</span><span>        </span><span style="color:#c82829;">output_file</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">$(</span><span style="color:#c82829;">extract_argument </span><span style="color:#4271ae;">$</span><span style="color:#c82829;">@</span><span style="color:#718c00;">)
+</span><span>
+</span><span>        </span><span style="color:#4271ae;">shift
+</span><span>        ;;
+</span><span>      </span><span style="color:#3e999f;">*</span><span style="color:#8959a8;">)
+</span><span>        </span><span style="color:#4271ae;">echo </span><span style="color:#718c00;">&quot;Invalid option: $</span><span style="color:#c82829;">1</span><span style="color:#718c00;">&quot; </span><span style="color:#3e999f;">&gt;&amp;</span><span style="color:#f5871f;">2
+</span><span>        </span><span style="color:#c82829;">usage
+</span><span>        </span><span style="color:#4271ae;">exit 1
+</span><span>        ;;
+</span><span>    </span><span style="color:#8959a8;">esac
+</span><span>    </span><span style="color:#4271ae;">shift
+</span><span>  </span><span style="color:#8959a8;">done
+</span><span>}
+</span></code></pre>
+<h3 id="getopts"><code>getopts</code></h3>
+<p>Only supports shorthand single character options aka flags</p>
+<pre data-lang="bash" style="background-color:#ffffff;color:#4d4d4c;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#c82829;">aflag</span><span style="color:#3e999f;">=
+</span><span style="color:#c82829;">bflag</span><span style="color:#3e999f;">=
+</span><span style="color:#8959a8;">while </span><span style="color:#4271ae;">getopts ab: name
+</span><span style="color:#8959a8;">do
+</span><span>    </span><span style="color:#8959a8;">case </span><span>$</span><span style="color:#c82829;">name </span><span style="color:#8959a8;">in
+</span><span>    a</span><span style="color:#8959a8;">)    </span><span style="color:#c82829;">aflag</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">1</span><span>;;
+</span><span>    b</span><span style="color:#8959a8;">)    </span><span style="color:#c82829;">bflag</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">1
+</span><span>          </span><span style="color:#c82829;">bval</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">&quot;$</span><span style="color:#c82829;">OPTARG</span><span style="color:#718c00;">&quot;</span><span>;;
+</span><span>    </span><span style="color:#3e999f;">?</span><span style="color:#8959a8;">)   </span><span style="color:#4271ae;">printf </span><span style="color:#718c00;">&quot;Usage: %s: [-a] [-b value] args\n&quot; </span><span style="color:#4271ae;">$</span><span style="color:#c82829;">0
+</span><span>          </span><span style="color:#4271ae;">exit 2</span><span>;;
+</span><span>    </span><span style="color:#8959a8;">esac
+</span><span style="color:#8959a8;">done
+</span><span style="color:#8959a8;">if </span><span style="color:#4271ae;">[ </span><span style="color:#3e999f;">! </span><span style="color:#f5871f;">-z </span><span style="color:#718c00;">&quot;$</span><span style="color:#c82829;">aflag</span><span style="color:#718c00;">&quot; </span><span style="color:#4271ae;">]</span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">then
+</span><span>    </span><span style="color:#4271ae;">printf </span><span style="color:#718c00;">&quot;Option -a specified\n&quot;
+</span><span style="color:#8959a8;">fi
+</span><span style="color:#8959a8;">if </span><span style="color:#4271ae;">[ </span><span style="color:#3e999f;">! </span><span style="color:#f5871f;">-z </span><span style="color:#718c00;">&quot;$</span><span style="color:#c82829;">bflag</span><span style="color:#718c00;">&quot; </span><span style="color:#4271ae;">]</span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">then
+</span><span>    </span><span style="color:#4271ae;">printf </span><span style="color:#718c00;">&#39;Option -b &quot;%s&quot; specified\n&#39; &quot;$</span><span style="color:#c82829;">bval</span><span style="color:#718c00;">&quot;
+</span><span style="color:#8959a8;">fi
+</span><span style="color:#4271ae;">shift $(($</span><span style="color:#c82829;">OPTIND </span><span style="color:#3e999f;">- </span><span style="color:#f5871f;">1</span><span style="color:#4271ae;">))
+</span><span style="color:#4271ae;">printf </span><span style="color:#718c00;">&quot;Remaining arguments are: %s\n&quot; &quot;$</span><span style="color:#c82829;">*</span><span style="color:#718c00;">&quot;
+</span></code></pre>
+<h3 id="getopt"><code>getopt</code></h3>
+<p>Supports short and long options</p>
+<pre data-lang="bash" style="background-color:#ffffff;color:#4d4d4c;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#999999;">#!/bin/bash
+</span><span>
+</span><span style="color:#999999;"># We use &quot;${@}&quot; instead of &quot;${*}&quot; to preserve argument-boundary information
+</span><span style="color:#c82829;">ARGS</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">$(</span><span style="color:#c82829;">getopt</span><span style="color:#f5871f;"> --options </span><span style="color:#718c00;">&#39;a:l::v&#39;</span><span style="color:#f5871f;"> --longoptions </span><span style="color:#718c00;">&#39;article:,lang::,language::,verbose&#39;</span><span style="color:#3e999f;"> -- </span><span style="color:#718c00;">&quot;${</span><span style="color:#c82829;">@</span><span style="color:#718c00;">}&quot;) </span><span style="color:#3e999f;">|| </span><span style="color:#4271ae;">exit
+</span><span style="color:#4271ae;">eval </span><span style="color:#718c00;">&quot;set -- ${</span><span style="color:#c82829;">ARGS</span><span style="color:#718c00;">}&quot;
+</span><span>
+</span><span style="color:#8959a8;">while </span><span style="color:#c82829;">true</span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">do
+</span><span>    </span><span style="color:#8959a8;">case </span><span style="color:#718c00;">&quot;${</span><span style="color:#c82829;">1</span><span style="color:#718c00;">}&quot; </span><span style="color:#8959a8;">in
+</span><span>        </span><span style="color:#8959a8;">(</span><span>-v </span><span style="color:#3e999f;">|</span><span> --verbose</span><span style="color:#8959a8;">)
+</span><span>            ((VERBOSE</span><span style="color:#3e999f;">++</span><span>))
+</span><span>            </span><span style="color:#4271ae;">shift
+</span><span>        ;;
+</span><span>        </span><span style="color:#8959a8;">(</span><span>-a </span><span style="color:#3e999f;">|</span><span> --article</span><span style="color:#8959a8;">)
+</span><span>            </span><span style="color:#c82829;">ARTICLE</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">&quot;${</span><span style="color:#c82829;">2</span><span style="color:#718c00;">}&quot;
+</span><span>            </span><span style="color:#4271ae;">shift 2
+</span><span>        ;;
+</span><span>        </span><span style="color:#8959a8;">(</span><span>-l </span><span style="color:#3e999f;">|</span><span> --lang </span><span style="color:#3e999f;">|</span><span> --language</span><span style="color:#8959a8;">)
+</span><span>            </span><span style="color:#999999;"># handle optional: getopt normalizes it into an empty string
+</span><span>            </span><span style="color:#8959a8;">if </span><span style="color:#4271ae;">[ </span><span style="color:#f5871f;">-n </span><span style="color:#718c00;">&quot;${</span><span style="color:#c82829;">2</span><span style="color:#718c00;">}&quot; </span><span style="color:#4271ae;">] </span><span style="color:#3e999f;">; </span><span style="color:#8959a8;">then
+</span><span>                </span><span style="color:#c82829;">LANG</span><span style="color:#3e999f;">=</span><span style="color:#718c00;">&quot;${</span><span style="color:#c82829;">2</span><span style="color:#718c00;">}&quot;
+</span><span>            </span><span style="color:#8959a8;">fi
+</span><span>            </span><span style="color:#4271ae;">shift 2
+</span><span>        ;;
+</span><span>        </span><span style="color:#8959a8;">(</span><span>--</span><span style="color:#8959a8;">)
+</span><span>            </span><span style="color:#4271ae;">shift
+</span><span>            </span><span style="color:#8959a8;">break
+</span><span>        ;;
+</span><span>        </span><span style="color:#8959a8;">(</span><span style="color:#3e999f;">*</span><span style="color:#8959a8;">)
+</span><span>            </span><span style="color:#4271ae;">exit 1    </span><span style="color:#999999;"># error
+</span><span>        ;;
+</span><span>    </span><span style="color:#8959a8;">esac
+</span><span style="color:#8959a8;">done
+</span><span>
+</span><span style="color:#c82829;">remaining_args</span><span style="color:#3e999f;">=</span><span>(</span><span style="color:#718c00;">&quot;${</span><span style="color:#c82829;">@</span><span style="color:#718c00;">}&quot;</span><span>)
+</span></code></pre>
+
+
+    </div>
+  </section>
+</body>
+
+</html>

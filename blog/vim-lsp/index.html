@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>APeronsalSite</title>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      
+<h1 class="title">
+  Neovim Language Server Protocol (LSP)
+</h1>
+<p class="subtitle"><strong>2024-03-05</strong></p>
+<p>[Optional] Install Rust</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> curl</span><span style="color:#f5871f;"> --proto </span><span style="color:#718c00;">&#39;=https&#39;</span><span style="color:#f5871f;"> --tlsv1</span><span style="color:#4271ae;">.2</span><span style="color:#f5871f;"> -sSf</span><span style="color:#4271ae;"> https://sh.rustup.rs </span><span style="color:#3e999f;">| </span><span style="color:#c82829;">sh
+</span></code></pre>
+<p>[Optional] Install rust-analyzer</p>
+<pre data-lang="sh" style="background-color:#ffffff;color:#4d4d4c;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#c82829;">$</span><span style="color:#4271ae;"> rustup component add rust-analyzer
+</span></code></pre>
+<p>Append to ~/config/nvim/init.lua</p>
+<pre data-lang="lua" style="background-color:#ffffff;color:#4d4d4c;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#c82829;">lua </span><span style="color:#4271ae;">require</span><span style="color:#718c00;">&#39;lspconfig&#39;</span><span>.rust_analyzer.</span><span style="color:#c82829;">setup</span><span style="color:#4271ae;">({})
+</span></code></pre>
+
+
+    </div>
+  </section>
+</body>
+
+</html>
