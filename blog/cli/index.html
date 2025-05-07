@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing CLI Tools | Alex Perrin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --text-color: #1f2937;
+      --light-bg: #f9fafb;
+      --border-color: #e5e7eb;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: white;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+    }
+    
+    .nav-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 2rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.75rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1.5rem;
+    }
+    
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      background-color: var(--light-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    
+    pre {
+      background-color: var(--light-bg);
+      padding: 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+    
+    pre code {
+      background: none;
+      padding: 0;
+    }
+    
+    .title {
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      color: #4b5563;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .post-list {
+      list-style: none;
+    }
+    
+    .post-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .post-item:last-child {
+      border-bottom: none;
+    }
+    
+    .post-link {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+    
+    .post-date {
+      color: #6b7280;
+      font-size: 0.9rem;
+      display: block;
+      margin-top: 0.25rem;
+    }
+    
+    footer {
+      background-color: var(--light-bg);
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      text-align: center;
+      color: #4b5563;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      h3 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">Alex Perrin</a>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      
+<article class="blog-post">
+  <header class="post-header">
+    <h1 class="title">Writing CLI Tools</h1>
+    <p class="subtitle">Published on <time>February 04, 2024</time></p>
+  </header>
+
+  <div class="post-content">
+    <p>Bash scripting doesn't have a defined way to interface with scripts. 
+Usage strings, argument handling methods positional, shifting, and getopts
+consider expanding for C and Python</p>
+<h2 id="usage-help-message">Usage/Help Message</h2>
+<p>Here is an example based on the NetBSD source code style guide:</p>
+<p><code>Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]</code></p>
+<p>This would indicate that &quot;program&quot; should be called with:</p>
+<ul>
+<li>options without operands: a, D, d, e (any of which may be omitted). Note that in this case some parameters are case-sensitive</li>
+<li>exclusive options: f, g (denoted by the vertical bar)</li>
+<li>options with operands: n</li>
+<li>exclusive options with operands: b, c</li>
+<li>required arguments: req1, req2</li>
+<li>optional argument opt1, which may be used with or without opt2 (marked optional within the group by using another set of square brackets)</li>
+<li>optional argument opt2, which requires opt1</li>
+</ul>
+<h2 id="bash">Bash</h2>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-entity z-name z-function z-shell">usage</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-punctuation z-section z-parens z-end z-shell">)</span> <span class="z-punctuation z-section z-braces z-begin z-shell">{</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>Usage: <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">0</span></span> [OPTIONS]<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>Options:<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span> -h, --help      Display this help message<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span> -v, --verbose   Enable verbose mode<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span> -f, --file      FILE Specify an output file<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-punctuation z-section z-braces z-end z-shell">}</span></span>
+</span></code></pre>
+<h3 id="built-in-variables">Built-In Variables</h3>
+<p><code>$0</code> The Script Name</p>
+<p><code>$1, $2, $3, ...</code> Positional Arguments</p>
+<p><code>$#</code> Argument Count</p>
+<p><code>$@ and $*</code> All the Args</p>
+<h3 id="bash-test-function">Bash Test Function</h3>
+<p><a href="https://www.gnu.org/software/coreutils/manual/html_node/test-invocation.html">16.3 test: Check file types and compare values</a></p>
+<p><code>-z string</code> True if the length of string is zero.</p>
+<p><code>-n string</code> True if the length of string is nonzero.</p>
+<p><code>arg1 -eq arg2</code> equal</p>
+<p><code>arg1 -ne arg2</code> not equal</p>
+<p><code>arg1 -lt arg2</code> less then</p>
+<p><code>arg1 -le arg2</code> less then equal</p>
+<p><code>arg1 -gt arg2</code> greater then</p>
+<p><code>arg1 -ge arg2</code> greater then equal</p>
+<p><code>! TEST</code> boolean NOT</p>
+<h3 id="basic-conditional-parsing">Basic Conditional Parsing</h3>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-conditional z-if z-shell">if</span> <span class="z-meta z-function-call z-arguments z-shell"><span class="z-support z-function z-double-brace z-begin z-shell">[[</span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">1</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-logical z-shell">==</span> <span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">-</span>h</span> <span class="z-support z-function z-double-brace z-end z-shell">]]</span></span><span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-conditional z-then z-shell">then</span>
+</span><span class="z-source z-shell z-bash">  <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">usage</span></span>
+</span><span class="z-source z-shell z-bash">  <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span><span class="z-meta z-function-call z-arguments z-shell"> 0</span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-conditional z-end z-shell">fi</span>
+</span></code></pre>
+<h3 id="loop-shift-parsing">Loop shift parsing</h3>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-entity z-name z-function z-shell">handle_options</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-punctuation z-section z-parens z-end z-shell">)</span> <span class="z-punctuation z-section z-braces z-begin z-shell">{</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-keyword z-control z-loop z-while z-shell">while</span> <span class="z-support z-function z-test z-begin z-shell">[</span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-language z-shell">#</span></span> <span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">-</span>gt</span> 0 <span class="z-support z-function z-test z-end z-shell">]</span></span><span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-loop z-do z-shell">do</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">    <span class="z-meta z-conditional z-case z-shell"><span class="z-keyword z-control z-conditional z-case z-shell">case</span> <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">1</span></span> <span class="z-keyword z-control z-in z-shell">in</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-shell">      </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">-h <span class="z-keyword z-operator z-logical z-shell">|</span> --help<span class="z-meta z-conditional z-case z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">usage</span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span><span class="z-meta z-function-call z-arguments z-shell"> 0</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">      </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">-v <span class="z-keyword z-operator z-logical z-shell">|</span> --verbose<span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-variable z-other z-readwrite z-assignment z-shell">verbose_mode</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell">true</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">      </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">-f <span class="z-keyword z-operator z-logical z-shell">|</span> --file<span class="z-keyword z-operator z-regexp z-quantifier z-shell">*</span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-keyword z-control z-conditional z-if z-shell">if</span> <span class="z-keyword z-operator z-logical z-shell">!</span> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">has_argument</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-language z-shell">@</span></span></span><span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-conditional z-then z-shell">then</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">          <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>File not specified.<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;&amp;</span><span class="z-constant z-numeric z-integer z-decimal z-file-descriptor z-shell">2</span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">          <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">usage</span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">          <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span><span class="z-meta z-function-call z-arguments z-shell"> 1</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-keyword z-control z-conditional z-end z-shell">fi</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-variable z-other z-readwrite z-assignment z-shell">output_file</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell"><span class="z-meta z-group z-expansion z-command z-parens z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">extract_argument</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-language z-shell">@</span></span></span><span class="z-punctuation z-section z-parens z-end z-shell">)</span></span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">      </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-operator z-regexp z-quantifier z-shell">*</span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>Invalid option: <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">1</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;&amp;</span><span class="z-constant z-numeric z-integer z-decimal z-file-descriptor z-shell">2</span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">usage</span></span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span><span class="z-meta z-function-call z-arguments z-shell"> 1</span>
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">    <span class="z-keyword z-control z-conditional z-end z-shell">esac</span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">    <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">  <span class="z-keyword z-control z-loop z-end z-shell">done</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"><span class="z-punctuation z-section z-braces z-end z-shell">}</span></span>
+</span></code></pre>
+<h3 id="getopts"><code>getopts</code></h3>
+<p>Only supports shorthand single character options aka flags</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-variable z-other z-readwrite z-assignment z-shell">aflag</span><span class="z-keyword z-operator z-assignment z-shell">=</span>
+</span><span class="z-source z-shell z-bash"><span class="z-variable z-other z-readwrite z-assignment z-shell">bflag</span><span class="z-keyword z-operator z-assignment z-shell">=</span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-loop z-while z-shell">while</span> <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-getopts z-shell">getopts</span></span><span class="z-meta z-function-call z-arguments z-shell"> ab: name</span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-loop z-do z-shell">do</span>
+</span><span class="z-source z-shell z-bash">    <span class="z-meta z-conditional z-case z-shell"><span class="z-keyword z-control z-conditional z-case z-shell">case</span> <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">name</span></span> <span class="z-keyword z-control z-in z-shell">in</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-shell">    </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">a<span class="z-meta z-conditional z-case z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">    <span class="z-variable z-other z-readwrite z-assignment z-shell">aflag</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell">1</span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">    </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">b<span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">    <span class="z-variable z-other z-readwrite z-assignment z-shell">bflag</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell">1</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">          <span class="z-variable z-other z-readwrite z-assignment z-shell">bval</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell"><span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">OPTARG</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">    </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-operator z-regexp z-quantifier z-shell">?</span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">   <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-printf z-shell">printf</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>Usage: %s: [-a] [-b value] args\n<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">0</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">          <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span><span class="z-meta z-function-call z-arguments z-shell"> 2</span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">    <span class="z-keyword z-control z-conditional z-end z-shell">esac</span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-loop z-end z-shell">done</span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-conditional z-if z-shell">if</span> <span class="z-support z-function z-test z-begin z-shell">[</span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-keyword z-operator z-logical z-shell">!</span> <span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">-</span>z</span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">aflag</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-support z-function z-test z-end z-shell">]</span></span><span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-conditional z-then z-shell">then</span>
+</span><span class="z-source z-shell z-bash">    <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-printf z-shell">printf</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>Option -a specified\n<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-conditional z-end z-shell">fi</span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-conditional z-if z-shell">if</span> <span class="z-support z-function z-test z-begin z-shell">[</span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-keyword z-operator z-logical z-shell">!</span> <span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">-</span>z</span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">bflag</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-support z-function z-test z-end z-shell">]</span></span><span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-conditional z-then z-shell">then</span>
+</span><span class="z-source z-shell z-bash">    <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-printf z-shell">printf</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>Option -b &quot;%s&quot; specified\n<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">bval</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-conditional z-end z-shell">fi</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-meta z-group z-expansion z-arithmetic z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-parens z-begin z-shell">((</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-other z-readwrite z-shell">OPTIND</span></span> <span class="z-keyword z-operator z-arithmetic z-shell">-</span> <span class="z-constant z-numeric z-integer z-decimal z-shell">1</span><span class="z-punctuation z-section z-parens z-end z-shell">))</span></span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-printf z-shell">printf</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>Remaining arguments are: %s\n<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-variable z-language z-shell">*</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></code></pre>
+<h3 id="getopt"><code>getopt</code></h3>
+<p>Supports short and long options</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell">!/bin/bash</span><span class="z-comment z-line z-number-sign z-shell">
+</span></span><span class="z-source z-shell z-bash">
+</span><span class="z-source z-shell z-bash"><span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell"> We use &quot;${@}&quot; instead of &quot;${*}&quot; to preserve argument-boundary information</span><span class="z-comment z-line z-number-sign z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-variable z-other z-readwrite z-assignment z-shell">ARGS</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell"><span class="z-meta z-group z-expansion z-command z-parens z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">getopt</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>options</span> <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>a:l::v<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>longoptions</span> <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>article:,lang::,language::,verbose<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span><span class="z-keyword z-operator z-end-of-options z-shell"> --</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell"><span class="z-variable z-language z-shell">@</span></span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span><span class="z-punctuation z-section z-parens z-end z-shell">)</span></span></span> <span class="z-meta z-function-call z-shell"></span><span class="z-keyword z-operator z-logical z-or z-shell">||</span> <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-eval z-shell">eval</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>set -- <span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell">ARGS</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span><span class="z-source z-shell z-bash">
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-loop z-while z-shell">while</span> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">true</span></span><span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-loop z-do z-shell">do</span>
+</span><span class="z-source z-shell z-bash">    <span class="z-meta z-conditional z-case z-shell"><span class="z-keyword z-control z-conditional z-case z-shell">case</span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell">1</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-control z-in z-shell">in</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-shell">        </span><span class="z-meta z-conditional z-case z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-begin z-shell">(</span></span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">-v <span class="z-keyword z-operator z-logical z-shell">|</span> --verbose<span class="z-meta z-conditional z-case z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-meta z-group z-arithmetic z-shell"><span class="z-punctuation z-section z-arithmetic z-begin z-shell">((</span>VERBOSE<span class="z-keyword z-operator z-arithmetic z-shell">++</span><span class="z-punctuation z-section z-arithmetic z-end z-shell">))</span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-begin z-shell">(</span></span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">-a <span class="z-keyword z-operator z-logical z-shell">|</span> --article<span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-variable z-other z-readwrite z-assignment z-shell">ARTICLE</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell"><span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell">2</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span><span class="z-meta z-function-call z-arguments z-shell"> 2</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-begin z-shell">(</span></span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">-l <span class="z-keyword z-operator z-logical z-shell">|</span> --lang <span class="z-keyword z-operator z-logical z-shell">|</span> --language<span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell"> handle optional: getopt normalizes it into an empty string</span><span class="z-comment z-line z-number-sign z-shell">
+</span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-keyword z-control z-conditional z-if z-shell">if</span> <span class="z-support z-function z-test z-begin z-shell">[</span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">-</span>n</span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell">2</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-support z-function z-test z-end z-shell">]</span></span> <span class="z-keyword z-operator z-logical z-continue z-shell">;</span> <span class="z-keyword z-control z-conditional z-then z-shell">then</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">                <span class="z-variable z-other z-readwrite z-assignment z-shell">LANG</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-string z-unquoted z-shell"><span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell">2</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-keyword z-control z-conditional z-end z-shell">fi</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span><span class="z-meta z-function-call z-arguments z-shell"> 2</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-begin z-shell">(</span></span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">--<span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-shift z-shell">shift</span></span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-keyword z-control z-flow z-break z-shell">break</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-begin z-shell">(</span></span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-operator z-regexp z-quantifier z-shell">*</span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell"><span class="z-keyword z-control z-conditional z-patterns z-end z-shell">)</span></span></span><span class="z-meta z-conditional z-case z-clause z-commands z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">            <span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span><span class="z-meta z-function-call z-arguments z-shell"> 1    <span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell"> error</span><span class="z-comment z-line z-number-sign z-shell">
+</span></span></span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-commands z-shell">        </span><span class="z-meta z-conditional z-case z-clause z-commands z-shell"><span class="z-punctuation z-terminator z-case z-clause z-shell">;;</span></span><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-conditional z-case z-clause z-patterns z-shell">    <span class="z-keyword z-control z-conditional z-end z-shell">esac</span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-loop z-end z-shell">done</span>
+</span><span class="z-source z-shell z-bash">
+</span><span class="z-source z-shell z-bash"><span class="z-variable z-other z-readwrite z-assignment z-shell">remaining_args</span><span class="z-keyword z-operator z-assignment z-shell">=</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-expansion z-parameter z-begin z-shell">{</span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-variable z-other z-readwrite z-shell"><span class="z-variable z-language z-shell">@</span></span></span><span class="z-meta z-group z-expansion z-parameter z-shell"><span class="z-punctuation z-section z-expansion z-parameter z-end z-shell">}</span></span><span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-shell">)</span>
+</span></code></pre>
+
+  </div>
+    
+    <div class="back-to-blog">
+      <a href="/blog">← Back to all posts</a>
+    </div>
+  </footer>
+</article>
+
+<style>
+  .blog-post {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  
+  .post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .post-content {
+    font-size: 1.05rem;
+  }
+  
+  .post-content h2 {
+    margin-top: 2.5rem;
+  }
+  
+  .post-content h3 {
+    margin-top: 2rem;
+  }
+  
+  .post-content ul, .post-content ol {
+    padding-left: 1.5rem;
+  }
+  
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  
+  .post-nav-prev, .post-nav-next {
+    max-width: 45%;
+  }
+  
+  .back-to-blog {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 640px) {
+    .post-nav {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .post-nav-prev, .post-nav-next {
+      max-width: 100%;
+    }
+  }
+  
+  /* Code block styling */
+  .post-content pre {
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  
+  /* Tweak the existing code styles to make them nicer */
+  .post-content code {
+    font-size: 0.9em;
+  }
+</style>
+
+    </div>
+  </section>

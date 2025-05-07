@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL | Alex Perrin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --text-color: #1f2937;
+      --light-bg: #f9fafb;
+      --border-color: #e5e7eb;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: white;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+    }
+    
+    .nav-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 2rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.75rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1.5rem;
+    }
+    
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      background-color: var(--light-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    
+    pre {
+      background-color: var(--light-bg);
+      padding: 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+    
+    pre code {
+      background: none;
+      padding: 0;
+    }
+    
+    .title {
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      color: #4b5563;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .post-list {
+      list-style: none;
+    }
+    
+    .post-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .post-item:last-child {
+      border-bottom: none;
+    }
+    
+    .post-link {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+    
+    .post-date {
+      color: #6b7280;
+      font-size: 0.9rem;
+      display: block;
+      margin-top: 0.25rem;
+    }
+    
+    footer {
+      background-color: var(--light-bg);
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      text-align: center;
+      color: #4b5563;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      h3 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">Alex Perrin</a>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      
+<article class="blog-post">
+  <header class="post-header">
+    <h1 class="title">SQL</h1>
+    <p class="subtitle">Published on <time>March 11, 2024</time></p>
+  </header>
+
+  <div class="post-content">
+    <h2 id="todo">[TODO]</h2>
+<ul>
+<li>Querrying SELECT, FROM, WHERE, ORDER BY
+<ul>
+<li>Subquerries</li>
+<li>JOINS</li>
+<li>UNIONS?</li>
+</ul>
+</li>
+<li>Triggers, stored procedures</li>
+</ul>
+<h2 id="guide">Guide</h2>
+<h3 id="constraints">Constraints</h3>
+<p>SQL constraints are used to specify rules for the data in a table.</p>
+<p>Constraints are used to limit the type of data that can go into a table. This ensures the accuracy and reliability of the data in the table. If there is any violation between the constraint and the data action, the action is aborted.</p>
+<p>Constraints can be column level or table level. Column level constraints apply to a column, and table level constraints apply to the whole table.</p>
+<p>The following constraints are commonly used in SQL:</p>
+<ul>
+<li><code>NOT NULL</code> - Ensures that a column cannot have a NULL value</li>
+<li><code>UNIQUE</code> - Ensures that all values in a column are different</li>
+<li><code>PRIMARY KEY</code> - A combination of a <code>NOT NULL</code> and <code>UNIQUE</code>. Uniquely identifies each row in a table</li>
+<li><code>FOREIGN KEY</code> - Prevents actions that would destroy links between tables</li>
+<li><code>CHECK</code> - Ensures that the values in a column satisfies a specific condition</li>
+<li><code>DEFAULT</code> - Sets a default value for a column if no value is specified</li>
+<li><code>CREATE INDEX</code> - Used to create and retrieve data from the database very quickly</li>
+</ul>
+<h4 id="syntax">Syntax</h4>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-meta z-create z-sql"><span class="z-keyword z-other z-create z-sql">CREATE</span> <span class="z-keyword z-other z-sql">TABLE</span> </span><span class="z-meta z-toc-list z-full-identifier z-sql"><span class="z-entity z-name z-function z-sql">table_name</span></span> (
+</span><span class="z-source z-sql">    column1 datatype <span class="z-storage z-modifier z-sql">constraint</span>,
+</span><span class="z-source z-sql">    column2 datatype <span class="z-storage z-modifier z-sql">constraint</span>,
+</span><span class="z-source z-sql">    column3 datatype <span class="z-storage z-modifier z-sql">constraint</span>,
+</span><span class="z-source z-sql">    ....
+</span><span class="z-source z-sql">);
+</span></code></pre>
+<h4 id="data-integrity">Data Integrity</h4>
+<p>Data integrity ensures the accuracy, and consistency of data over its life-cycle. </p>
+<h4 id="referential-integrity">Referential Integrity</h4>
+<p>Referential Integrity ensures that changes to a table do not break logic constraints of other tables.</p>
+<h3 id="relations">Relations</h3>
+<h4 id="one-to-one">One-to-One</h4>
+<h4 id="one-to-many-associative">One-to-Many (Associative)</h4>
+<h3 id="denormalization">Denormalization</h3>
+<p>The process of transforming normalized relations into nonnormalized physical record specifications.</p>
+<h2 id="examples-from-khan-academy">Examples from <a href="https://www.khanacademy.org/computer-programming/new/sql">Khan Academy</a></h2>
+<h3 id="creating-tables">Creating tables</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-create-table-with-multiple-data-types/5945065256124416">Many data types</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-meta z-create z-sql"><span class="z-keyword z-other z-create z-sql">CREATE</span> <span class="z-keyword z-other z-sql">TABLE</span> </span><span class="z-meta z-toc-list z-full-identifier z-sql"><span class="z-entity z-name z-function z-sql">customers</span></span> (
+</span><span class="z-source z-sql">    id <span class="z-storage z-type z-sql">INTEGER</span> <span class="z-storage z-modifier z-sql">PRIMARY KEY</span>, 
+</span><span class="z-source z-sql">    name <span class="z-storage z-type z-sql">TEXT</span>, 
+</span><span class="z-source z-sql">    age <span class="z-storage z-type z-sql">INTEGER</span>, 
+</span><span class="z-source z-sql">    weight <span class="z-storage z-type z-sql">REAL</span>
+</span><span class="z-source z-sql">);
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-create-table-with-a-primary-key/5189331400654848">Using primary keys</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-meta z-create z-sql"><span class="z-keyword z-other z-create z-sql">CREATE</span> <span class="z-keyword z-other z-sql">TABLE</span> </span><span class="z-meta z-toc-list z-full-identifier z-sql"><span class="z-entity z-name z-function z-sql">customers</span></span> (
+</span><span class="z-source z-sql">    id <span class="z-storage z-type z-sql">INTEGER</span> <span class="z-storage z-modifier z-sql">PRIMARY KEY</span>, 
+</span><span class="z-source z-sql">    age <span class="z-storage z-type z-sql">INTEGER</span>
+</span><span class="z-source z-sql">);
+</span></code></pre>
+<h3 id="inserting-data">Inserting data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-inserting-values-in-tables/5382515271532544">Inserting data</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">INSERT INTO</span> customers <span class="z-keyword z-other z-DML z-II z-sql">VALUES</span> (<span class="z-constant z-numeric z-sql">73</span>, <span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>Brian<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span>, <span class="z-constant z-numeric z-sql">33</span>);
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-inserting-values-in-tables/5382515271532544">Inseting data for named columns</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">INSERT INTO</span> customers (name, age) <span class="z-keyword z-other z-DML z-II z-sql">VALUES</span> (<span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>Brian<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span>, <span class="z-constant z-numeric z-sql">33</span>);
+</span></code></pre>
+<h3 id="querying-data">Querying Data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-rows/5163767537205248">Select everything</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-variable z-language z-star z-sql">*</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-rows/5163767537205248">Select specific columns</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> name, age <span class="z-keyword z-other z-DML z-sql">FROM</span> customers;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-with-where-conditions/6216095996444672">Filter with condition</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-variable z-language z-star z-sql">*</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers 
+</span><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">WHERE</span> age <span class="z-keyword z-operator z-comparison z-sql">&gt;</span> <span class="z-constant z-numeric z-sql">21</span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-selecting-with-where-conditions/6216095996444672">Filter with multiple conditions</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-variable z-language z-star z-sql">*</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers 
+</span><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">WHERE</span> age <span class="z-keyword z-operator z-comparison z-sql">&lt;</span> <span class="z-constant z-numeric z-sql">21</span> <span class="z-keyword z-operator z-logical z-sql">AND</span> state <span class="z-keyword z-operator z-comparison z-sql">=</span> <span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>NY<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-filter-with-in/6529475600842752">Filter with IN</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-variable z-language z-star z-sql">*</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers 
+</span><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">WHERE</span> plan <span class="z-keyword z-operator z-logical z-sql">IN</span> (<span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>free<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span>, <span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>basic<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span>);
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-select-with-order-by/6218182226477056">Order results</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-variable z-language z-star z-sql">*</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers
+</span><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">WHERE</span> age <span class="z-keyword z-operator z-comparison z-sql">&gt;</span> <span class="z-constant z-numeric z-sql">21</span> <span class="z-keyword z-other z-DML z-sql">ORDER BY</span> age <span class="z-keyword z-other z-order z-sql">DESC</span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-transform-select-results-with-case/5100246984163328">Transform with CASE</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> name, <span class="z-keyword z-other z-DML z-sql">CASE</span> <span class="z-keyword z-other z-DML z-sql">WHEN</span> age <span class="z-keyword z-operator z-comparison z-sql">&gt;</span> <span class="z-constant z-numeric z-sql">18</span> <span class="z-keyword z-other z-DML z-sql">THEN</span> <span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>adult<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span> <span class="z-keyword z-other z-DML z-sql">ELSE</span> <span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>minor<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span> <span class="z-keyword z-other z-DML z-sql">END</span> <span class="z-string z-quoted z-double z-sql"><span class="z-punctuation z-definition z-string z-begin z-sql">&quot;</span>type<span class="z-punctuation z-definition z-string z-end z-sql">&quot;</span></span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers;
+</span></code></pre>
+<h3 id="aggregating-data">Aggregating data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-select-with-aggregate-functions/4797964233080832">Aggregate functions</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-support z-function z-aggregate z-sql">MAX</span>(age) <span class="z-keyword z-other z-DML z-sql">FROM</span> customers;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-grouping-select-results-with-group-by/5520132919132160">Grouping data</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> gender, <span class="z-support z-function z-aggregate z-sql">COUNT</span>(<span class="z-variable z-language z-star z-sql">*</span>) <span class="z-keyword z-other z-DML z-sql">FROM</span> students <span class="z-keyword z-other z-DML z-sql">GROUP BY</span> gender;
+</span></code></pre>
+<h3 id="updating-and-deleting-data">Updating and deleting data</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-update-and-delete/5559819222253568">Updating data</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">UPDATE</span> customers <span class="z-keyword z-other z-DML z-sql">SET</span> age <span class="z-keyword z-operator z-comparison z-sql">=</span> <span class="z-constant z-numeric z-sql">44</span> <span class="z-keyword z-other z-DML z-sql">WHERE</span> id <span class="z-keyword z-operator z-comparison z-sql">=</span> <span class="z-constant z-numeric z-sql">73</span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-update-and-delete/5559819222253568">Deleting data</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">DELETE</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers <span class="z-keyword z-other z-DML z-sql">WHERE</span> id <span class="z-keyword z-operator z-comparison z-sql">=</span> <span class="z-constant z-numeric z-sql">73</span>;
+</span></code></pre>
+<h3 id="joining-related-tables">Joining related tables</h3>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-join-on-tables/5409956539006976">Inner Join</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-constant z-other z-database-name z-sql">customers</span>.<span class="z-constant z-other z-table-name z-sql">name</span>, <span class="z-constant z-other z-database-name z-sql">orders</span>.<span class="z-constant z-other z-table-name z-sql">time</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers 
+</span><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">JOIN</span> orders ON <span class="z-constant z-other z-database-name z-sql">customers</span>.<span class="z-constant z-other z-table-name z-sql">id</span> <span class="z-keyword z-operator z-comparison z-sql">=</span> <span class="z-constant z-other z-database-name z-sql">order</span>.<span class="z-constant z-other z-table-name z-sql">customer_id</span>;
+</span></code></pre>
+<p><a href="https://www.khanacademy.org/computer-programming/sql-join-on-tables/5409956539006976">Outer Join</a></p>
+<pre data-lang="sql" class="language-sql z-code"><code class="language-sql" data-lang="sql"><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">SELECT</span> <span class="z-constant z-other z-database-name z-sql">customers</span>.<span class="z-constant z-other z-table-name z-sql">name</span>, <span class="z-constant z-other z-database-name z-sql">orders</span>.<span class="z-constant z-other z-table-name z-sql">item</span> <span class="z-keyword z-other z-DML z-sql">FROM</span> customers
+</span><span class="z-source z-sql"><span class="z-keyword z-other z-DML z-sql">LEFT OUTER JOIN</span> orders ON <span class="z-constant z-other z-database-name z-sql">customers</span>.<span class="z-constant z-other z-table-name z-sql">id</span> <span class="z-keyword z-operator z-comparison z-sql">=</span> <span class="z-constant z-other z-database-name z-sql">orders</span>.<span class="z-constant z-other z-table-name z-sql">customer_id</span>;
+</span></code></pre>
+
+  </div>
+    
+    <div class="back-to-blog">
+      <a href="/blog">← Back to all posts</a>
+    </div>
+  </footer>
+</article>
+
+<style>
+  .blog-post {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  
+  .post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .post-content {
+    font-size: 1.05rem;
+  }
+  
+  .post-content h2 {
+    margin-top: 2.5rem;
+  }
+  
+  .post-content h3 {
+    margin-top: 2rem;
+  }
+  
+  .post-content ul, .post-content ol {
+    padding-left: 1.5rem;
+  }
+  
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  
+  .post-nav-prev, .post-nav-next {
+    max-width: 45%;
+  }
+  
+  .back-to-blog {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 640px) {
+    .post-nav {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .post-nav-prev, .post-nav-next {
+      max-width: 100%;
+    }
+  }
+  
+  /* Code block styling */
+  .post-content pre {
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  
+  /* Tweak the existing code styles to make them nicer */
+  .post-content code {
+    font-size: 0.9em;
+  }
+</style>
+
+    </div>
+  </section>
