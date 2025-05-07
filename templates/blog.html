@@ -1,13 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  {{ section.title }}
-</h1>
-<ul>
-  <!-- If you are using pagination, section.pages will be empty. You need to use the paginator object -->  
+<h1 class="title">{{ section.title }}</h1>
+
+<div class="blog-intro">
+  <p>Here you'll find my thoughts and tutorials on software development, database management, and related technologies.</p>
+</div>
+
+<ul class="post-list">
   {% for page in section.pages %}
-  <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+  <li class="post-item">
+    <a href="{{ page.permalink | safe }}" class="post-link">{{ page.title }}</a>
+    <span class="post-date">{{ page.date | date(format="%B %d, %Y") }}</span>
+    {% if page.description %}
+      <p>{{ page.description }}</p>
+    {% endif %}
+  </li>
   {% endfor %}
 </ul>
+
+<style>
+  .blog-intro {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .post-list {
+    list-style: none;
+  }
+  
+  .post-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .post-item:last-child {
+    border-bottom: none;
+  }
+  
+  .post-link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+</style>
 {% endblock content %}

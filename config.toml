@@ -1,8 +1,11 @@
 base_url = "/"
-
 author = "Alex Perrin"
+compile_sass = true
 
 [markdown]
 render_emoji = true
 highlight_code = true
-highlight_theme = "Tomorrow"
+highlight_theme = "css"
+
+[extra]
+tailwind = true
