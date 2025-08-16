@@ -195,7 +195,7 @@ This means the `decrypt()` function should inevitibly use the compliment of `sel
 
 [DES exhibits the complementation property, namely that](https://en.wikipedia.org/wiki/Data_Encryption_Standard)
 
-![alt text](image-2.png)
+![alt text](https://wikimedia.org/api/rest_v1/media/math/render/svg/e567b0f71aff5efa778ec2660f1ef7c5b0f04ba7)
 
 DES being symmetric, the complementation property applies to decrypting as well.
 
@@ -203,7 +203,7 @@ Taking the complement of ciphertext from `get_challenge()`, and `decrypt()` it w
 
 The first 8 bytes will need to be complemented again, because in [CBC mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation)
 
-![alt text](image-3.png)
+![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/CBC_decryption.svg/512px-CBC_decryption.svg.png)
 
 The first block is XORed with IV, subsequent blocks are XORed with the previous block's ciphertext.
 
@@ -228,7 +228,7 @@ d7fb309d5a3ac2f3e916c73957d110a3d546491bfd75ccec6eb544347185cbad5dfd58e72e2eed02
 
 Compute the complement cipher text `2804cf62a5c53d0c16e938c6a82eef5c2ab9b6e4028a3313914abbcb8e7a3452a202a718d1d112fd4d3341d9f52a8db680de2642bbf963edcb51b1a1a0ef2d1d`
 
-![alt text](<Screenshot 2025-08-15 233139.png>)
+![alt text](/images/googlectf-2024-desfunctional-writeup-1.png)
 
 Decrypt until lucky
 
@@ -293,7 +293,7 @@ Choose an API option
 
 Compute the complement of the first 8 bits `bfa735fa5ec5b360`
 
-![alt text](<Screenshot 2025-08-15 233355.png>)
+![alt text](/images/googlectf-2024-desfunctional-writeup-1.png)
 
 Use the it to form challenge `bfa735fa5ec5b36000c989e10b3d9ed1e68af5dd26cd90dcaaeb7db69f6582b195a3ea8272e2d523cfb2c5d2bd1830923eefc25f2444e708c64ab8cd249115fc`
 
