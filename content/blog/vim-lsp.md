@@ -1,6 +1,7 @@
 ---
 title: Neovim Language Server Protocol (LSP)
 date: 2024-03-05
+draft: true
 ---
 
 [Optional] Install Rust

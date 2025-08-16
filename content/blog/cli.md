@@ -1,6 +1,7 @@
 ---
 title: Writing CLI Tools
 date: 2024-02-04
+draft: true
 ---
 
 Bash scripting doesn't have a defined way to interface with scripts. 

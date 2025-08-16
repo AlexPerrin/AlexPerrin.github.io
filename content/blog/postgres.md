@@ -1,6 +1,7 @@
 ---
 title: PostgreSQL
 date: 2024-02-13
+draft: true
 ---
 
 ## Quickstart

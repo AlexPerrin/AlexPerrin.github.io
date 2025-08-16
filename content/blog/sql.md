@@ -1,6 +1,7 @@
 ---
 title: SQL
 date: 2024-03-11
+draft: true
 ---
 
 ## [TODO]
