@@ -293,9 +293,9 @@ Choose an API option
 
 Compute the complement of the first 8 bits `bfa735fa5ec5b360`
 
-![alt text](/images/googlectf-2024-desfunctional-writeup-1.png)
+![alt text](/images/googlectf-2024-desfunctional-writeup-2.png)
 
-Use the it to form challenge `bfa735fa5ec5b36000c989e10b3d9ed1e68af5dd26cd90dcaaeb7db69f6582b195a3ea8272e2d523cfb2c5d2bd1830923eefc25f2444e708c64ab8cd249115fc`
+Use it to form challenge `bfa735fa5ec5b36000c989e10b3d9ed1e68af5dd26cd90dcaaeb7db69f6582b195a3ea8272e2d523cfb2c5d2bd1830923eefc25f2444e708c64ab8cd249115fc`
 
 Get the flag
 
