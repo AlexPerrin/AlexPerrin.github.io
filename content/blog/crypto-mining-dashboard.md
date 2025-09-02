@@ -1,5 +1,5 @@
 ---
-title: "Crpytocurrency Mining Analytics Dashboard"
+title: "Cryptocurrency Mining Analytics Dashboard"
 date: 2022-10-15
 ---
 
@@ -11,7 +11,7 @@ I wanted a better way to track costs related to power consumption, and calculate
 
 The analytics stack runs on my home server, seperate from the mining PC.
 
-![System Diagram](/images/crpyto-mining-dashboard-system-diagram.png)
+![System Diagram](/images/crypto-mining-dashboard-system-diagram.png)
 
 This tutorial walks through setting up the monitoring and analytics stack; Prometheus, Grafana, and exporters. Setting up Docker and mining software is out of scope for this tutorial.
 
@@ -28,7 +28,7 @@ The architecture ended up being fairly straightforward: exporters collect metric
 **Server**
 
 ```
-crpyto-mining-dashboard/
+crypto-mining-dashboard/
 ├── compose.yam
 ├── prometheus/
 │   └── config/
@@ -197,19 +197,19 @@ scrape_configs:
 
 Visit http://server-ip:9090/targets to verfiy that Prometheus can reach the the exporters.
 
-![Prometheus Targets](/images/crpyto-mining-dashboard-prometheus-targets.png)
+![Prometheus Targets](/images/crypto-mining-dashboard-prometheus-targets.png)
 
 The targets page shows all exporters as "UP" with recent successful scrapes, indicating the data pipeline is functioning correctly. 
 
 Go to the Query tab and see that data is flowing into Prometheus.
 
-![Prometheus Query](/images/crpyto-mining-dashboard-prometheus-query.png)
+![Prometheus Query](/images/crypto-mining-dashboard-prometheus-query.png)
 
 The Prometheus query interface enables ad-hoc analysis for troubleshooting and optimization. This useful for exploring different data metrics before building out vizualizations.
 
 I've setup a simple dashboard to display the GPU hashrate, power consumption, valid shares, and unpaid balance. 
 
-![Grafana Dashboard](/images/crpyto-mining-dashboard-grafana.png)
+![Grafana Dashboard](/images/crypto-mining-dashboard-grafana.png)
 
 The dashboard demonstrates several design principles that emerged during development. The gauge visualizations provide immediate status awareness with color coding for normal, warning, and critical states. The time-series graphs reveal trends over several days, which proved essential for identifying gradual degradation or improvement patterns.
 
