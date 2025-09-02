@@ -259,8 +259,8 @@ CREATE TABLE payment (
 INSERT INTO realtor_agent VALUES (1, 'Carmen', 50, '123 Anywhere St', 20.0);
 INSERT INTO realtor_agent VALUES (2, 'Joe', 60, '55 Some Rd', 35.2);
 
-INSERT INTO customer VALUES (1, 'Alex', 1, '69 That Way', 'The trap', 20.1, 69000000.00);
-INSERT INTO customer VALUES (2, 'You', 2, 'Third World', 'Slum', 0.1, 3.50);
+INSERT INTO customer VALUES (1, 'Alex', 1, '1 Blue Jay Way', 'Rogers Center', 20.1, 69000000.00);
+INSERT INTO customer VALUES (2, 'Sydney', 2, '27 Kings College Circle', 'University of Toronto', 0.1, 3.50);
 
 INSERT INTO payment VALUES (1, 1, 1, 250000, '2018-03-13');
 INSERT INTO payment VALUES (2, 2, 2, 5000000.01, '2024-03-13');
@@ -335,8 +335,8 @@ CREATE TABLE Qualified_to_teach (
     course_no INT REFERENCES Course
 );
 
-INSERT INTO Student VALUES (1, 'Alex Perrin', '3208 Latimer Rd', 2.4);
-INSERT INTO Student VALUES (2, 'Sydney Perrin', '150 Beverly St', 4.0);
+INSERT INTO Student VALUES (1, 'Alex Perrin', 'Kingston ON', 2.4);
+INSERT INTO Student VALUES (2, 'Sydney Perrin', 'Toronto ON', 4.0);
 
 INSERT INTO Course VALUES (1, 'COMP 378', 'Databases');
 INSERT INTO Course VALUES (2, 'COMP 418', 'Coding');
