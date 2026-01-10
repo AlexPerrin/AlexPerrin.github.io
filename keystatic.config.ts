@@ -1,4 +1,5 @@
 import { config, fields, collection, singleton } from "@keystatic/core";
+import { block } from "@keystatic/core/content-components";
 
 export default config({
   storage: {
@@ -225,6 +226,14 @@ export default config({
               directory: "src/assets/projects",
               publicPath: "@assets/projects/",
             },
+          },
+          components: {
+            Spotify: block({
+              label: "Spotify Playlist",
+              schema: {
+                url: fields.text({ label: "Playlist ID" }),
+              },
+            }),
           },
         }),
       },
