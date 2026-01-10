@@ -91,7 +91,7 @@ const hackathons = defineCollection({
 
 // Blog collection
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx,yaml}", base: "./src/content/blog" }),
+  loader: glob({ pattern: "**/*.{md,mdoc,yaml}", base: "./src/content/blog" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),

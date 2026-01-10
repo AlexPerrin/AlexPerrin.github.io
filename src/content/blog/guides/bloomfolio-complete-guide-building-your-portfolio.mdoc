@@ -1,11 +1,19 @@
 ---
-title: "Bloomfolio Complete Guide: Building Your Portfolio"
-description: "A comprehensive guide to customizing and deploying your Bloomfolio portfolio template. Learn about configuration, components, content collections, and deployment."
-image: "@assets/blog/placeholder-blog.png"
-publishDate: "2025-11-01"
-tags: ["Guide", "Documentation", "Astro", "Portfolio"]
+title: 'Bloomfolio Complete Guide: Building Your Portfolio'
+description: >-
+  A comprehensive guide to customizing and deploying your Bloomfolio portfolio
+  template. Learn about configuration, components, content collections, and
+  deployment.
+image: >-
+  @assets/blog/guides/bloomfolio-complete-guide-building-your-portfolio/image.png
+publishDate: 2025-11-01
+updatedDate: 2026-01-10
+tags:
+  - Guide
+  - Documentation
+  - Astro
+  - Portfolio
 ---
-
 ## Introduction
 
 Bloomfolio is a configuration-driven portfolio template designed for developers, designers, and creatives. It combines the power of Astro's static site generation with the flexibility of Tailwind CSS and the beautiful components of DaisyUI.
@@ -16,7 +24,7 @@ Bloomfolio is a configuration-driven portfolio template designed for developers,
 - **6 Content Collections**: Blog, Projects, Work, Education, Hackathons, and About
 - **Type-Safe**: Full TypeScript support for content and configuration
 - **Modern Stack**: [Astro 5](https://astro.build/) + [TailwindCSS 4](https://tailwindcss.com/docs/installation/using-vite) + [DaisyUI 5](https://daisyui.com/)
-- **MDX Support**: Enhanced markdown with component imports
+- **Markdoc Support**: Enhanced markdown with custom tags
 - **6 Built-in Themes**: Light, Dark, Synthwave, Retro, Valentine, Dim
 - **Responsive Design**: Mobile-first approach with DaisyUI components
 - **View Transitions**: Smooth page transitions with Astro's View Transitions API
@@ -27,16 +35,16 @@ Bloomfolio is a configuration-driven portfolio template designed for developers,
 
 ### Core Technologies
 
-- **[Astro 5](https://astro.build/)**: Modern static site generator with component islands
-- **[TailwindCSS 4](https://tailwindcss.com/docs/installation/using-vite)**: Utility-first CSS framework with CSS-first configuration
-- **[DaisyUI 5](https://daisyui.com/)**: Tailwind CSS component library
+- [**Astro 5**](https://astro.build/): Modern static site generator with component islands
+- [**TailwindCSS 4**](https://tailwindcss.com/docs/installation/using-vite): Utility-first CSS framework with CSS-first configuration
+- [**DaisyUI 5**](https://daisyui.com/): Tailwind CSS component library
 - **TypeScript**: Type-safe development experience
-- **MDX**: Markdown with JSX support
-- **[Lucide Icons](https://lucide.dev/)**: Beautiful, consistent icon library
+- **Markdoc**: Markdown with custom tag support
+- [**Lucide Icons**](https://lucide.dev/): Beautiful, consistent icon library
 
 ### Integrations
 
-- **@astrojs/mdx**: MDX integration for enhanced content
+- **@astrojs/markdoc**: Markdoc integration for enhanced content
 - **@tailwindcss/vite**: Tailwind CSS 4 Vite plugin
 - **View Transitions API**: Smooth page transitions
 
@@ -162,6 +170,7 @@ enableThemeSelector: true  // true = dropdown, false = checkbox
 ```
 
 Available themes:
+
 - `light` - Clean light theme (default)
 - `dark` - Dark theme
 - `synthwave` - Retro cyberpunk
@@ -329,7 +338,9 @@ Project details and achievements...
 ### Layout Components
 
 #### Layout.astro
+
 Base layout for all pages. Includes:
+
 - Global styles
 - Theme controls
 - Page transitions
@@ -337,19 +348,24 @@ Base layout for all pages. Includes:
 - FAB Flower (if enabled)
 
 #### BlogLayout.astro
+
 Specialized layout for blog posts with:
+
 - Featured image
 - Post metadata (date, reading time)
 - Tags display
 - Navigation buttons
 
 #### ProjectLayout.astro
+
 Project detail page layout with custom styling.
 
 ### Section Components
 
 #### Hero.astro
+
 Main hero section with:
+
 - Avatar/logo
 - Name and title
 - Description
@@ -357,22 +373,28 @@ Main hero section with:
 - Social media links
 
 #### About.astro
+
 About section displaying bio with optional photo.
 
 #### Projects.astro
+
 Projects showcase section showing all projects in a grid.
 
 #### Blog.astro
+
 Latest blog posts section (shows 3 most recent).
 
 #### Timeline.astro
+
 Versatile component for Work and Education sections.
 
 **Variants**:
+
 - `timeline`: Visual timeline with icons
 - `list`: Clean list view
 
 **Props**:
+
 ```typescript
 {
   collection: "work" | "education"
@@ -385,15 +407,19 @@ Versatile component for Work and Education sections.
 ```
 
 #### Hackathons.astro
+
 Display hackathon participation with cards.
 
 #### Contact.astro
+
 Contact section with email display.
 
 ### Card Components
 
 #### ProjectCard.astro
+
 Individual project card with:
+
 - Project image
 - Title and description
 - Date period
@@ -401,7 +427,9 @@ Individual project card with:
 - Action buttons (Demo, Source, View)
 
 #### BlogCard.astro
+
 Blog post card with:
+
 - Image overlay effect
 - Title and description
 - Publish date
@@ -410,43 +438,44 @@ Blog post card with:
 ### Utility Components
 
 #### SkillBadge.astro
+
 Displays skill/tag badges with consistent styling.
 
 #### ThemeSelector.astro
+
 Dropdown menu for theme selection (6 themes).
 
 #### ThemeToggle.astro
+
 Simple checkbox for light/dark toggle.
 
 #### FabFlower.astro
+
 Floating action button with expandable link menu.
 
 ### Media Components
 
 #### Spotify.astro
-Embed Spotify tracks, albums, or playlists.
 
-```jsx
-<Spotify url="https://open.spotify.com/track/..." />
-```
+Embed Spotify tracks, albums, or playlists using Markdoc tags.
+
+`{% Spotify url="https://open.spotify.com/track/..." /%}`
 
 #### YouTube.astro
-Embed YouTube videos.
 
-```jsx
-<YouTube id="video-id" />
-<!-- OR -->
-<YouTube url="https://youtube.com/watch?v=..." />
-```
+Embed YouTube videos using Markdoc tags.
+
+`{% YouTube id="video-id" /%}`
+or
+`{% YouTube url="https://youtube.com/watch?v=..." /%}`
 
 #### Twitter.astro
-Embed tweets.
 
-```jsx
-<Twitter url="https://twitter.com/user/status/..." />
-<!-- OR -->
-<Twitter id="tweet-id" username="username" />
-```
+Embed tweets using Markdoc tags.
+
+`{% Twitter url="https://twitter.com/user/status/..." /%}`
+or
+`{% Twitter id="tweet-id" username="username" /%}`
 
 ## Styling System
 
@@ -462,6 +491,7 @@ Bloomfolio uses Tailwind CSS 4 with the new CSS-first configuration approach. Gl
 ### DaisyUI Components
 
 DaisyUI components are available throughout the project:
+
 - Cards
 - Buttons
 - Badges
@@ -502,43 +532,51 @@ npm run preview
 ### Deployment Platforms
 
 #### Vercel
+
 1. Connect your GitHub repository
-2. Vercel auto-detects Astro
-3. Deploy!
+1. Vercel auto-detects Astro
+1. Deploy!
 
 #### Netlify
+
 1. Connect repository
-2. Build command: `npm run build`
-3. Publish directory: `dist`
+1. Build command: `npm run build`
+1. Publish directory: `dist`
 
 #### Cloudflare Pages
+
 1. Connect repository
-2. Build command: `npm run build`
-3. Build output directory: `dist`
+1. Build command: `npm run build`
+1. Build output directory: `dist`
 
 #### GitHub Pages
+
 1. Use GitHub Actions
-2. Configure Astro for GitHub Pages
-3. Push to deploy
+1. Configure Astro for GitHub Pages
+1. Push to deploy
 
 ## Troubleshooting
 
 ### Images not loading
+
 - Ensure images are in `src/assets/` or use proper URLs
 - Use `image()` helper in frontmatter for relative paths
 - Check image paths are correct
 
 ### Theme not changing
+
 - Clear browser cache
 - Check localStorage is enabled
 - Verify theme names match DaisyUI themes
 
 ### Build errors
+
 - Run `npm install` to ensure all dependencies are installed
 - Check TypeScript errors with `npm run astro check`
 - Verify all content frontmatter matches schemas
 
 ### Content not appearing
+
 - Check collection name matches folder name
 - Verify frontmatter schema is correct
 - Ensure files have `.md` or `.mdx` extension
@@ -546,14 +584,14 @@ npm run preview
 ## Tips & Best Practices
 
 1. **Keep config.ts updated**: This is your central control panel
-2. **Use type-safe content**: Let TypeScript catch errors early
-3. **Optimize images**: Keep images under 1MB for best performance
-4. **Write meaningful descriptions**: Helps with SEO
-5. **Test on mobile**: Use responsive design utilities
-6. **Use consistent dates**: ISO format `YYYY-MM-DD` works best
-7. **Leverage MDX**: Import components for rich content
-8. **Commit regularly**: Use git to track changes
-9. **Preview before deploy**: Always test builds locally
+1. **Use type-safe content**: Let TypeScript catch errors early
+1. **Optimize images**: Keep images under 1MB for best performance
+1. **Write meaningful descriptions**: Helps with SEO
+1. **Test on mobile**: Use responsive design utilities
+1. **Use consistent dates**: ISO format `YYYY-MM-DD` works best
+1. **Leverage Markdoc**: Use custom tags for rich content
+1. **Commit regularly**: Use git to track changes
+1. **Preview before deploy**: Always test builds locally
 
 ## Next Steps
 

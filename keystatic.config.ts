@@ -241,7 +241,7 @@ export default config({
 
     blog: collection({
       label: "Blog Posts",
-      path: "src/content/blog/*",
+      path: "src/content/blog/**",
       slugField: "title",
       format: {
         contentField: "content",
@@ -275,7 +275,7 @@ export default config({
           itemLabel: (props) => props.value,
           description: "Blog post tags",
         }),
-        content: fields.mdx({
+        content: fields.markdoc({
           label: "Content",
           description: "Blog post content",
           options: {
@@ -283,6 +283,49 @@ export default config({
               directory: "src/assets/blog",
               publicPath: "@assets/blog/",
             },
+          },
+          components: {
+            Spotify: block({
+              label: "Spotify Embed",
+              schema: {
+                url: fields.text({
+                  label: "Spotify URL",
+                  description:
+                    "Full Spotify URL (track, album, playlist, or podcast)",
+                  validation: { isRequired: true },
+                }),
+              },
+            }),
+            YouTube: block({
+              label: "YouTube Video",
+              schema: {
+                id: fields.text({
+                  label: "Video ID",
+                  description: "YouTube video ID (optional if URL is provided)",
+                }),
+                url: fields.text({
+                  label: "YouTube URL",
+                  description: "Full YouTube URL (optional if ID is provided)",
+                }),
+              },
+            }),
+            Twitter: block({
+              label: "Twitter/X Embed",
+              schema: {
+                url: fields.text({
+                  label: "Tweet URL",
+                  description: "Full Twitter/X URL",
+                }),
+                id: fields.text({
+                  label: "Tweet ID",
+                  description: "Tweet ID (optional if URL is provided)",
+                }),
+                username: fields.text({
+                  label: "Username",
+                  description: "Twitter username (optional if URL is provided)",
+                }),
+              },
+            }),
           },
         }),
       },

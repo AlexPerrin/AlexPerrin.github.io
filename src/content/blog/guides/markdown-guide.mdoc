@@ -1,11 +1,17 @@
 ---
-title: "Markdown & MDX Guide"
-description: "Master Markdown syntax and MDX features in Bloomfolio. Learn how to create rich, formatted content with embedded media components."
-image: "@assets/blog/placeholder-blog.png"
-publishDate: "2025-11-03"
-tags: ["Guide", "Markdown", "MDX", "Writing"]
+title: Markdown & MDX Guide
+description: >-
+  Master Markdown syntax and MDX features in Bloomfolio. Learn how to create
+  rich, formatted content with embedded media components.
+image: '@assets/blog/guides/markdown-guide/image.png'
+publishDate: 2025-11-03
+updatedDate: 2026-01-10
+tags:
+  - Guide
+  - Markdown
+  - MDX
+  - Writing
 ---
-
 ## What is Markdown?
 
 Markdown is a lightweight markup language that lets you format text using simple, readable syntax. It's widely used for documentation, blog posts, and README files because it's easy to write and read.
@@ -44,6 +50,7 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ```
 
 **Renders as**:
+
 - **Bold text**
 - *Italic text*
 - ***Bold and italic***
@@ -55,6 +62,7 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ### Lists
 
 **Unordered Lists**:
+
 ```markdown
 - Item 1
 - Item 2
@@ -64,6 +72,7 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ```
 
 **Ordered Lists**:
+
 ```markdown
 1. First item
 2. Second item
@@ -73,6 +82,7 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ```
 
 **Task Lists** (GitHub-style):
+
 ```markdown
 - [x] Completed task
 - [ ] Incomplete task
@@ -92,6 +102,7 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ```
 
 **Internal Links** (within your site):
+
 ```markdown
 [About Page](/about)
 [Blog Post](/blog/my-post)
@@ -108,12 +119,14 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ```
 
 **Best Practices**:
+
 - Always include descriptive alt text for accessibility
 - Use relative paths for local images (`./image.png`)
 - Optimize images before adding (aim for < 1MB)
 - Use meaningful filenames
 
 **Example**:
+
 ```markdown
 ![A developer coding at a modern workspace with dual monitors](./workspace.jpg)
 ```
@@ -123,6 +136,7 @@ Create headings using `#` symbols. More `#` symbols mean smaller headings.
 ### Code Blocks
 
 **Inline Code**: Use single backticks
+
 ```markdown
 Use `const` for variables that won't change.
 ```
@@ -139,6 +153,7 @@ console.log(greet("World"));
 ````
 
 **Supported Languages**:
+
 - `javascript` / `js`
 - `typescript` / `ts`
 - `python`
@@ -151,6 +166,7 @@ console.log(greet("World"));
 - And many more!
 
 **Code Block with Title**:
+
 ````markdown
 ```javascript title="greet.js"
 function greet(name) {
@@ -171,10 +187,12 @@ function greet(name) {
 ```
 
 **Renders as**:
+
 > This is a blockquote.
-> It can span multiple lines.
+It can span multiple lines.
 
 **Nested Blockquotes**:
+
 ```markdown
 > First level
 >> Second level
@@ -207,6 +225,7 @@ All render as a horizontal line.
 ```
 
 **Alignment**:
+
 ```markdown
 | Left aligned | Center aligned | Right aligned |
 |:-------------|:--------------:|--------------:|
@@ -215,41 +234,41 @@ All render as a horizontal line.
 
 ---
 
-## MDX Features
+## Markdoc Features
 
-MDX allows you to import and use components within your markdown files. This is only available in `.mdx` files (not `.md`).
+Markdoc allows you to use custom tags within your markdown files. This is available in `.md` files when configured properly.
 
-### When to Use MDX vs MD
+### When to Use Markdoc Components vs Plain Markdown
 
-**Use `.md` when**:
+**Use plain Markdown when**:
+
 - Writing simple blog posts
 - No need for interactive components
 - Standard markdown is sufficient
 
-**Use `.mdx` when**:
+**Use Markdoc tags when**:
+
 - Embedding media (Spotify, YouTube, Twitter)
 - Creating interactive content
 - Using custom components
 - Need advanced formatting
 
-### Importing Components
+### Using Markdoc Tags
 
-At the top of your `.mdx` file, import the components you need:
+Markdoc tags are globally registered and don't require imports. Simply use the `{% %}` syntax in your `.md` files:
 
-```jsx
+```markdown
 ---
 title: "My Post"
 description: "Post description"
 publishDate: "2024-01-27"
 ---
 
-import Spotify from '../../components/Spotify.astro';
-import YouTube from '../../components/YouTube.astro';
-import Twitter from '../../components/Twitter.astro';
-
 # My Post Content
 
 Regular markdown content here...
+
+`{% Spotify url="https://open.spotify.com/track/..." /%}`
 ```
 
 ### Available Media Components
@@ -260,33 +279,27 @@ Bloomfolio includes three built-in media components for rich content:
 
 Embed Spotify tracks, albums, playlists, or podcasts:
 
-```jsx
-<Spotify url="https://open.spotify.com/track/..." />
-```
+`{% Spotify url="https://open.spotify.com/track/..." /%}`
 
 #### YouTube Component
 
 Embed YouTube videos using either ID or full URL:
 
-```jsx
-<YouTube id="video-id" />
-<!-- OR -->
-<YouTube url="https://youtube.com/watch?v=..." />
-```
+`{% YouTube id="video-id" /%}`
+or
+`{% YouTube url="https://youtube.com/watch?v=..." /%}`
 
 #### Twitter Component
 
 Embed tweets using URL or ID:
 
-```jsx
-<Twitter url="https://x.com/user/status/..." />
-<!-- OR -->
-<Twitter id="tweet-id" username="username" />
-```
+`{% Twitter url="https://x.com/user/status/..." /%}`
+or
+`{% Twitter id="tweet-id" username="username" /%}`
 
 ### Live Examples
 
-Want to see these components in action? Check out the **[Rich Media Embeds Example](/blog/embed-examples)** page which demonstrates all three media components with live examples.
+Want to see these components in action? Check out the [**Rich Media Embeds Example**](/blog/embed-examples) page which demonstrates all three media components with live examples.
 
 ---
 
@@ -295,6 +308,7 @@ Want to see these components in action? Check out the **[Rich Media Embeds Examp
 ### 1. Structure Your Content
 
 **Good Structure**:
+
 ```markdown
 # Main Title
 
@@ -320,11 +334,13 @@ Summary and next steps...
 ### 2. Use Meaningful Headings
 
 **Good**:
+
 - `## Installation Steps`
 - `## Common Errors and Solutions`
 - `## Performance Optimization`
 
 **Avoid**:
+
 - `## Part 1`
 - `## More Information`
 - `## Details`
@@ -334,6 +350,7 @@ Summary and next steps...
 Keep paragraphs to 2-4 sentences for better readability:
 
 **Good**:
+
 ```markdown
 Markdown is easy to learn. It uses simple, intuitive syntax that mirrors
 how people naturally format text in emails.
@@ -343,6 +360,7 @@ to understand what the formatted output will look like.
 ```
 
 **Avoid**:
+
 ```markdown
 Markdown is easy to learn and it uses simple, intuitive syntax that mirrors how people naturally format text in emails and the beauty of Markdown is its readability because even in raw form, it's easy to understand what the formatted output will look like and it makes writing documentation much faster.
 ```
@@ -351,7 +369,7 @@ Markdown is easy to learn and it uses simple, intuitive syntax that mirrors how 
 
 When explaining technical concepts, include code examples:
 
-```markdown
+````markdown
 ## Using Array Methods
 
 The `map()` method creates a new array:
@@ -360,8 +378,9 @@ The `map()` method creates a new array:
 const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(n => n * 2);
 console.log(doubled); // [2, 4, 6, 8, 10]
-```
-```
+````
+
+````
 
 ### 5. Include Visual Breaks
 
@@ -379,7 +398,7 @@ Second part of the content...
 > Important note: This is a key point to remember.
 
 Final part of the content...
-```
+````
 
 ### 6. Link to Related Content
 
@@ -408,6 +427,7 @@ description: "Learn Markdown syntax and MDX features in Bloomfolio with this com
 ```
 
 **Tips**:
+
 - Keep under 160 characters
 - Include primary keywords
 - Make it compelling
@@ -446,11 +466,13 @@ practical example.
 ### 1. Meaningful Link Text
 
 **Good**:
+
 ```markdown
 Learn more about [Markdown syntax](https://example.com).
 ```
 
 **Avoid**:
+
 ```markdown
 Learn more [here](https://example.com).
 ```
@@ -460,11 +482,13 @@ Learn more [here](https://example.com).
 Describe the image content, not just what it is:
 
 **Good**:
+
 ```markdown
 ![Bar chart showing 50% improvement in page load times after optimization](./performance-chart.png)
 ```
 
 **Avoid**:
+
 ```markdown
 ![Chart](./performance-chart.png)
 ```
@@ -474,6 +498,7 @@ Describe the image content, not just what it is:
 Don't skip heading levels:
 
 **Good**:
+
 ```markdown
 # Title
 ## Section
@@ -481,6 +506,7 @@ Don't skip heading levels:
 ```
 
 **Avoid**:
+
 ```markdown
 # Title
 ### Subsection  <!-- Skipped H2 -->
@@ -495,6 +521,7 @@ Don't skip heading levels:
 Markdown needs blank lines between elements:
 
 **Correct**:
+
 ```markdown
 ## Heading
 
@@ -505,6 +532,7 @@ Paragraph text here.
 ```
 
 **Incorrect**:
+
 ```markdown
 ## Heading
 Paragraph text here.
@@ -526,11 +554,13 @@ If you need to display special characters literally, escape them with `\`:
 While you can use HTML in Markdown, it's better to use Markdown syntax when possible:
 
 **Prefer**:
+
 ```markdown
 **Bold text**
 ```
 
 **Over**:
+
 ```html
 <strong>Bold text</strong>
 ```
@@ -541,7 +571,7 @@ While you can use HTML in Markdown, it's better to use Markdown syntax when poss
 
 Quick reference for common syntax:
 
-```markdown
+````markdown
 # H1
 ## H2
 ### H3
@@ -566,7 +596,7 @@ Quick reference for common syntax:
 | Table | Header |
 |-------|--------|
 | Cell  | Cell   |
-```
+````
 
 ---
 
@@ -598,8 +628,8 @@ Quick reference for common syntax:
 Now that you understand Markdown and MDX:
 
 1. **Create Content**: Start writing blog posts with your new skills
-2. **Experiment with MDX**: Try the [embed examples](/blog/embed-examples) in your own posts
-3. **Check Content Guide**: Review the [Content Collections Guide](/blog/guides/content-collections-guide) for schema details
-4. **Read Complete Guide**: See the [Bloomfolio Complete Guide](/blog/guides/bloomfolio-complete-guide) for full setup
+1. **Experiment with MDX**: Try the [embed examples](/blog/embed-examples) in your own posts
+1. **Check Content Guide**: Review the [Content Collections Guide](/blog/guides/content-collections-guide) for schema details
+1. **Read Complete Guide**: See the [Bloomfolio Complete Guide](/blog/guides/bloomfolio-complete-guide) for full setup
 
 Happy writing! 🌼

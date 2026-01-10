@@ -127,10 +127,11 @@ Bloomfolio is designed as a portfolio website template with the following sectio
 Contact information
 
 ### Blog Page (Page + Content Loaded)
+- Format: Markdoc (`.md` files)
 - Image
 - Title
 - Publish Date
-- Content
+- Content (supports Markdoc tags for Spotify, YouTube, Twitter embeds)
 
 ## Development Workflow
 
@@ -146,3 +147,48 @@ When building components or implementing features, **always use the available MC
    - First resolve the library ID, then fetch the documentation with specific topics
 
 **Important**: Always consult these documentation sources before implementing features to ensure best practices and correct API usage.
+
+## Working with Markdoc
+
+### Blog Content Format
+
+Blog posts use Markdoc format (`.md` extension) which supports:
+- Standard markdown syntax
+- Custom tags for media embeds
+- Image optimization via Astro assets
+
+### Available Media Components
+
+Three media components are available in blog posts via Markdoc tags:
+
+#### Spotify
+Embed Spotify tracks, albums, playlists, or podcasts:
+```
+{% Spotify url="https://open.spotify.com/track/..." /%}
+```
+
+#### YouTube
+Embed YouTube videos using ID or URL:
+```
+{% YouTube id="video-id" /%}
+{% YouTube url="https://youtube.com/watch?v=..." /%}
+```
+
+#### Twitter
+Embed tweets using URL or ID+username:
+```
+{% Twitter url="https://x.com/username/status/..." /%}
+{% Twitter id="tweet-id" username="username" /%}
+```
+
+### Component Configuration
+
+Media components are:
+1. Defined in `keystatic.config.ts` (blog collection components)
+2. Registered in `markdoc.config.mjs` (Astro rendering)
+3. Implemented as Astro components in `src/components/`
+
+To add new components:
+1. Create Astro component in `src/components/`
+2. Add to Keystatic config using `block()` helper
+3. Register in `markdoc.config.mjs` using `component()` helper

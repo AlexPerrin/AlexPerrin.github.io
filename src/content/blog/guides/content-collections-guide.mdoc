@@ -1,11 +1,16 @@
 ---
-title: "Content Collections Guide"
-description: "Learn how to create and manage content in Bloomfolio using Astro's Content Collections. Complete schemas and examples for all 6 collection types."
-image: "@assets/blog/placeholder-blog.png"
-publishDate: "2025-11-02"
-tags: ["Guide", "Content", "Collections"]
+title: Content Collections Guide
+description: >-
+  Learn how to create and manage content in Bloomfolio using Astro's Content
+  Collections. Complete schemas and examples for all 6 collection types.
+image: '@assets/blog/guides/content-collections-guide/image.png'
+publishDate: 2025-11-02
+updatedDate: 2026-01-10
+tags:
+  - Guide
+  - Content
+  - Collections
 ---
-
 ## Understanding Astro Content Collections
 
 Content Collections are Astro's way of organizing and validating your content with TypeScript. Each collection has a defined schema that ensures your content has the required fields and correct data types.
@@ -43,6 +48,7 @@ Each collection has a specific schema defined in `src/content.config.ts`. All co
 **File**: `src/content/about/about.md`
 
 **Schema**:
+
 ```yaml
 ---
 title: string              # Section title
@@ -51,6 +57,7 @@ photo?: string            # Optional photo URL
 ```
 
 **Example**:
+
 ```markdown
 ---
 title: "About Me"
@@ -73,6 +80,7 @@ to open source projects, or sharing knowledge through blog posts and talks.
 ```
 
 **Tips**:
+
 - Use the photo field for a professional headshot or avatar
 - Write in first person for a personal touch
 - Include markdown formatting for better readability
@@ -87,6 +95,7 @@ to open source projects, or sharing knowledge through blog posts and talks.
 **Location**: `src/content/blog/*.{md,mdx}`
 
 **Schema**:
+
 ```yaml
 ---
 title: string                    # Post title
@@ -99,6 +108,7 @@ tags?: string[]                 # Optional tags/categories
 ```
 
 **Example**:
+
 ```markdown
 ---
 title: "Building Modern Web Apps with Astro"
@@ -127,11 +137,13 @@ Let's dive into creating your first Astro project...
 ```
 
 **Image Paths**:
+
 - Use relative paths (`./image.png`) for images in the same folder as your markdown file
 - Images are automatically optimized by Astro
 - Supported formats: PNG, JPG, WEBP, AVIF, SVG
 
 **Best Practices**:
+
 - Write compelling titles that encourage clicks
 - Keep descriptions under 160 characters for SEO
 - Use 2-5 relevant tags per post
@@ -147,6 +159,7 @@ Let's dive into creating your first Astro project...
 **Location**: `src/content/projects/*.md`
 
 **Schema**:
+
 ```yaml
 ---
 title: string                    # Project name
@@ -161,6 +174,7 @@ sourceLink?: string             # Optional source code URL
 ```
 
 **Example**:
+
 ```markdown
 ---
 title: "E-Commerce Platform"
@@ -211,6 +225,7 @@ for live updates and optimistic UI updates for better user experience.
 ```
 
 **Tips for Great Project Descriptions**:
+
 - Start with a clear overview
 - Explain the problem you solved
 - Highlight technical challenges and solutions
@@ -219,12 +234,14 @@ for live updates and optimistic UI updates for better user experience.
 - Add screenshots or demos if available
 
 **Skills Array**:
+
 - List technologies in order of prominence
 - Include frameworks, libraries, and tools
 - Be specific (e.g., "React 18" vs just "React")
 - Limit to 5-8 key technologies
 
 **Ongoing Projects**:
+
 - Omit `endDate` for projects still in development
 - The UI will automatically show "Present"
 
@@ -237,6 +254,7 @@ for live updates and optimistic UI updates for better user experience.
 **Location**: `src/content/work/*.md`
 
 **Schema**:
+
 ```yaml
 ---
 title: string                    # Company name
@@ -249,6 +267,7 @@ link?: string                   # Optional company website
 ```
 
 **Example**:
+
 ```markdown
 ---
 title: "Tech Innovations Inc."
@@ -280,16 +299,19 @@ React, TypeScript, Node.js, PostgreSQL, Redis, Docker, AWS, GitHub Actions
 ```
 
 **Current Position**:
+
 - Omit `endDate` field entirely for your current job
 - The timeline will automatically display "Present"
 
 **Logo Guidelines**:
+
 - Use company's official logo
 - Host on CDN or use company website URL
 - Square format works best (will be displayed as circle)
 - Recommended size: 200x200px minimum
 
 **Writing Tips**:
+
 - Use action verbs (Led, Implemented, Architected)
 - Quantify achievements with numbers when possible
 - Focus on impact, not just responsibilities
@@ -317,6 +339,7 @@ link?: string                   # Optional institution website
 ```
 
 **Example**:
+
 ```markdown
 ---
 title: "University of Technology"
@@ -384,6 +407,7 @@ Validated expertise in designing distributed systems on AWS.
 **Location**: `src/content/hackathons/*.md`
 
 **Schema**:
+
 ```yaml
 ---
 title: string                    # Hackathon name
@@ -397,6 +421,7 @@ sourceLink?: string             # Optional project repository
 ```
 
 **Example**:
+
 ```markdown
 ---
 title: "TechCrunch Disrupt Hackathon"
@@ -446,6 +471,7 @@ suggestions and identifies potential bugs using GPT-4 and static analysis.
 ```
 
 **Tips for Hackathon Entries**:
+
 - Clearly describe what you built and why
 - Highlight your specific contributions
 - Include team size and collaboration aspects
@@ -454,6 +480,7 @@ suggestions and identifies potential bugs using GPT-4 and static analysis.
 - Explain what you learned from the experience
 
 **Virtual Hackathons**:
+
 ```yaml
 location: "Virtual"  # For online hackathons
 ```
@@ -467,11 +494,13 @@ location: "Virtual"  # For online hackathons
 Use descriptive, URL-friendly names:
 
 **Good**:
+
 - `building-modern-web-apps.md`
 - `react-performance-tips.mdx`
 - `ecommerce-platform.md`
 
 **Avoid**:
+
 - `post1.md` (not descriptive)
 - `New Project.md` (spaces)
 - `article_2024.md` (underscores)
@@ -506,6 +535,7 @@ src/content/blog/
 ```
 
 Reference with relative paths:
+
 ```yaml
 image: "./my-first-post-hero.png"
 ```
@@ -513,21 +543,23 @@ image: "./my-first-post-hero.png"
 ### Content Quality
 
 1. **Proofread**: Check for typos and grammar
-2. **Structure**: Use clear headings and sections
-3. **Brevity**: Be concise but thorough
-4. **Examples**: Include code examples when relevant
-5. **Links**: Verify all links work correctly
+1. **Structure**: Use clear headings and sections
+1. **Brevity**: Be concise but thorough
+1. **Examples**: Include code examples when relevant
+1. **Links**: Verify all links work correctly
 
 ## Troubleshooting
 
 ### Frontmatter Validation Errors
 
 **Error**: "Required property missing"
+
 - Check `src/content.config.ts` for required fields
 - Ensure all required fields are present in frontmatter
 - Verify field names match exactly (case-sensitive)
 
 **Error**: "Invalid date format"
+
 - Use ISO format: `YYYY-MM-DD`
 - Ensure dates are quoted: `"2024-01-25"`
 - Check for typos in dates
@@ -535,13 +567,14 @@ image: "./my-first-post-hero.png"
 ### Images Not Loading
 
 1. **Check path**: Ensure path is correct relative to markdown file
-2. **File extension**: Include extension (.png, .jpg, etc.)
-3. **Case sensitivity**: Match exact case of filename
-4. **Build cache**: Try deleting `dist/` and rebuilding
+1. **File extension**: Include extension (.png, .jpg, etc.)
+1. **Case sensitivity**: Match exact case of filename
+1. **Build cache**: Try deleting `dist/` and rebuilding
 
 ### Type Errors
 
 If TypeScript shows errors in content:
+
 - Run `npm run astro check` to see detailed errors
 - Verify schema matches your frontmatter
 - Check that array fields use proper syntax: `["item1", "item2"]`
@@ -551,9 +584,9 @@ If TypeScript shows errors in content:
 Now that you understand content collections:
 
 1. **Start Creating**: Add your projects, work experience, and education
-2. **Write Blog Posts**: Share your knowledge and experiences
-3. **Optimize Images**: Use compressed, optimized images
-4. **Check the [Markdown Guide](/blog/guides/markdown-guide)**: Learn markdown syntax and formatting
+1. **Write Blog Posts**: Share your knowledge and experiences
+1. **Optimize Images**: Use compressed, optimized images
+1. **Check the [Markdown Guide](/blog/guides/markdown-guide)**: Learn markdown syntax and formatting
 
 For setup and configuration, see the [Bloomfolio Complete Guide](/blog/guides/bloomfolio-complete-guide).
 
