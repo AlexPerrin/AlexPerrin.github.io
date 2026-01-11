@@ -18,6 +18,7 @@ const hero = defineCollection({
       instagramUrl: z.string().url().optional(),
       youtubeUrl: z.string().url().optional(),
       codetipsUrl: z.string().url().optional(),
+      emailUrl: z.string().url().optional(),
     }),
 });
 
@@ -113,6 +114,54 @@ const about = defineCollection({
     }),
 });
 
+// General singleton
+const general = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdoc,yaml}", base: "./src/content/general" }),
+  schema: z.object({
+    enableThemeSelector: z.boolean(),
+    extraLinksEnabled: z.boolean(),
+    extraLinks: z.array(
+      z.object({
+        link: z.string(),
+        icon: z.enum([
+          "Flower2",
+          "BookOpen",
+          "FileText",
+          "CodeXml",
+          "Mail",
+          "Home",
+          "User",
+          "Briefcase",
+          "GraduationCap",
+          "Link",
+        ]),
+        label: z.string(),
+      })
+    ),
+    showAboutSection: z.boolean(),
+    showProjectsSection: z.boolean(),
+    showBlogSection: z.boolean(),
+    showWorkSection: z.boolean(),
+    showEducationSection: z.boolean(),
+    showHackathonsSection: z.boolean(),
+    showContactSection: z.boolean(),
+  }),
+});
+
+// Contact singleton
+const contact = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdoc,yaml}", base: "./src/content/contact" }),
+  schema: z.object({
+    icon: z.enum(["MessageCircleCode", "Mail", "Phone"]),
+    linkUrl: z.string().url(),
+    linkText: z.string(),
+    footerIcon: z.enum(["Pickaxe", "Hammer", "Heart"]),
+    footerText: z.string(),
+    footerLinkText: z.string(),
+    footerLinkUrl: z.string().url(),
+  }),
+});
+
 export const collections = {
   hero,
   work,
@@ -121,4 +170,6 @@ export const collections = {
   hackathons,
   blog,
   about,
+  general,
+  contact,
 };

@@ -69,6 +69,10 @@ export default config({
           label: "CodeTips URL",
           description: "Your CodeTips profile URL",
         }),
+        emailUrl: fields.url({
+          label: "Email",
+          description: "Your email address (will create mailto: link)",
+        }),
       },
     }),
 
@@ -93,6 +97,141 @@ export default config({
           label: "Content",
           description: "About section content (supports Markdown)",
           extension: "md",
+        }),
+      },
+    }),
+
+    general: singleton({
+      label: "General Settings",
+      path: "src/content/general/",
+      schema: {
+        enableThemeSelector: fields.checkbox({
+          label: "Enable Theme Selector",
+          description: "Show theme dropdown instead of toggle switch",
+          defaultValue: true,
+        }),
+        extraLinksEnabled: fields.checkbox({
+          label: "Enable Extra Links FAB",
+          description: "Show floating action button with extra links",
+          defaultValue: true,
+        }),
+        extraLinks: fields.array(
+          fields.object({
+            link: fields.text({
+              label: "Link URL",
+              description: "URL or path (e.g., /blog or https://example.com)",
+              validation: { isRequired: true },
+            }),
+            icon: fields.select({
+              label: "Icon",
+              description: "Select an icon from Lucide icon library",
+              options: [
+                { label: "Flower (Flower2)", value: "Flower2" },
+                { label: "Book (BookOpen)", value: "BookOpen" },
+                { label: "File (FileText)", value: "FileText" },
+                { label: "Code (CodeXml)", value: "CodeXml" },
+                { label: "Mail (Mail)", value: "Mail" },
+                { label: "Home (Home)", value: "Home" },
+                { label: "User (User)", value: "User" },
+                { label: "Briefcase (Briefcase)", value: "Briefcase" },
+                { label: "Graduation Cap (GraduationCap)", value: "GraduationCap" },
+                { label: "Link (Link)", value: "Link" },
+              ],
+              defaultValue: "Link",
+            }),
+            label: fields.text({
+              label: "Tooltip Label",
+              description: "Label shown on hover",
+              validation: { isRequired: true },
+            }),
+          }),
+          {
+            label: "Extra Links",
+            itemLabel: (props) => props.fields.label.value || "New Link",
+            description: "Links to display in the floating action button",
+          }
+        ),
+        showAboutSection: fields.checkbox({
+          label: "Show About Section",
+          defaultValue: true,
+        }),
+        showProjectsSection: fields.checkbox({
+          label: "Show Projects Section",
+          defaultValue: true,
+        }),
+        showBlogSection: fields.checkbox({
+          label: "Show Blog Section",
+          defaultValue: true,
+        }),
+        showWorkSection: fields.checkbox({
+          label: "Show Work Experience Section",
+          defaultValue: true,
+        }),
+        showEducationSection: fields.checkbox({
+          label: "Show Education Section",
+          defaultValue: true,
+        }),
+        showHackathonsSection: fields.checkbox({
+          label: "Show Hackathons Section",
+          defaultValue: true,
+        }),
+        showContactSection: fields.checkbox({
+          label: "Show Contact Section",
+          defaultValue: true,
+        }),
+      },
+    }),
+
+    contact: singleton({
+      label: "Contact Section",
+      path: "src/content/contact/",
+      format: { contentField: "content" },
+      schema: {
+        icon: fields.select({
+          label: "Section Icon",
+          description: "Icon displayed at the top of contact section",
+          options: [
+            { label: "Message Circle (MessageCircleCode)", value: "MessageCircleCode" },
+            { label: "Mail (Mail)", value: "Mail" },
+            { label: "Phone (Phone)", value: "Phone" },
+          ],
+          defaultValue: "MessageCircleCode",
+        }),
+        content: fields.markdoc({
+          label: "Contact Message",
+          description: "Main contact message (supports Markdown)",
+          extension: "md",
+        }),
+        linkUrl: fields.url({
+          label: "Contact Link URL",
+          description: "URL for contact link (e.g., Twitter profile)",
+        }),
+        linkText: fields.text({
+          label: "Contact Link Text",
+          description: "Text for the contact link",
+        }),
+        footerIcon: fields.select({
+          label: "Footer Icon",
+          description: "Icon for footer credit",
+          options: [
+            { label: "Pickaxe", value: "Pickaxe" },
+            { label: "Hammer (Hammer)", value: "Hammer" },
+            { label: "Heart (Heart)", value: "Heart" },
+          ],
+          defaultValue: "Pickaxe",
+        }),
+        footerText: fields.text({
+          label: "Footer Text",
+          description: "Footer credit text",
+          defaultValue: "Crafted by an Artisan",
+        }),
+        footerLinkText: fields.text({
+          label: "Footer Link Text",
+          description: "Name/text for footer link",
+        }),
+        footerLinkUrl: fields.url({
+          label: "Footer Link URL",
+          description: "URL for footer credit link",
         }),
       },
     }),
