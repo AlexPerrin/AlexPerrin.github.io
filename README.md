@@ -474,8 +474,9 @@ For remote content editing from anywhere, you can enable Keystatic's GitHub mode
    KEYSTATIC_GITHUB_CLIENT_ID=your_client_id_here
    KEYSTATIC_GITHUB_CLIENT_SECRET=your_client_secret_here
    KEYSTATIC_SECRET=$(openssl rand -base64 32)
-   KEYSTATIC_REPO_OWNER=your-github-username
-   KEYSTATIC_REPO_NAME=bloomfolio
+   PUBLIC_KEYSTATIC_REPO_OWNER=your-github-username
+   PUBLIC_KEYSTATIC_REPO_NAME=bloomfolio
+   PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=your-github-app-slug
    ```
 
 3. **Restart Development Server**

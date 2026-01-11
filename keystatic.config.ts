@@ -6,8 +6,8 @@ export default config({
     ? {
         kind: "github",
         repo: {
-          owner: import.meta.env.KEYSTATIC_REPO_OWNER!,
-          name: import.meta.env.KEYSTATIC_REPO_NAME!,
+          owner: import.meta.env.PUBLIC_KEYSTATIC_REPO_OWNER!,
+          name: import.meta.env.PUBLIC_KEYSTATIC_REPO_NAME!,
         },
       }
     : {

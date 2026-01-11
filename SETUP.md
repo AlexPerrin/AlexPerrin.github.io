@@ -122,8 +122,9 @@ To enable remote content editing through GitHub:
    - `KEYSTATIC_GITHUB_CLIENT_ID` - From GitHub OAuth App
    - `KEYSTATIC_GITHUB_CLIENT_SECRET` - From GitHub OAuth App
    - `KEYSTATIC_SECRET` - Random secret (`openssl rand -base64 32`)
-   - `KEYSTATIC_REPO_OWNER` - Your GitHub username
-   - `KEYSTATIC_REPO_NAME` - Repository name
+   - `PUBLIC_KEYSTATIC_REPO_OWNER` - Your GitHub username
+   - `PUBLIC_KEYSTATIC_REPO_NAME` - Repository name
+   - `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` - GitHub App slug (set any value to enable GitHub mode)
 
 4. **Restart and Authenticate:**
    ```bash

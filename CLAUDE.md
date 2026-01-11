@@ -318,8 +318,8 @@ storage: { kind: "local" }
 storage: {
   kind: "github",
   repo: {
-    owner: import.meta.env.KEYSTATIC_REPO_OWNER!,
-    name: import.meta.env.KEYSTATIC_REPO_NAME!,
+    owner: import.meta.env.PUBLIC_KEYSTATIC_REPO_OWNER!,
+    name: import.meta.env.PUBLIC_KEYSTATIC_REPO_NAME!,
   },
 }
 ```
@@ -338,12 +338,14 @@ storage: import.meta.env.PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
 ```
 
 **Environment Variables Required for GitHub Mode:**
-- `KEYSTATIC_GITHUB_CLIENT_ID` - OAuth app client ID
-- `KEYSTATIC_GITHUB_CLIENT_SECRET` - OAuth app secret
-- `KEYSTATIC_SECRET` - Random secret for cookie signing
-- `KEYSTATIC_REPO_OWNER` - GitHub username/organization
-- `KEYSTATIC_REPO_NAME` - Repository name
-- `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` - (Optional) GitHub App slug
+- `KEYSTATIC_GITHUB_CLIENT_ID` - OAuth app client ID (server-side only)
+- `KEYSTATIC_GITHUB_CLIENT_SECRET` - OAuth app secret (server-side only)
+- `KEYSTATIC_SECRET` - Random secret for cookie signing (server-side only)
+- `PUBLIC_KEYSTATIC_REPO_OWNER` - GitHub username/organization (PUBLIC_ prefix required)
+- `PUBLIC_KEYSTATIC_REPO_NAME` - Repository name (PUBLIC_ prefix required)
+- `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` - GitHub App slug to enable GitHub mode (PUBLIC_ prefix required)
+
+**Important:** Variables prefixed with `PUBLIC_` are accessible in `import.meta.env` (required for client-side config). Variables without `PUBLIC_` are only available server-side.
 
 **Setup Instructions:**
 1. Create GitHub OAuth App: https://github.com/settings/developers
