@@ -2,9 +2,17 @@ import { config, fields, collection, singleton } from "@keystatic/core";
 import { block } from "@keystatic/core/content-components";
 
 export default config({
-  storage: {
-    kind: "local",
-  },
+  storage: import.meta.env.PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
+    ? {
+        kind: "github",
+        repo: {
+          owner: import.meta.env.KEYSTATIC_REPO_OWNER!,
+          name: import.meta.env.KEYSTATIC_REPO_NAME!,
+        },
+      }
+    : {
+        kind: "local",
+      },
 
   singletons: {
     hero: singleton({

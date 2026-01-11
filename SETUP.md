@@ -103,6 +103,36 @@ This means you can:
 - **[Content Components](https://keystatic.com/docs/content-components)** - Custom component guide
 - **[GitHub Mode](https://keystatic.com/docs/github-mode)** - Enable GitHub-based editing
 
+### Enabling GitHub Mode (Optional)
+
+To enable remote content editing through GitHub:
+
+1. **Create GitHub OAuth App:**
+   - Go to [GitHub Developer Settings](https://github.com/settings/developers)
+   - Create new OAuth App
+   - Callback URL: `http://localhost:4321/api/keystatic/github/oauth/callback`
+
+2. **Configure Environment Variables:**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your GitHub credentials
+   ```
+
+3. **Required Variables:**
+   - `KEYSTATIC_GITHUB_CLIENT_ID` - From GitHub OAuth App
+   - `KEYSTATIC_GITHUB_CLIENT_SECRET` - From GitHub OAuth App
+   - `KEYSTATIC_SECRET` - Random secret (`openssl rand -base64 32`)
+   - `KEYSTATIC_REPO_OWNER` - Your GitHub username
+   - `KEYSTATIC_REPO_NAME` - Repository name
+
+4. **Restart and Authenticate:**
+   ```bash
+   npm run dev
+   ```
+   Visit `/keystatic` and sign in with GitHub
+
+**Full guide:** https://keystatic.com/docs/github-mode
+
 ## 📝 Customization
 
 ### Choosing Your Workflow

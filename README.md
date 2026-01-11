@@ -442,6 +442,68 @@ Your about content with **Markdown** formatting...
 - **[Astro Content Collections](https://docs.astro.build/en/guides/content-collections/)** - Type-safe content schemas
 - **[Markdoc Syntax](https://markdoc.dev/docs/syntax)** - Enhanced Markdown format
 
+### Setting Up GitHub Mode (Optional)
+
+For remote content editing from anywhere, you can enable Keystatic's GitHub mode:
+
+#### Prerequisites
+- GitHub account
+- Repository hosted on GitHub
+
+#### Steps
+
+1. **Create GitHub OAuth App**
+
+   Visit [GitHub Developer Settings](https://github.com/settings/apps) and create a new Github App:
+
+   - **Application name:** Bloomfolio Keystatic
+   - **Homepage URL:** `http://localhost:4321` (for local development)
+   - **Authorization callback URL:** `http://localhost:4321/api/keystatic/github/oauth/callback`
+
+   For production, use your deployed URL instead.
+
+2. **Set Environment Variables**
+
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+   Fill in your values:
+   ```bash
+   KEYSTATIC_GITHUB_CLIENT_ID=your_client_id_here
+   KEYSTATIC_GITHUB_CLIENT_SECRET=your_client_secret_here
+   KEYSTATIC_SECRET=$(openssl rand -base64 32)
+   KEYSTATIC_REPO_OWNER=your-github-username
+   KEYSTATIC_REPO_NAME=bloomfolio
+   ```
+
+3. **Restart Development Server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Access Keystatic**
+
+   Navigate to `http://localhost:4321/keystatic` and sign in with GitHub.
+
+#### Production Setup
+
+For production deployment (Vercel, Netlify, etc.):
+
+1. Add all environment variables to your hosting platform's environment settings
+2. Update OAuth App callback URL to your production domain
+3. Set `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` (optional, for GitHub App mode)
+
+**Learn more:** [Keystatic GitHub Mode Documentation](https://keystatic.com/docs/github-mode)
+
+#### Switching Between Modes
+
+- **GitHub Mode:** Set environment variables (content synced with GitHub)
+- **Local Mode:** Remove/unset environment variables (content stored locally)
+
+The configuration automatically detects which mode to use based on environment variables.
+
 ## 🎨 Customization
 
 ### Changing Themes
