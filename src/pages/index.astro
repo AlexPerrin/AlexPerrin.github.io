@@ -10,9 +10,11 @@ import Contact from "../components/Contact.astro";
 import { Briefcase, GraduationCap } from "@lucide/astro";
 import { getEntry, render } from "astro:content";
 import { siteConfig } from "../config";
-import bloomfolioLogo from "../assets/bloomfolio.png";
 
-// Load about content
+// Load Hero singleton
+const heroEntry = await getEntry("hero", "index");
+
+// Load About singleton
 const aboutEntry = await getEntry("about", "about");
 const { Content: AboutContent } = await render(aboutEntry);
 ---
@@ -23,14 +25,7 @@ const { Content: AboutContent } = await render(aboutEntry);
 >
   <main>
     <!-- Hero Section (Always visible) -->
-    <Hero
-      name={siteConfig.name}
-      title={siteConfig.title}
-      description={siteConfig.description}
-      avatar={bloomfolioLogo}
-      location={siteConfig.location}
-      socialLinks={siteConfig.socialLinks}
-    />
+    <Hero hero={heroEntry.data} />
 
     <!-- About Section -->
     {

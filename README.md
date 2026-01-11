@@ -20,6 +20,7 @@ A modern, customizable portfolio template built with **Astro 5** and **DaisyUI 5
 
 - 🎨 **6 Built-in Themes** - Light, Dark, Synthwave, Retro, Valentine, and Dim
 - 📝 **6 Content Collections** - Blog, Projects, Work, Education, Hackathons, and About
+- 🎨 **Keystatic CMS** - Visual content editor with live preview and GitHub integration
 - 🔒 **Type-Safe Content** - Full TypeScript support with validated schemas
 - 📱 **Fully Responsive** - Mobile-first design with DaisyUI components
 - ⚡ **Fast & Optimized** - Static site generation with automatic image optimization
@@ -203,9 +204,91 @@ bloomfolio/
 
 ## 📝 Content Management
 
-### Creating Content
+Bloomfolio offers two powerful ways to manage your content: the **Keystatic CMS** for a visual editing experience, or **direct file editing** for developers who prefer working with code.
 
-All content is stored in `src/content/` organized by type. Each content type has a specific schema.
+### Option 1: Keystatic CMS (Recommended)
+
+Keystatic is a modern, Git-based headless CMS that provides a user-friendly interface for managing your content without touching code.
+
+#### Accessing the Editor
+
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+2. Navigate to the admin panel:
+   ```
+   http://localhost:4321/keystatic
+   ```
+
+3. Start creating and editing content through the visual interface!
+
+#### What is Keystatic?
+
+Keystatic is a **Git-based CMS** that:
+- Stores content as files in your repository (not in a database)
+- Provides a beautiful visual editor with live preview
+- Works with local development and GitHub/GitLab workflows
+- Generates type-safe content with full TypeScript support
+- Integrates seamlessly with Astro's Content Collections
+
+**Learn more:** [Keystatic Documentation](https://keystatic.com/docs)
+
+#### Content Types in Keystatic
+
+**Singletons** (one-per-site content):
+- **Hero Section** - Your name, title, avatar, social links
+- **About Section** - Personal bio with photo (supports Markdown)
+
+**Collections** (multiple entries):
+- **Blog Posts** - Articles with cover images, tags, and rich media embeds
+- **Projects** - Portfolio items with screenshots, descriptions, and tech stacks
+- **Work Experience** - Timeline of employment history
+- **Education** - Academic background
+- **Hackathons** - Competitive coding events and achievements
+
+#### Using the Keystatic Editor
+
+1. **Create New Entries**
+   - Click "Create entry" in any collection
+   - Fill out the form fields (Keystatic validates required fields)
+   - Use the rich text editor for Markdown content
+   - Upload images directly through the interface
+
+2. **Edit Existing Content**
+   - Select any entry from the collection list
+   - Make changes in the visual editor
+   - See live preview of your content
+
+3. **Rich Media Embeds** (Blog posts only)
+   - Click the "+" button in the content editor
+   - Select from available components: Spotify, YouTube, Twitter
+   - Paste the URL and Keystatic handles the rest
+
+   > **⚠️ Important:** Media components (Spotify, YouTube, Twitter) are only available in blog posts. Files must use the `.mdoc` extension (not `.md`). To extend components to other collections, see the technical guide in [CLAUDE.md](CLAUDE.md).
+
+4. **Save Changes**
+   - All changes are saved as file edits in `src/content/`
+   - Changes are automatically detected by Astro's dev server
+   - Commit and push your changes like any other code
+
+#### Deployment Modes
+
+**Local Mode (Current Setup)**
+- Content stored in `src/content/` directory
+- Changes saved as file system edits
+- Perfect for personal portfolios and single-user sites
+
+**GitHub/Cloud Mode** (Future upgrade)
+- Content synced with GitHub repository
+- Enable collaboration with non-technical users
+- Manage content from anywhere via hosted admin panel
+- See [Keystatic Cloud documentation](https://keystatic.com/docs/cloud) for setup
+
+### Option 2: Direct File Editing
+
+If you prefer working directly with files, all content is stored in `src/content/` as Markdown, YAML, or Markdoc files.
 
 #### Blog Posts
 
@@ -223,7 +306,24 @@ tags: ["Tag1", "Tag2"]
 Your content here...
 ```
 
-Supports both `.md` and `.mdx` files. Use `.mdx` for rich media embeds (Spotify, YouTube, Twitter).
+**File Extensions:**
+- `.md` - Standard Markdown for regular blog posts
+- `.mdoc` - Markdoc with component support (required for media embeds)
+
+**Rich Media Embeds** (`.mdoc` files only):
+
+> **Note:** Media components only work in blog collection currently.
+
+```markdown
+# Spotify Embed
+{% Spotify url="https://open.spotify.com/track/..." /%}
+
+# YouTube Video
+{% YouTube url="https://youtube.com/watch?v=..." /%}
+
+# Twitter/X Post
+{% Twitter url="https://x.com/username/status/..." /%}
+```
 
 #### Projects
 
@@ -261,7 +361,149 @@ link: "https://company-website.com"   # Optional
 Job description and achievements...
 ```
 
-For complete documentation on content creation, see the [Content Collections Guide](/blog/guides/content-collections-guide) and [Markdown Guide](/blog/guides/markdown-guide).
+#### Education
+
+Create a new file in `src/content/education/`:
+
+```markdown
+---
+title: "Institution Name"
+subtitle: "Degree/Course"
+startDate: "2015-09-01"
+endDate: "2019-06-30"  # Optional
+logo: "https://institution-logo-url.com"  # Optional
+link: "https://institution.edu"  # Optional
+---
+
+Educational details and achievements...
+```
+
+#### Hackathons
+
+Create a new file in `src/content/hackathons/`:
+
+```markdown
+---
+title: "Hackathon Name"
+location: "City, State or Virtual"
+description: "Brief hackathon summary"
+startDate: "2023-11-23"
+endDate: "2023-11-25"  # Optional
+logo: "https://hackathon-logo-url.com"  # Optional
+sourceLink: "https://github.com/..."  # Optional
+---
+
+Detailed information about the hackathon and your project...
+```
+
+#### Singletons (Hero & About)
+
+**Hero** (`src/content/hero/index.yaml`):
+```yaml
+name: Your Name
+title: Your Professional Title
+description: Brief description of your portfolio
+avatar: "./avatar.png"
+location: 🌍 Your Location
+githubUrl: https://github.com/username
+linkedinUrl: https://linkedin.com/in/username
+# ... other social links
+```
+
+**About** (`src/content/about/about.md`):
+```markdown
+---
+title: "About Me"
+photo: "./photo.png"
+---
+
+Your about content with **Markdown** formatting...
+```
+
+### Content Tips
+
+**Image Paths:**
+- Use relative paths like `"./image.png"` for local images
+- Images are automatically optimized by Astro
+- Supported formats: PNG, JPG, WEBP, AVIF, SVG
+
+**Dates:**
+- Format: `YYYY-MM-DD` (e.g., "2024-01-15")
+- Leave `endDate` empty for ongoing positions/projects
+
+**Skills/Tags:**
+- Arrays of strings: `["React", "TypeScript", "Node.js"]`
+- Display as badges in the UI
+
+### Resources
+
+- **[Keystatic Documentation](https://keystatic.com/docs)** - Complete CMS guide
+- **[Keystatic Content Components](https://keystatic.com/docs/content-components)** - Creating custom components
+- **[Astro Content Collections](https://docs.astro.build/en/guides/content-collections/)** - Type-safe content schemas
+- **[Markdoc Syntax](https://markdoc.dev/docs/syntax)** - Enhanced Markdown format
+
+### Setting Up GitHub Mode (Optional)
+
+For remote content editing from anywhere, you can enable Keystatic's GitHub mode:
+
+#### Prerequisites
+- GitHub account
+- Repository hosted on GitHub
+
+#### Steps
+
+1. **Create GitHub OAuth App**
+
+   Visit [GitHub Developer Settings](https://github.com/settings/apps) and create a new Github App:
+
+   - **Application name:** Bloomfolio Keystatic
+   - **Homepage URL:** `http://localhost:4321` (for local development)
+   - **Authorization callback URL:** `http://localhost:4321/api/keystatic/github/oauth/callback`
+
+   For production, use your deployed URL instead.
+
+2. **Set Environment Variables**
+
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+   Fill in your values:
+   ```bash
+   KEYSTATIC_GITHUB_CLIENT_ID=your_client_id_here
+   KEYSTATIC_GITHUB_CLIENT_SECRET=your_client_secret_here
+   KEYSTATIC_SECRET=$(openssl rand -base64 32)
+   PUBLIC_KEYSTATIC_REPO_OWNER=your-github-username
+   PUBLIC_KEYSTATIC_REPO_NAME=bloomfolio
+   PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=your-github-app-slug
+   ```
+
+3. **Restart Development Server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Access Keystatic**
+
+   Navigate to `http://localhost:4321/keystatic` and sign in with GitHub.
+
+#### Production Setup
+
+For production deployment (Vercel, Netlify, etc.):
+
+1. Add all environment variables to your hosting platform's environment settings
+2. Update OAuth App callback URL to your production domain
+3. Set `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` (optional, for GitHub App mode)
+
+**Learn more:** [Keystatic GitHub Mode Documentation](https://keystatic.com/docs/github-mode)
+
+#### Switching Between Modes
+
+- **GitHub Mode:** Set environment variables (content synced with GitHub)
+- **Local Mode:** Remove/unset environment variables (content stored locally)
+
+The configuration automatically detects which mode to use based on environment variables.
 
 ## 🎨 Customization
 
@@ -338,6 +580,7 @@ Bloomfolio works with any static hosting platform that supports Node.js builds:
 - **[DaisyUI 5](https://daisyui.com)** - Component library for Tailwind
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
 - **[MDX](https://mdxjs.com/)** - Enhanced Markdown
+- **[Keystatic](https://keystatic.com)** - Git-based CMS for content management
 - **[Lucide Icons](https://lucide.dev/)** - Icon library
 
 ## 📚 Documentation
