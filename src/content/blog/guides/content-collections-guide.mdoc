@@ -1,19 +1,55 @@
 ---
 title: Content Collections Guide
 description: >-
-  Learn how to create and manage content in Bloomfolio using Astro's Content
-  Collections. Complete schemas and examples for all 6 collection types.
+  Learn how to create and manage content in Bloomfolio using Keystatic CMS or
+  direct file editing. Complete schemas and examples for all 6 collection types.
 image: '@assets/blog/guides/content-collections-guide/image.png'
 publishDate: 2025-11-02
-updatedDate: 2026-01-10
+updatedDate: 2026-01-11
 tags:
   - Guide
   - Content
   - Collections
 ---
+## Content Management Options
+
+Bloomfolio offers two ways to manage your content:
+
+### Option 1: Keystatic CMS (Recommended)
+
+**Easiest way to create and edit content without touching code.**
+
+- **Access**: Navigate to `http://localhost:4321/keystatic` when dev server is running
+- **Visual Editor**: Form-based content editing with live preview
+- **Media Uploads**: Upload images directly through the interface
+- **Type Safety**: Automatic validation of required fields
+- **No File Management**: Keystatic handles file creation and naming
+
+**Perfect for:**
+- Non-technical users
+- Quick content updates
+- Adding media embeds (Spotify, YouTube, Twitter)
+- Visual content preview
+
+**Learn more:** [Keystatic Documentation](https://keystatic.com/docs)
+
+### Option 2: Direct File Editing (For Developers)
+
+Edit markdown files directly in `src/content/` with your code editor.
+
+**Perfect for:**
+- Bulk content changes
+- Version control workflows
+- Advanced markdown editing
+- Scripting content generation
+
+---
+
 ## Understanding Astro Content Collections
 
 Content Collections are Astro's way of organizing and validating your content with TypeScript. Each collection has a defined schema that ensures your content has the required fields and correct data types.
+
+Whether you use Keystatic CMS or edit files directly, all content is stored as files in `src/content/` and validated using these schemas.
 
 ### Benefits
 
@@ -92,7 +128,9 @@ to open source projects, or sharing knowledge through blog posts and talks.
 
 **Purpose**: Articles, tutorials, and blog posts
 
-**Location**: `src/content/blog/*.{md,mdx}`
+**Location**: `src/content/blog/*.{md,mdoc}`
+
+> **Tip:** Use [Keystatic CMS](/keystatic) for the easiest way to create blog posts with rich media embeds!
 
 **Schema**:
 
@@ -106,6 +144,12 @@ updatedDate?: date              # Optional last update date
 tags?: string[]                 # Optional tags/categories
 ---
 ```
+
+**File Extensions:**
+- `.md` - Standard Markdown for regular blog posts
+- `.mdoc` - Markdoc with component support (required for Spotify, YouTube, Twitter embeds)
+
+> **⚠️ Important:** Media components (Spotify, YouTube, Twitter) only work in `.mdoc` files and are currently only available in the blog collection.
 
 **Example**:
 
@@ -157,6 +201,8 @@ Let's dive into creating your first Astro project...
 **Purpose**: Showcase your portfolio work
 
 **Location**: `src/content/projects/*.md`
+
+> **Tip:** Create projects easily through [Keystatic CMS](/keystatic) with the visual editor!
 
 **Schema**:
 
@@ -253,6 +299,8 @@ for live updates and optimistic UI updates for better user experience.
 
 **Location**: `src/content/work/*.md`
 
+> **Tip:** Manage your work timeline through [Keystatic CMS](/keystatic) for easier updates!
+
 **Schema**:
 
 ```yaml
@@ -324,6 +372,8 @@ React, TypeScript, Node.js, PostgreSQL, Redis, Docker, AWS, GitHub Actions
 **Purpose**: Academic background and certifications
 
 **Location**: `src/content/education/*.md`
+
+> **Tip:** Add your education history through [Keystatic CMS](/keystatic) with form validation!
 
 **Schema**: Same as Work Collection
 
@@ -405,6 +455,8 @@ Validated expertise in designing distributed systems on AWS.
 **Purpose**: Hackathon participation and projects
 
 **Location**: `src/content/hackathons/*.md`
+
+> **Tip:** Track your hackathon projects through [Keystatic CMS](/keystatic)!
 
 **Schema**:
 
@@ -583,10 +635,12 @@ If TypeScript shows errors in content:
 
 Now that you understand content collections:
 
+1. **Try Keystatic CMS**: Access the visual editor at [/keystatic](/keystatic) for easy content creation
 1. **Start Creating**: Add your projects, work experience, and education
 1. **Write Blog Posts**: Share your knowledge and experiences
+1. **Add Media Embeds**: Use `.mdoc` files for Spotify, YouTube, Twitter embeds
 1. **Optimize Images**: Use compressed, optimized images
-1. **Check the [Markdown Guide](/blog/guides/markdown-guide)**: Learn markdown syntax and formatting
+1. **Check the [Markdown Guide](/blog/guides/markdown-guide)**: Learn markdown and Markdoc syntax
 
 For setup and configuration, see the [Bloomfolio Complete Guide](/blog/guides/bloomfolio-complete-guide).
 

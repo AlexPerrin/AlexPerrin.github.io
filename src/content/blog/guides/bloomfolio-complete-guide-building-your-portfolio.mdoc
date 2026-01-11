@@ -2,17 +2,17 @@
 title: 'Bloomfolio Complete Guide: Building Your Portfolio'
 description: >-
   A comprehensive guide to customizing and deploying your Bloomfolio portfolio
-  template. Learn about configuration, components, content collections, and
-  deployment.
+  template. Learn about Keystatic CMS, configuration, content management, and deployment.
 image: >-
   @assets/blog/guides/bloomfolio-complete-guide-building-your-portfolio/image.png
 publishDate: 2025-11-01
-updatedDate: 2026-01-10
+updatedDate: 2026-01-11
 tags:
   - Guide
   - Documentation
   - Astro
   - Portfolio
+  - Keystatic
 ---
 ## Introduction
 
@@ -20,11 +20,12 @@ Bloomfolio is a configuration-driven portfolio template designed for developers,
 
 ### Key Features
 
+- **Keystatic CMS**: Visual content editor with live preview and GitHub integration
 - **Configuration-Driven**: Customize your portfolio through a central config file
 - **6 Content Collections**: Blog, Projects, Work, Education, Hackathons, and About
 - **Type-Safe**: Full TypeScript support for content and configuration
 - **Modern Stack**: [Astro 5](https://astro.build/) + [TailwindCSS 4](https://tailwindcss.com/docs/installation/using-vite) + [DaisyUI 5](https://daisyui.com/)
-- **Markdoc Support**: Enhanced markdown with custom tags
+- **Markdoc Support**: Enhanced markdown with custom tags (Spotify, YouTube, Twitter)
 - **6 Built-in Themes**: Light, Dark, Synthwave, Retro, Valentine, Dim
 - **Responsive Design**: Mobile-first approach with DaisyUI components
 - **View Transitions**: Smooth page transitions with Astro's View Transitions API
@@ -36,6 +37,7 @@ Bloomfolio is a configuration-driven portfolio template designed for developers,
 ### Core Technologies
 
 - [**Astro 5**](https://astro.build/): Modern static site generator with component islands
+- [**Keystatic**](https://keystatic.com): Git-based headless CMS for content management
 - [**TailwindCSS 4**](https://tailwindcss.com/docs/installation/using-vite): Utility-first CSS framework with CSS-first configuration
 - [**DaisyUI 5**](https://daisyui.com/): Tailwind CSS component library
 - **TypeScript**: Type-safe development experience
@@ -44,6 +46,7 @@ Bloomfolio is a configuration-driven portfolio template designed for developers,
 
 ### Integrations
 
+- **@keystatic/astro**: Keystatic CMS integration with visual editor
 - **@astrojs/markdoc**: Markdoc integration for enhanced content
 - **@tailwindcss/vite**: Tailwind CSS 4 Vite plugin
 - **View Transitions API**: Smooth page transitions
@@ -73,6 +76,12 @@ npm run dev
 ```
 
 Visit `http://localhost:4321` to see your portfolio.
+
+**Access Keystatic CMS:**
+```
+http://localhost:4321/keystatic
+```
+Use the visual editor to create and manage your content!
 
 ## Project Structure
 
@@ -216,6 +225,42 @@ extraLinks: {
 
 Set `enable: false` to hide the FAB entirely.
 
+## Content Management
+
+Bloomfolio offers two powerful ways to manage your content:
+
+### Option 1: Keystatic CMS (Recommended)
+
+**The easiest way to create and edit content without touching code.**
+
+Access the visual editor at `http://localhost:4321/keystatic` when your dev server is running.
+
+**Key Benefits:**
+- **Visual Interface**: Form-based content editing with live preview
+- **No File Management**: Keystatic handles file creation, naming, and organization
+- **Image Uploads**: Upload images directly through the interface
+- **Type Validation**: Automatic validation ensures all required fields are filled
+- **Media Embeds**: Easy Spotify, YouTube, Twitter embeds (blog posts only)
+- **Git-Based**: All changes are saved as files in your repository
+
+**Content Types Available:**
+- **Singletons**: Hero, About
+- **Collections**: Blog, Projects, Work, Education, Hackathons
+
+**Learn more:** [Keystatic Documentation](https://keystatic.com/docs)
+
+### Option 2: Direct File Editing (For Developers)
+
+Edit markdown files directly in `src/content/` with your code editor.
+
+**Perfect for:**
+- Bulk content changes
+- Version control workflows
+- Advanced markdown editing
+- Scripting content generation
+
+**Both approaches work together** - changes made in files appear in Keystatic and vice versa!
+
 ## Content Collections
 
 Bloomfolio uses Astro's Content Collections for type-safe content management. There are 6 collections:
@@ -237,9 +282,15 @@ Write your bio here using Markdown...
 
 ### 2. Blog Collection
 
-Blog posts support both `.md` and `.mdx` formats.
+Blog posts support both `.md` (standard markdown) and `.mdoc` (Markdoc with media components).
 
-**Location**: `src/content/blog/*.{md,mdx}`
+**Location**: `src/content/blog/*.{md,mdoc}`
+
+**File Extensions:**
+- `.md` - Standard Markdown for regular blog posts
+- `.mdoc` - Markdoc with component support (required for Spotify, YouTube, Twitter embeds)
+
+> **⚠️ Important:** Media components only work in `.mdoc` files and are currently only available in the blog collection.
 
 ```markdown
 ---

@@ -1,24 +1,30 @@
 ---
-title: Markdown & MDX Guide
+title: Markdown & Markdoc Guide
 description: >-
-  Master Markdown syntax and MDX features in Bloomfolio. Learn how to create
-  rich, formatted content with embedded media components.
+  Master Markdown syntax and Markdoc features in Bloomfolio. Learn how to create
+  rich, formatted content with embedded media components using Keystatic CMS or manual editing.
 image: '@assets/blog/guides/markdown-guide/image.png'
 publishDate: 2025-11-03
-updatedDate: 2026-01-10
+updatedDate: 2026-01-11
 tags:
   - Guide
   - Markdown
-  - MDX
+  - Markdoc
   - Writing
 ---
 ## What is Markdown?
 
 Markdown is a lightweight markup language that lets you format text using simple, readable syntax. It's widely used for documentation, blog posts, and README files because it's easy to write and read.
 
-## What is MDX?
+## What is Markdoc?
 
-MDX is an extension of Markdown that allows you to use JSX (JavaScript XML) within your markdown files. This means you can import and use React/Astro components directly in your content, creating interactive and rich media experiences.
+Markdoc is an extension of Markdown used in Bloomfolio that allows you to use custom tags for rich media embeds (Spotify, YouTube, Twitter). Files using Markdoc components must have the `.mdoc` extension.
+
+**Quick Facts:**
+- Standard blog posts: `.md` extension
+- Blog posts with media embeds: `.mdoc` extension
+- Add components via [Keystatic CMS](/keystatic) (visual editor) or manual editing
+- Components currently only available in blog collection
 
 ## Markdown Syntax Guide
 
@@ -236,17 +242,40 @@ All render as a horizontal line.
 
 ## Markdoc Features
 
-Markdoc allows you to use custom tags within your markdown files. This is available in `.md` files when configured properly.
+Markdoc allows you to use custom tags within your markdown files for rich media embeds and interactive components.
+
+### File Extension Requirements
+
+> **⚠️ Important:** Media components (Spotify, YouTube, Twitter) **only work in `.mdoc` files**, not `.md` files.
+>
+> - Use `.md` for standard blog posts
+> - Use `.mdoc` for blog posts with media embeds
+> - Components are currently **only available in the blog collection**
+
+### Content Management Options
+
+You can add Markdoc components in two ways:
+
+**Option 1: Keystatic CMS (Easier)**
+- Access the visual editor at `http://localhost:4321/keystatic`
+- Click the "+" button in the content editor
+- Select Spotify, YouTube, or Twitter component
+- Paste the URL - Keystatic handles the rest
+- Files are automatically saved as `.mdoc`
+
+**Option 2: Manual Editing**
+- Create/rename file with `.mdoc` extension
+- Use `{% %}` tag syntax shown below
 
 ### When to Use Markdoc Components vs Plain Markdown
 
-**Use plain Markdown when**:
+**Use plain Markdown (`.md`) when**:
 
 - Writing simple blog posts
 - No need for interactive components
 - Standard markdown is sufficient
 
-**Use Markdoc tags when**:
+**Use Markdoc tags (`.mdoc`) when**:
 
 - Embedding media (Spotify, YouTube, Twitter)
 - Creating interactive content
@@ -255,7 +284,7 @@ Markdoc allows you to use custom tags within your markdown files. This is availa
 
 ### Using Markdoc Tags
 
-Markdoc tags are globally registered and don't require imports. Simply use the `{% %}` syntax in your `.md` files:
+Markdoc tags are globally registered and don't require imports. Simply use the `{% %}` syntax in your `.mdoc` files:
 
 ```markdown
 ---
@@ -625,10 +654,11 @@ Quick reference for common syntax:
 
 ## Next Steps
 
-Now that you understand Markdown and MDX:
+Now that you understand Markdown and Markdoc:
 
 1. **Create Content**: Start writing blog posts with your new skills
-1. **Experiment with MDX**: Try the [embed examples](/blog/embed-examples) in your own posts
+1. **Try Keystatic CMS**: Access the visual editor at [/keystatic](/keystatic) to easily add media embeds
+1. **Experiment with Markdoc**: Try the [embed examples](/blog/embed-examples) in your own posts (remember to use `.mdoc` extension)
 1. **Check Content Guide**: Review the [Content Collections Guide](/blog/guides/content-collections-guide) for schema details
 1. **Read Complete Guide**: See the [Bloomfolio Complete Guide](/blog/guides/bloomfolio-complete-guide) for full setup
 
