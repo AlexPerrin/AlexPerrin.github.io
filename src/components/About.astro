@@ -7,9 +7,10 @@ interface Props {
   title: string;
   photo?: ImageMetadata | string;
   Content: any;
+  link?: string;
 }
 
-const { title, photo, Content } = Astro.props;
+const { title, photo, Content, link } = Astro.props;
 ---
 
 <section id="about" class="py-20 px-4">
@@ -18,7 +19,7 @@ const { title, photo, Content } = Astro.props;
       {
         photo && (
           <figure class="shrink-0 w-48">
-            {typeof photo === 'string' ? (
+            {typeof photo === "string" ? (
               <img src={photo} alt={title} />
             ) : (
               <Image src={photo} alt={title} />
@@ -31,17 +32,17 @@ const { title, photo, Content } = Astro.props;
         <p class="text-lg">
           <Content />
         </p>
-        <div class="card-actions justify-end">
-          <div class="tooltip" data-tip="More about me">
-            <a
-              href="https://linkedin.com/in/lauroguedes"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              <Plus class="size-5" />
-            </a>
-          </div>
-        </div>
+        {
+          link && (
+            <div class="card-actions justify-end">
+              <div class="tooltip" data-tip="More about me">
+                <a href={link} target="_blank" class="btn btn-primary">
+                  <Plus class="size-5" />
+                </a>
+              </div>
+            </div>
+          )
+        }
       </div>
     </div>
   </div>

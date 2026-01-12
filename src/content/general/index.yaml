@@ -1,7 +1,7 @@
 enableThemeSelector: true
 extraLinksEnabled: true
 extraLinks:
-  - link: /blog/guides/bloomfolio-complete-guide
+  - link: /blog/guides/bloomfolio-complete-guide-building-your-portfolio
     icon: Flower2
     label: Bloomfolio Guide
   - link: /blog/guides/content-collections-guide

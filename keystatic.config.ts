@@ -98,6 +98,10 @@ export default config({
           description: "About section content (supports Markdown)",
           extension: "md",
         }),
+        link: fields.url({
+          label: "LinkedIn URL or Other",
+          description: "Your LinkedIn profile URL or other link",
+        }),
       },
     }),
 

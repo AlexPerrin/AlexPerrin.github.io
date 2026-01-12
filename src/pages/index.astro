@@ -14,7 +14,7 @@ import { getEntry, render } from "astro:content";
 const heroEntry = await getEntry("hero", "index");
 
 // Load About singleton
-const aboutEntry = await getEntry("about", "about");
+const aboutEntry = await getEntry("about", "index");
 const { Content: AboutContent } = await render(aboutEntry);
 
 // Load General singleton
@@ -37,6 +37,7 @@ const general = generalEntry.data;
           title={aboutEntry.data.title}
           photo={aboutEntry.data.photo}
           Content={AboutContent}
+          link={aboutEntry.data.link}
         />
       )
     }
