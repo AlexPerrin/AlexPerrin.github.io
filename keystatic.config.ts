@@ -41,38 +41,40 @@ export default config({
           label: "Location",
           description: 'e.g., "🇧🇷 Brazil"',
         }),
-        githubUrl: fields.url({
-          label: "GitHub URL",
-          description: "Your GitHub profile URL",
-        }),
-        linkedinUrl: fields.url({
-          label: "LinkedIn URL",
-          description: "Your LinkedIn profile URL",
-        }),
-        twitterUrl: fields.url({
-          label: "Twitter/X URL",
-          description: "Your Twitter/X profile URL",
-        }),
-        blueskyUrl: fields.url({
-          label: "Bluesky URL",
-          description: "Your Bluesky profile URL",
-        }),
-        instagramUrl: fields.url({
-          label: "Instagram URL",
-          description: "Your Instagram profile URL",
-        }),
-        youtubeUrl: fields.url({
-          label: "YouTube URL",
-          description: "Your YouTube channel URL",
-        }),
-        codetipsUrl: fields.url({
-          label: "CodeTips URL",
-          description: "Your CodeTips profile URL",
-        }),
-        emailUrl: fields.url({
-          label: "Email",
-          description: "Your email address (will create mailto: link)",
-        }),
+        socialLinks: fields.array(
+          fields.object({
+            url: fields.text({
+              label: "URL",
+              description: "Profile URL or mailto: link",
+              validation: { isRequired: true },
+            }),
+            icon: fields.select({
+              label: "Icon",
+              description: "Select a social media icon",
+              options: [
+                { label: "GitHub", value: "GitHub" },
+                { label: "LinkedIn", value: "LinkedIn" },
+                { label: "Twitter/X", value: "Twitter" },
+                { label: "Bluesky", value: "Bluesky" },
+                { label: "Instagram", value: "Instagram" },
+                { label: "YouTube", value: "YouTube" },
+                { label: "Email", value: "Email" },
+                { label: "CodeTips (Folder)", value: "FolderCode" },
+              ],
+              defaultValue: "GitHub",
+            }),
+            label: fields.text({
+              label: "Aria Label",
+              description: "Accessibility label (e.g., 'GitHub', 'Email')",
+              validation: { isRequired: true },
+            }),
+          }),
+          {
+            label: "Social Links",
+            itemLabel: (props) => props.fields.label.value || "New Link",
+            description: "Your social media and contact links",
+          }
+        ),
       },
     }),
 
@@ -138,7 +140,10 @@ export default config({
                 { label: "Home (Home)", value: "Home" },
                 { label: "User (User)", value: "User" },
                 { label: "Briefcase (Briefcase)", value: "Briefcase" },
-                { label: "Graduation Cap (GraduationCap)", value: "GraduationCap" },
+                {
+                  label: "Graduation Cap (GraduationCap)",
+                  value: "GraduationCap",
+                },
                 { label: "Link (Link)", value: "Link" },
               ],
               defaultValue: "Link",
@@ -195,7 +200,10 @@ export default config({
           label: "Section Icon",
           description: "Icon displayed at the top of contact section",
           options: [
-            { label: "Message Circle (MessageCircleCode)", value: "MessageCircleCode" },
+            {
+              label: "Message Circle (MessageCircleCode)",
+              value: "MessageCircleCode",
+            },
             { label: "Mail (Mail)", value: "Mail" },
             { label: "Phone (Phone)", value: "Phone" },
           ],
@@ -328,6 +336,7 @@ export default config({
       label: "Projects",
       path: "src/content/projects/*",
       slugField: "title",
+      entryLayout: "content",
       format: {
         contentField: "content",
       },
@@ -394,6 +403,7 @@ export default config({
       label: "Blog Posts",
       path: "src/content/blog/**",
       slugField: "title",
+      entryLayout: "content",
       format: {
         contentField: "content",
       },

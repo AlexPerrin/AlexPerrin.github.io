@@ -11,14 +11,22 @@ const hero = defineCollection({
       description: z.string(),
       avatar: image(),
       location: z.string().optional(),
-      githubUrl: z.string().url().optional(),
-      linkedinUrl: z.string().url().optional(),
-      twitterUrl: z.string().url().optional(),
-      blueskyUrl: z.string().url().optional(),
-      instagramUrl: z.string().url().optional(),
-      youtubeUrl: z.string().url().optional(),
-      codetipsUrl: z.string().url().optional(),
-      emailUrl: z.string().url().optional(),
+      socialLinks: z.array(
+        z.object({
+          url: z.string(),
+          icon: z.enum([
+            "GitHub",
+            "LinkedIn",
+            "Twitter",
+            "Bluesky",
+            "Instagram",
+            "YouTube",
+            "Email",
+            "FolderCode",
+          ]),
+          label: z.string(),
+        })
+      ),
     }),
 });
 
