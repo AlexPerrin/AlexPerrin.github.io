@@ -11,13 +11,22 @@ const hero = defineCollection({
       description: z.string(),
       avatar: image(),
       location: z.string().optional(),
-      githubUrl: z.string().url().optional(),
-      linkedinUrl: z.string().url().optional(),
-      twitterUrl: z.string().url().optional(),
-      blueskyUrl: z.string().url().optional(),
-      instagramUrl: z.string().url().optional(),
-      youtubeUrl: z.string().url().optional(),
-      codetipsUrl: z.string().url().optional(),
+      socialLinks: z.array(
+        z.object({
+          url: z.string(),
+          icon: z.enum([
+            "GitHub",
+            "LinkedIn",
+            "Twitter",
+            "Bluesky",
+            "Instagram",
+            "YouTube",
+            "Email",
+            "FolderCode",
+          ]),
+          label: z.string(),
+        })
+      ),
     }),
 });
 
@@ -110,7 +119,56 @@ const about = defineCollection({
     z.object({
       title: z.string(),
       photo: image().optional(),
+      link: z.string().url().optional(),
     }),
+});
+
+// General singleton
+const general = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdoc,yaml}", base: "./src/content/general" }),
+  schema: z.object({
+    enableThemeSelector: z.boolean(),
+    extraLinksEnabled: z.boolean(),
+    extraLinks: z.array(
+      z.object({
+        link: z.string(),
+        icon: z.enum([
+          "Flower2",
+          "BookOpen",
+          "FileText",
+          "CodeXml",
+          "Mail",
+          "Home",
+          "User",
+          "Briefcase",
+          "GraduationCap",
+          "Link",
+        ]),
+        label: z.string(),
+      })
+    ),
+    showAboutSection: z.boolean(),
+    showProjectsSection: z.boolean(),
+    showBlogSection: z.boolean(),
+    showWorkSection: z.boolean(),
+    showEducationSection: z.boolean(),
+    showHackathonsSection: z.boolean(),
+    showContactSection: z.boolean(),
+  }),
+});
+
+// Contact singleton
+const contact = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdoc,yaml}", base: "./src/content/contact" }),
+  schema: z.object({
+    icon: z.enum(["MessageCircleCode", "Mail", "Phone"]),
+    linkUrl: z.string().url(),
+    linkText: z.string(),
+    footerIcon: z.enum(["Pickaxe", "Hammer", "Heart"]),
+    footerText: z.string(),
+    footerLinkText: z.string(),
+    footerLinkUrl: z.string().url(),
+  }),
 });
 
 export const collections = {
@@ -121,4 +179,6 @@ export const collections = {
   hackathons,
   blog,
   about,
+  general,
+  contact,
 };

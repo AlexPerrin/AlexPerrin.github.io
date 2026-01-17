@@ -9,19 +9,22 @@ import Hackathons from "../components/Hackathons.astro";
 import Contact from "../components/Contact.astro";
 import { Briefcase, GraduationCap } from "@lucide/astro";
 import { getEntry, render } from "astro:content";
-import { siteConfig } from "../config";
 
 // Load Hero singleton
 const heroEntry = await getEntry("hero", "index");
 
 // Load About singleton
-const aboutEntry = await getEntry("about", "about");
+const aboutEntry = await getEntry("about", "index");
 const { Content: AboutContent } = await render(aboutEntry);
+
+// Load General singleton
+const generalEntry = await getEntry("general", "index");
+const general = generalEntry.data;
 ---
 
 <Layout
-  title={`${siteConfig.name} - Portfolio`}
-  description={siteConfig.description}
+  title={`${heroEntry.data.name} - Portfolio`}
+  description={heroEntry.data.description}
 >
   <main>
     <!-- Hero Section (Always visible) -->
@@ -29,24 +32,25 @@ const { Content: AboutContent } = await render(aboutEntry);
 
     <!-- About Section -->
     {
-      siteConfig.sections.about && (
+      general.showAboutSection && (
         <About
           title={aboutEntry.data.title}
           photo={aboutEntry.data.photo}
           Content={AboutContent}
+          link={aboutEntry.data.link}
         />
       )
     }
 
     <!-- Projects Section -->
-    {siteConfig.sections.projects && <Projects />}
+    {general.showProjectsSection && <Projects />}
 
     <!-- Blog Section -->
-    {siteConfig.sections.blog && <Blog />}
+    {general.showBlogSection && <Blog />}
 
     <!-- Work Experience Section -->
     {
-      siteConfig.sections.work && (
+      general.showWorkSection && (
         <Timeline
           collection="work"
           variant="timeline"
@@ -59,7 +63,7 @@ const { Content: AboutContent } = await render(aboutEntry);
 
     <!-- Education Section -->
     {
-      siteConfig.sections.education && (
+      general.showEducationSection && (
         <Timeline
           collection="education"
           variant="list"
@@ -72,9 +76,9 @@ const { Content: AboutContent } = await render(aboutEntry);
     }
 
     <!-- Hackathons Section -->
-    {siteConfig.sections.hackathons && <Hackathons />}
+    {general.showHackathonsSection && <Hackathons />}
 
     <!-- Contact Section -->
-    {siteConfig.sections.contact && <Contact />}
+    {general.showContactSection && <Contact />}
   </main>
 </Layout>
