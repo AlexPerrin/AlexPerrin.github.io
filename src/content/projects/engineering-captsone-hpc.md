@@ -210,31 +210,13 @@ cpupower -c 1-23 frequency-set -d 1.2GHz -u 1.4GHz
 
 ## Performance Results
 
-{% table %}
-- Hint Type
-- Runtime Reduction
-- Energy Reduction
----
-- Serial
-- 0.6%
-- **38.9%**
----
-- Parallel
-- 0.2%
-- 1.1%
----
-- Memory Bound
-- 1.7%
-- 4.0%
----
-- I/O
-- 0.6%
-- 0.3%
----
-- Network Communication
-- **29.7%**
-- 2.9%
-{% /table %}
+| Hint Type | Runtime Reduction | Energy Reduction |
+|-----------|-------------------|------------------|
+| Serial | 0.6% | **38.9%** |
+| Parallel | 0.2% | 1.1% |
+| Memory Bound | 1.7% | 4.0% |
+| I/O | 0.6% | 0.3% |
+| Network Communication | **29.7%** | 2.9% |
 
 ## Development Process
 

@@ -43,31 +43,15 @@ PCAPs as well as CSVs containing labeled data (CICFlowMeter output)
 
 5 seperate days of network traffic, contains a mix of known exploits and benign. Orginal dataset is about ~10GB of pcap per day, use a reduced sample for training
 
-{% table %}
-- Label
-- 
----
-- BENIGN
-- 22731
----
-- DoS
-- 19035
----
-- PortScan
-- 7946
----
-- BruteForce
-- 2767
----
-- WebAttack
-- 2180
----
-- Bot
-- 1966
----
-- Infiltration
-- 36
-{% /table %}
+| Label | Count |
+|-------|-------|
+| BENIGN | 22731 |
+| DoS | 19035 |
+| PortScan | 7946 |
+| BruteForce | 2767 |
+| WebAttack | 2180 |
+| Bot | 1966 |
+| Infiltration | 36 |
 
 ### Machine Learning Model
 
@@ -95,141 +79,34 @@ https://www.snort.org/downloads/snortplus/snort_devel.html
 
 ### Signiture Detection
 
-{% table %}
-- 
-- 
----
-- Accuracy of XGBoost
-- 0.9955555555555555
----
-- Precision of XGBoost
-- 0.9957643745143745
----
-- Recall of XGBoost
-- 0.9955555555555555
----
-- F1-score of XGBoost
-- 0.9954610536001841
-{% /table %}
+| Metric | Value |
+|--------|-------|
+| Accuracy of XGBoost | 0.9955555555555555 |
+| Precision of XGBoost | 0.9957643745143745 |
+| Recall of XGBoost | 0.9955555555555555 |
+| F1-score of XGBoost | 0.9954610536001841 |
 
-{% table %}
-- 
-- precision
-- recall
-- f1-score
-- support
----
-- 0
-- 0.95
-- 0.88
-- 0.91
-- 24
----
-- 1
-- 1.00
-- 1.00
-- 1.00
-- 394
----
-- 2
-- 1.00
-- 0.75
-- 0.86
-- 4
----
-- 3
-- 0.92
-- 1.00
-- 0.96
-- 24
----
-- 4
-- 0.88
-- 1.00
-- 0.93
-- 7
----
-- 5
-- 1.00
-- 1.00
-- 1.00
-- 11
----
-- 6
-- 1.00
-- 1.00
-- 1.00
-- 436
----
-- 
-- 
-- 
-- 
-- 
----
-- accuracy
-- 
-- 
-- 1.00
-- 900
----
-- macro avg
-- 0.96
-- 0.95
-- 0.95
-- 900
----
-- weighted avg
-- 1.00
-- 1.00
-- 1.00
-- 900
-{% /table %}
+| Class | precision | recall | f1-score | support |
+|-------|-----------|--------|----------|---------|
+| 0 | 0.95 | 0.88 | 0.91 | 24 |
+| 1 | 1.00 | 1.00 | 1.00 | 394 |
+| 2 | 1.00 | 0.75 | 0.86 | 4 |
+| 3 | 0.92 | 1.00 | 0.96 | 24 |
+| 4 | 0.88 | 1.00 | 0.93 | 7 |
+| 5 | 1.00 | 1.00 | 1.00 | 11 |
+| 6 | 1.00 | 1.00 | 1.00 | 436 |
+| accuracy | | | 1.00 | 900 |
+| macro avg | 0.96 | 0.95 | 0.95 | 900 |
+| weighted avg | 1.00 | 1.00 | 1.00 | 900 |
 
 ![Signiture Confusion Matrix](https://github.com/AlexPerrin/snort3_ml/blob/main/figures/sig.png?raw=true)
 
 ### Anomoly Detection
 
-{% table %}
-- 
-- precision
-- recall
-- f1-score
-- support
----
-- 0
-- 0.00
-- 0.00
-- 0.00
-- 8
----
-- 1
-- 0.88
-- 1.00
-- 0.93
-- 56
----
-- 
-- 
-- 
-- 
-- 
----
-- accuracy
-- 
-- 
-- 0.88
-- 64
----
-- macro avg
-- 0.44
-- 0.50
-- 0.47
-- 64
----
-- weighted avg
-- 0.77
-- 0.88
-- 0.82
-- 64
-{% /table %}
+| Class | precision | recall | f1-score | support |
+|-------|-----------|--------|----------|---------|
+| 0 | 0.00 | 0.00 | 0.00 | 8 |
+| 1 | 0.88 | 1.00 | 0.93 | 56 |
+| accuracy | | | 0.88 | 64 |
+| macro avg | 0.44 | 0.50 | 0.47 | 64 |
+| weighted avg | 0.77 | 0.88 | 0.82 | 64 |

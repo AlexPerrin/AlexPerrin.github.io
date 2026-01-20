@@ -422,125 +422,34 @@ Commands:
 
 ### Single Client Tests
 
-{% table %}
-- Client Input (STDIN)
-- Client Output (STDOUT)
-- WildFly Service Output (STDOUT)
-- Result
----
-- \> search test
-- No files found matching: test
-- 19:58:04,570 INFO  [stdout] (default task-31) SEARCH REQUEST: test 19:58:04,770 INFO  [stdout] (default task-31) SEARCH SUCCESS: Found 0 files
-- No files found initially
----
-- \> register testfile.txt
-- Registered: testfile.txt
-- 19:58:10,161 INFO  [stdout] (default task-32) REGISTER REQUEST: testfile.txt from 127.0.0.1:32825 19:58:10,194 INFO  [stdout] (default task-32) REGISTER SUCCESS: Registered testfile.txt from 127.0.0.1:32825
-- File registered successfully
----
-- \> search test
-- Search results for 'test': testfile.txt
-- 19:58:13,669 INFO  [stdout] (default task-33) SEARCH REQUEST: test19:58:13,684 INFO  [stdout] (default task-33) SEARCH SUCCESS: Found 1 files
-- Find registered file
----
-- \> download testfile.txt output.txt
-- Served file: testfile.txt (13 bytes) Downloaded: testfile.txt -> output.txt (13 bytes)
-- 19:58:26,511 INFO  [stdout] (default task-35) OWNER REQUEST: testfile.txt 19:58:26,524 INFO  [stdout] (default task-35) OWNER SUCCESS: testfile.txt -> 127.0.0.1:32825
-- Download from self successful
----
-- \> unregister testfile.txt
-- Unregistered: testfile.txt
-- 9:58:38,932 INFO  [stdout] (default task-36) UNREGISTER REQUEST: testfile.txt from 127.0.0.1:32825 19:58:38,945 INFO  [stdout] (default task-36) UNREGISTER RESULT: Removed testfile.txt from 127.0.0.1:32825 (rows affected: 1)
-- File unregistered successfully
----
-- \> search test
-- No files found matching: test
-- 19:58:43,330 INFO  [stdout] (default task-37) SEARCH REQUEST: test 19:58:43,343 INFO  [stdout] (default task-37) SEARCH SUCCESS: Found 0 files
-- No files found after unregister
-{% /table %}
+| Client Input (STDIN) | Client Output (STDOUT) | WildFly Service Output (STDOUT) | Result |
+|---------------------|------------------------|--------------------------------|--------|
+| > search test | No files found matching: test | SEARCH REQUEST: test, SEARCH SUCCESS: Found 0 files | No files found initially |
+| > register testfile.txt | Registered: testfile.txt | REGISTER REQUEST: testfile.txt from 127.0.0.1:32825, REGISTER SUCCESS | File registered successfully |
+| > search test | Search results for 'test': testfile.txt | SEARCH REQUEST: test, SEARCH SUCCESS: Found 1 files | Find registered file |
+| > download testfile.txt output.txt | Served file: testfile.txt (13 bytes) Downloaded: testfile.txt -> output.txt (13 bytes) | OWNER REQUEST: testfile.txt, OWNER SUCCESS: testfile.txt -> 127.0.0.1:32825 | Download from self successful |
+| > unregister testfile.txt | Unregistered: testfile.txt | UNREGISTER REQUEST: testfile.txt, UNREGISTER RESULT: Removed (rows affected: 1) | File unregistered successfully |
+| > search test | No files found matching: test | SEARCH REQUEST: test, SEARCH SUCCESS: Found 0 files | No files found after unregister |
 
 ### Multi-Client P2P Tests
 
-{% table %}
-- Client A Actions
-- Client B Actions
-- Client A Output
-- Client B Output
-- Server Output
-- Result
----
-- Start client A
-- Start client B
-- Connected to web service at: http://localhost:8080/FileShareService/FileShareService<br>Client socket server listening on port 32825
-- Connected to web service at: http://localhost:8080/FileShareService/FileShareService<br>Client socket server listening on port 46447
-- Server accepts both connections
-- Two clients connected
----
-- -
-- register testfile.txt
-- -
-- Registered: testfile.txt
-- 19:58:10,161 INFO  [stdout] (default task-32) REGISTER REQUEST: testfile.txt from 127.0.0.1:32825 19:58:10,194 INFO  [stdout] (default task-32) REGISTER SUCCESS: Registered testfile.txt from 127.0.0.1:32825
-- Client B registers file
----
-- \> search test
-- -
-- Search results for 'test':<br>&nbsp;&nbsp;testfile.txt
-- -
-- 19:58:13,669 INFO  [stdout] (default task-33) SEARCH REQUEST: test 19:58:13,684 INFO  [stdout] (default task-33) SEARCH SUCCESS: Found 1 files
-- Client A finds B's file
----
-- \> download testfile.txt output1.txt
-- -
-- Downloaded: testfile.txt -> output1.txt (13 bytes)
-- Served file: testfile.txt (13 bytes)
-- 19:58:26,511 INFO  [stdout] (default task-35) OWNER REQUEST: testfile.txt 19:58:26,524 INFO  [stdout] (default task-35) OWNER SUCCESS: testfile.txt -> 127.0.0.1:32825
-- Client A downloads from B
----
-- -
-- \> download testfile.txt output2.txt
-- -
-- Downloaded: testfile.txt -> output2.txt (13 bytes)<br>Served file: testfile.txt (13 bytes)
-- 19:58:26,511 INFO  [stdout] (default task-35) OWNER REQUEST: testfile.txt 19:58:26,524 INFO  [stdout] (default task-35) OWNER SUCCESS: testfile.txt -> 127.0.0.1:46447
-- Client B downloads from self
-{% /table %}
+| Client A Actions | Client B Actions | Client A Output | Client B Output | Server Output | Result |
+|-----------------|------------------|-----------------|-----------------|---------------|--------|
+| Start client A | Start client B | Connected, listening on port 32825 | Connected, listening on port 46447 | Server accepts both | Two clients connected |
+| - | register testfile.txt | - | Registered: testfile.txt | REGISTER SUCCESS | Client B registers file |
+| > search test | - | Search results: testfile.txt | - | SEARCH SUCCESS: Found 1 files | Client A finds B's file |
+| > download testfile.txt output1.txt | - | Downloaded: testfile.txt -> output1.txt | Served file: testfile.txt | OWNER SUCCESS | Client A downloads from B |
+| - | > download testfile.txt output2.txt | - | Downloaded: testfile.txt -> output2.txt | OWNER SUCCESS | Client B downloads from self |
 
 ### Input Validation Tests
 
-{% table %}
-- Client Input (STDIN)
-- Client Output (STDOUT)
-- Result
----
-- register
-- Usage: register <filename>
-- Invalid command format rejected
----
-- unregister
-- Usage: unregister <filename>
-- Invalid command format rejected
----
-- search
-- Usage: search <query>
-- Invalid command format rejected
----
-- download
-- Usage: download <filename> [output_filename]
-- Invalid command format rejected
----
-- register nonexistent.txt
-- File not found: nonexistent.txt
-- Cannot register nonexistent file
----
-- download nonexistent.txt
-- File not found: nonexistent.txt
-- Cannot download nonexistent file
----
-- invalid_command
-- Unknown command: invalid_command<br>Type 'quit' to exit or use one of the available commands.
-- Invalid commands rejected
----
-- quit
-- Goodbye!
-- Application exits gracefully
-{% /table %}
+| Client Input (STDIN) | Client Output (STDOUT) | Result |
+|---------------------|------------------------|--------|
+| register | Usage: register \<filename\> | Invalid command format rejected |
+| unregister | Usage: unregister \<filename\> | Invalid command format rejected |
+| search | Usage: search \<query\> | Invalid command format rejected |
+| download | Usage: download \<filename\> [output_filename] | Invalid command format rejected |
+| register nonexistent.txt | File not found: nonexistent.txt | Cannot register nonexistent file |
+| download nonexistent.txt | File not found: nonexistent.txt | Cannot download nonexistent file |
+| invalid_command | Unknown command: invalid_command | Invalid commands rejected |
+| quit | Goodbye! | Application exits gracefully |

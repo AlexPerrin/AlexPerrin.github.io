@@ -4,14 +4,10 @@ location: Virtual
 description: >-
   UWaterloo's Cybersecurity Club brings you a jeopardy-style online CTF, open to
   all!
-
   Primarily aimed at beginner-to-medium level, but with some hard challenges to
   test the most skilled as well.
-
-  Format: Jeopardy Jeopardy
-
+  Format: Jeopardy
   Official URL: https://watctf.org/
-
   CTFtime: https://ctftime.org/event/2854
 startDate: 2025-03-15
 endDate: 2025-03-16

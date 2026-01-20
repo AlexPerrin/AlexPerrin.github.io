@@ -3,7 +3,7 @@ title: Google Capture The Flag 2024
 location: Virtual
 description: |-
   Annual Capture The Flag hosted by the Google Security Team.
-  Format: Jeopardy Jeopardy
+  Format: Jeopardy
   Categories: web, pwn, crypto, reversing, misc
   Official URL: https://g.co/ctf
   CTFtime: https://ctftime.org/event/2296/
@@ -21,10 +21,6 @@ Individual
 
 ## Writeups
 
-{% table %}
-- Challenge
-- Category
----
-- [DESFUNCTIONAL](https://github.com/AlexPerrin/CTF-Writeups/tree/main/Google%20Capture%20the%20Flag%202024/DESFUNCTIONAL)
-- Crypto
-{% /table %}
+| Challenge | Category |
+|-----------|----------|
+| [DESFUNCTIONAL](https://github.com/AlexPerrin/CTF-Writeups/tree/main/Google%20Capture%20the%20Flag%202024/DESFUNCTIONAL) | Crypto |
