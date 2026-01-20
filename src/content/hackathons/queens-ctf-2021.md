@@ -1,7 +1,7 @@
 ---
 title: Queen's CTF 2021
 location: Virtual
-description: >-
+description: |-
   The Queen’s Capture the Flag is an annual event run in partnership with the
   Queen’s Engineering Society that allows Queen’s University students interested
   in cybersecurity and other fields of computing and information technology to

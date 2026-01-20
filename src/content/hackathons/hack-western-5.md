@@ -1,7 +1,7 @@
 ---
 title: Hack Western 5
 location: Western University - Amit Chakma Engineering Building
-description: >-
+description: |-
   Hack Western is Western University's annual student-run hackathon, allowing
   students to innovate, build and create amazing technologies.
 startDate: 2018-11-23

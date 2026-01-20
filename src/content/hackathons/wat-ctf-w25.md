@@ -1,7 +1,7 @@
 ---
 title: WatCTF W25
 location: Virtual
-description: >-
+description: |-
   UWaterloo's Cybersecurity Club brings you a jeopardy-style online CTF, open to
   all!
   Primarily aimed at beginner-to-medium level, but with some hard challenges to
