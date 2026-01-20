@@ -42,13 +42,11 @@ const readingTime = Math.ceil(wordCount / 200); // Average reading speed: 200 wo
 
     <!-- Featured Image -->
     {image && (
-      <figure class="mb-8 rounded-2xl overflow-hidden">
+      <figure class="mb-8 flex justify-center">
         <Image
           src={image}
           alt={title}
-          class="w-full aspect-video object-cover"
-          width={1200}
-          height={630}
+          class="max-w-full h-auto rounded-2xl"
         />
       </figure>
     )}

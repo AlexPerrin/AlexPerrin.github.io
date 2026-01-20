@@ -42,12 +42,6 @@ const general = generalEntry.data;
       )
     }
 
-    <!-- Projects Section -->
-    {general.showProjectsSection && <Projects />}
-
-    <!-- Blog Section -->
-    {general.showBlogSection && <Blog />}
-
     <!-- Work Experience Section -->
     {
       general.showWorkSection && (
@@ -73,10 +67,16 @@ const general = generalEntry.data;
           sectionTitle="Education"
         />
       )
-    }
+    }    
+
+    <!-- Projects Section -->
+    {general.showProjectsSection && <Projects />}
 
     <!-- Hackathons Section -->
     {general.showHackathonsSection && <Hackathons />}
+
+    <!-- Blog Section -->
+    {general.showBlogSection && <Blog />}
 
     <!-- Contact Section -->
     {general.showContactSection && <Contact />}

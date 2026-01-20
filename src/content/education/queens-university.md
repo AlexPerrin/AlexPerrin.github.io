@@ -1,0 +1,56 @@
+---
+title: Queen's University
+subtitle: Bachelor of Applied Science in Computer Engineering
+startDate: 2017-09-03
+endDate: 2025-11-07
+logo: '@assets/education/queens-university/logo.png'
+link: https://smithengineering.queensu.ca/index.html
+---
+**ELEC 473: Cryptography and Network Security - Python**
+
+- Cryptography topics include: block ciphers, advanced encryption standard, public key encryption, hash functions, message authentication codes, digital signatures, key management and distribution, and public-key infrastructure. Network security topics include: user authentication, network access control, Kerberos protocol, transport layer security (TLS), IP security (IPSec), electronic mail security, and wireless network security.
+
+**CMPE 452: Neural and Genetic Computing - Python (PyTorch, Tensorflow)**
+
+- Artificial Neural Networks (ANN) and Genetic Algorithms (GA) for problem solving and prediction tasks such as classification, clustering, optimization and data reduction and modeling human cognition, with application to real world problems. Ongoing research in this area in various application domains.
+
+**COMP 489: Distributed Computing - Java**
+
+- Analyze the essential features and reference model in distributed systems.
+  Identify the capacity requirements for distributed systems.
+  Design distributed application models in object-oriented approaches.
+  Write multi-threaded programs in Java.
+  Apply concurrency control and mutual exclusion mechanisms to programs.
+  Write code using Java networking packages in distributed applications.
+  Write code to access relational database systems using JDBC API.
+  Examine the security issues in distributed application and write code using Java Security API.
+  Implement an integrated distributed application in a Java environment.
+
+**CMPE 454: Computer Graphics - C++ / OpenGL**
+
+- An introduction to computer graphics, including a review of current hardware; modelling and transformations in two and three dimensions; visual realism; perspective, hidden surface elimination, and shading; colour models; applications in several fields.
+
+**COMP 378: Database Management - SQL, Postgres**
+
+- Analyze an organization’s needs regarding data, data organization, and data storage.
+  Apply principles of relational database design to build data models.
+  Develop and implement database solutions.E
+  Elaborate data storage and indexing options for optimal query processing.
+  Perform basic database administration tasks.
+  Analyze an organization’s needs regarding data analytics and design solutions using the concepts of data warehousing and NoSQL.
+
+**CMPE 320: Fundamentals of Software Development - C++**
+
+- Introduction to management of small and medium-scale software projects. Advanced programming methodology using the programming language C++. Includes a significant programming project.
+
+**ELEC 374: Digital Systems Engineering- Verilog**
+
+- High-performance logic design for arithmetic circuits; memory system designs based on static and dynamic RAMs; computer bus protocols and standard I/O interfaces; mass storage devices; hardware description languages (VHDL, Verilog); fault testing, design for testability, built-in self-test, memory testing, and boundary scan architectures; asynchronous sequential circuit design; introduction to GPU architectures and GPU computing. The course is supplemented by a CPU design project that allows students to become proficient with Field Programmable Gate Array (FPGA) devices and associated CAD tools, as well as with GPU computing through nVidia CUDA or OpenCL languages.
+
+**ELEC 279: Introduction to Object Oriented Programming - Java**
+
+- Fundamental concepts of object-oriented programming (OOP) such as encapsulation, abstraction, classes and objects, inheritance, and polymorphic programming. It provides an introduction to basic concepts of class and pattern design. Throughout this course students will also gain experience of OOP using packages and class libraries. The students will be able to debug and test their programs as well as handle exceptions. To enhance the exposure to real-world applications, they will practise OOP in various areas of applications and with graphical user interface.
+
+**ELEC 278: Fundamentals of Information Structures - C**
+
+- Data Structures and Algorithms: arrays, linked lists, stacks, queues, deques, asymptotic notation, hash and scatter tables, recursion, trees and search trees, heaps and priority queues, sorting, and graphs. Advanced programming in the C language. Introduction to object oriented programming concepts in the context of data structures.

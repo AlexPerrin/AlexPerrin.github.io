@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 const hackathonEntries = await getCollection("hackathons");
 
@@ -28,13 +29,15 @@ function formatPeriod(startDate: Date, endDate?: Date) {
 <section id="hackathons" class="py-20 px-4">
   <div class="max-w-4xl mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold mb-4">I like building things</h2>
+      <h2 class="text-4xl font-bold mb-4">Hackathons & Capture the Flag (CTF) Events</h2>
+      <!-- 
       <p class="text-lg text-base-content/70">
         During my time in university, I attended multiple hackathons. People
         from around the country would come together and build incredible things
         in 2-3 days. It was eye-opening to see the endless possibilities brought
         to life by a group of motivated and passionate individuals.
       </p>
+      -->
     </div>
 
     <div class="space-y-6">
@@ -44,13 +47,14 @@ function formatPeriod(startDate: Date, endDate?: Date) {
             <div class="card-body">
               <div class="flex items-start gap-4">
                 {hackathon.data.logo && (
-                  <div class="avatar flex-shrink-0">
-                    <div class="w-16 h-16 rounded">
-                      <img
-                        src={hackathon.data.logo}
-                        alt={hackathon.data.title}
-                      />
-                    </div>
+                  <div class="flex-shrink-0 w-16 h-16 flex items-center justify-center">
+                    <Image
+                      src={hackathon.data.logo}
+                      alt={hackathon.data.title}
+                      width={64}
+                      height={64}
+                      class="max-w-full max-h-full object-contain"
+                    />
                   </div>
                 )}
                 <div class="flex-1">
@@ -64,9 +68,12 @@ function formatPeriod(startDate: Date, endDate?: Date) {
                   <p class="text-sm text-primary font-semibold">
                     {hackathon.data.location}
                   </p>
-                  <p class="text-base-content/80 mt-3">
-                    {hackathon.data.description}
-                  </p>
+                  <div class="text-base-content/80 mt-3 prose prose-sm max-w-none
+                    [&_p]:mb-4
+                    [&_ul]:mb-4 [&_ul]:ml-6 [&_ul]:list-disc [&_ul]:list-outside
+                    [&_ol]:mb-4 [&_ol]:ml-6 [&_ol]:list-decimal [&_ol]:list-outside
+                    [&_li]:mb-2
+                    whitespace-pre-line">{hackathon.data.description}</div>
                   {hackathon.data.sourceLink && (
                     <div class="card-actions mt-4">
                       <a
@@ -75,7 +82,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
                         rel="noopener noreferrer"
                         class="btn btn-sm btn-outline btn-primary"
                       >
-                        View Project
+                        Writeup
                       </a>
                     </div>
                   )}

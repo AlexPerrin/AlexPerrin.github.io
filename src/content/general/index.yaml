@@ -1,5 +1,5 @@
 enableThemeSelector: true
-extraLinksEnabled: true
+extraLinksEnabled: false
 extraLinks:
   - link: /blog/guides/bloomfolio-complete-guide-building-your-portfolio
     icon: Flower2
@@ -13,10 +13,10 @@ extraLinks:
   - link: https://github.com/lauroguedes/bloomfolio
     icon: CodeXml
     label: GitHub Repo
-showAboutSection: true
+showAboutSection: false
 showProjectsSection: true
 showBlogSection: true
 showWorkSection: true
 showEducationSection: true
 showHackathonsSection: true
-showContactSection: true
+showContactSection: false

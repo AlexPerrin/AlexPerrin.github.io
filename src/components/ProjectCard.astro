@@ -42,7 +42,12 @@ function formatPeriod(startDate: Date, endDate?: Date) {
     <time class="text-sm text-base-content/60">
       {formatPeriod(project.data.startDate, project.data.endDate)}
     </time>
-    <p class="text-base-content/80">{project.data.description}</p>
+    <div class="text-base-content/80 prose prose-sm max-w-none
+      [&_p]:mb-4
+      [&_ul]:mb-4 [&_ul]:ml-6 [&_ul]:list-disc [&_ul]:list-outside
+      [&_ol]:mb-4 [&_ol]:ml-6 [&_ol]:list-decimal [&_ol]:list-outside
+      [&_li]:mb-2
+      whitespace-pre-line">{project.data.description}</div>
     <div class="flex flex-wrap gap-2 mt-2">
       {project.data.skills.map((skill) => <SkillBadge skill={skill} />)}
     </div>

@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
 
 interface Props {
   collection: "work" | "education";
@@ -32,7 +33,7 @@ const sortedEntries = entries.sort(
   (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
 
-function formatPeriod(startDate: Date, endDate?: Date) {
+function formatPeriod(startDate: Date, endDate?: Date, showStartDate: boolean = true) {
   const options: Intl.DateTimeFormatOptions = {
     month: "short",
     year: "numeric",
@@ -41,7 +42,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
   const end = endDate
     ? endDate.toLocaleDateString("en-US", options)
     : "Present";
-  return `${start} - ${end}`;
+  return showStartDate ? `${start} - ${end}` : end;
 }
 
 // Render markdown content for each entry
@@ -79,16 +80,20 @@ const entriesWithContent = await Promise.all(
                 <time
                   class={`font-mono text-sm text-base-content/70 block italic ${index % 2 === 0 ? "text-end" : ""}`}
                 >
-                  {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                  {formatPeriod(entry.data.startDate, entry.data.endDate, collection !== "education")}
                 </time>
                 <div class="card bg-base-100 shadow-xl mt-2">
                   <div class="card-body">
                     <div class="flex items-center gap-4 mb-2">
                       {entry.data.logo && (
-                        <div class="avatar">
-                          <div class="w-12 mask mask-squircle">
-                            <img src={entry.data.logo} alt={entry.data.title} />
-                          </div>
+                        <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+                          <Image
+                            src={entry.data.logo}
+                            alt={entry.data.title}
+                            width={48}
+                            height={48}
+                            class="max-w-full max-h-full object-contain"
+                          />
                         </div>
                       )}
                       <div>
@@ -98,7 +103,11 @@ const entriesWithContent = await Promise.all(
                         </p>
                       </div>
                     </div>
-                    <div class="prose prose-sm max-w-none text-base-content/80">
+                    <div class="prose prose-sm max-w-none text-base-content/80
+                      [&_p]:mb-4
+                      [&_ul]:mb-4 [&_ul]:ml-6 [&_ul]:list-disc [&_ul]:list-outside
+                      [&_ol]:mb-4 [&_ol]:ml-6 [&_ol]:list-decimal [&_ol]:list-outside
+                      [&_li]:mb-2">
                       <Content />
                     </div>
                     {entry.data.link && (
@@ -133,10 +142,14 @@ const entriesWithContent = await Promise.all(
                   <div class="list-row p-0 items-center after:hidden">
                     <div>
                       {entry.data.logo && (
-                        <div class="avatar">
-                          <div class="w-10 mask mask-squircle">
-                            <img src={entry.data.logo} alt={entry.data.title} />
-                          </div>
+                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center">
+                          <Image
+                            src={entry.data.logo}
+                            alt={entry.data.title}
+                            width={40}
+                            height={40}
+                            class="max-w-full max-h-full object-contain"
+                          />
                         </div>
                       )}
                     </div>
@@ -149,13 +162,17 @@ const entriesWithContent = await Promise.all(
                     </div>
 
                     <div class="text-sm text-base-content/70 font-mono whitespace-nowrap">
-                      {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                      {formatPeriod(entry.data.startDate, entry.data.endDate, collection !== "education")}
                     </div>
                   </div>
                 </summary>
 
                 <div class="collapse-content">
-                  <div class="prose prose-sm max-w-none text-base-content/80">
+                  <div class="prose prose-sm max-w-none text-base-content/80
+                      [&_p]:mb-4
+                      [&_ul]:mb-4 [&_ul]:ml-6 [&_ul]:list-disc [&_ul]:list-outside
+                      [&_ol]:mb-4 [&_ol]:ml-6 [&_ol]:list-decimal [&_ol]:list-outside
+                      [&_li]:mb-2">
                     <Content />
                   </div>
                   {entry.data.link && (

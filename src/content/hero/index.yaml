@@ -1,33 +1,18 @@
-name: 🌻 Bloomfolio
-title: Astro Portfolio Template built with 🌼 DaisyUI
+name: Alex Perrin
+title: BAsc. Computer Engineer
 description: >-
-  A modern, responsive, and customizable portfolio template built with Astro and
-  DaisyUI. Perfect for developers, designers, and creatives to showcase their
-  work and skills.
+  Software engineer focused on cybersecurity and platform engineering. I build
+  resilient infrastructure and hunt for vulnerabilities. When I'm not hacking, I
+  love to skate🛹😎
 avatar: '@assets/hero/avatar.png'
-location: 🇧🇷 Brazil
+location: 🇨🇦 Canada
 socialLinks:
-  - url: mailto:hello@example.com
+  - url: mailto:alex.perrin@queensu.ca
     icon: Email
     label: Email
-  - url: https://github.com/lauroguedes
+  - url: https://github.com/AlexPerrin
     icon: GitHub
     label: GitHub
-  - url: https://linkedin.com/in/lauroguedes
+  - url: https://www.linkedin.com/in/qualexperrin/
     icon: LinkedIn
     label: LinkedIn
-  - url: https://twitter.com/leowg
-    icon: Twitter
-    label: X (Twitter)
-  - url: https://bsky.app/profile/lauroguedes.bsky.social
-    icon: Bluesky
-    label: Bluesky
-  - url: https://instagram.com/lauroguedes.dev
-    icon: Instagram
-    label: Instagram
-  - url: https://youtube.com/leowgweb
-    icon: YouTube
-    label: YouTube
-  - url: https://codetips.cloud/u/lauroguedes
-    icon: FolderCode
-    label: CodeTips

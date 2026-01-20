@@ -10,6 +10,7 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://AlexPerrin.github.io',
   integrations: [react(), markdoc(), keystatic()],
 
   vite: {

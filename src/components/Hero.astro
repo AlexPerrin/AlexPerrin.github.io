@@ -23,20 +23,16 @@ const { hero } = Astro.props;
 
 <section class="hero min-h-screen">
   <div class="hero-content flex-col lg:flex-row-reverse max-w-7xl gap-8">
-    <div class="avatar">
-      <div
-        class="w-48 ring-primary ring-offset-base-100 rounded-full ring-2 ring-offset-2"
-      >
-        {typeof hero.avatar === 'string' ? (
-          <img src={hero.avatar} alt={hero.name} />
-        ) : (
-          <Image src={hero.avatar} alt={hero.name} />
-        )}
-      </div>
+    <div class="w-48 h-48 rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2 flex items-center justify-center overflow-hidden">
+      {typeof hero.avatar === 'string' ? (
+        <img src={hero.avatar} alt={hero.name} class="max-w-full max-h-full object-contain" />
+      ) : (
+        <Image src={hero.avatar} alt={hero.name} class="max-w-full max-h-full object-contain" />
+      )}
     </div>
     <div class="max-w-2xl">
       <h1 class="text-5xl font-bold mb-4">
-        Hi, I'm {hero.name}
+        {hero.name}
       </h1>
       <p class="text-xl text-base-content/80 mb-2">{hero.title}</p>
       {hero.location && <p class="text-base-content/60 mb-4">{hero.location}</p>}
