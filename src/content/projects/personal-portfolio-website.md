@@ -11,22 +11,16 @@ startDate: 2026-01-16
 endDate: 2026-01-19
 skills:
   - Github Actions
-  - HTML
-  - JSX
-  - Tailwind CSS
   - Astro
+  - JSX
+  - HTML
+  - Tailwind CSS
   - DaisyUI
   - Claude Code
   - MCP
 demoLink: https://alexperr.in
 sourceLink: https://github.com/AlexPerrin/AlexPerrin.github.io
 ---
-# AlexPerrin.github.io
-
-Personal portfolio website showcasing projects, work experience, education, and CTF writeups.
-
-**Live site:** [alexperrin.github.io](https://alexperrin.github.io)
-
 ## Built With
 
 - [Astro](https://astro.build/) - Static site generator

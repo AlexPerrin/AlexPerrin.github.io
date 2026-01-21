@@ -1,0 +1,167 @@
+---
+title: Bash Cheatsheet
+description: 'Personal reference for concepts and code snippets.'
+publishDate: 2025-01-211
+tags:
+  - Cheatsheet
+---
+## Bash Syntax
+
+### Data Terminology
+
+| Term      | What it is (official meaning)                | Example from `test $A -eq "B"` |
+| --------- | -------------------------------------------- | ------------------------------ |
+| Argument  | A word passed to a command for it to process | `$A`, `-eq`, `"B"`             |
+| Operand   | A value that an operator acts on             | `$A`, `"B"`                    |
+| Parameter | A variable that can be expanded by the shell | `$A`                           |
+| Variable  | A named parameter that stores a value        | `A`                            |
+
+### Bracket Evaluation
+
+|Bracket|Purpose|Example|
+|-|-|-|
+|`[ ]`|POSIX test|`[ $x -eq 5 ]`|
+|`[[ ]]`|Bash conditional|`[[ $x == 5 ]]`|
+|`( )`|Subshell/array|`(cd /tmp)`|
+|`(( ))`|Arithmetic|`((x = 5 + 3))`|
+|`{ }`|Expansion/grouping|`{1..10}`|
+
+#### Single Brackets `[ ]`
+
+- Part of POSIX standard (works in all shells)
+
+- Shorthand for the bash `test` command. This is why comparisons use bash operands. eg.
+
+  ```sh
+    if [ $x -eq 5 ]; then
+      echo "x is 5"
+    fi
+  ```
+
+  Evaluates as
+
+  ```sh
+  test $x -eq 5
+  ```
+
+#### Double Brackets `[[ ]]`
+
+- Bash-specific enhancement (not POSIX)
+- Can use `&&` and `||` inside brackets
+- No need to quote variables
+- Pattern matching with `==` or `!=`
+- Regex matching with `=~`
+
+  ```bash
+  if [[ $name == "Alex" ]]; then
+    echo "Hello Alex"
+  fi
+  
+  [[ $file == *.txt ]] && echo "Text file"
+  [[ $string =~ ^[0-9]+$ ]] && echo "Numbers only"
+  ```
+
+#### Single Parentheses `( )`
+
+- Subshell execution
+
+  ```bash
+  (cd /tmp && ls)  # Runs in subshell, doesn't change current directory
+  echo $PWD  # Still in original directory
+  ```
+
+#### Double Parentheses `(( ))`
+
+- Bash arithmetic evaluation
+- C-style syntax
+- No `$` needed for variables inside
+
+  ```bash
+  ((x = 5 + 3))
+  ((x++))
+
+  if ((x > 10)); then
+    echo "x is greater than 10"
+  fi
+
+  for ((i=0; i<10; i++)); do
+    echo $i
+  done
+  ```
+
+#### Curly Braces `{ }`
+
+- Brace expansion:
+
+  ```bash
+  echo {1..10}  # 1 2 3 4 5 6 7 8 9 10
+  echo {a..z}   # a b c d ... z
+  mkdir dir{1,2,3}  # Creates dir1, dir2, dir3
+  ```
+
+- Variable expansion:
+
+  ```bash
+  name="Alex"
+  echo ${name}
+  echo ${name:-default}  # Use default if name is unset
+  echo ${#name}  # Length of variable (4)
+  ```
+
+- Command grouping (in current shell):
+
+  ```bash
+  { cd /tmp; ls; }  # Runs in current shell
+  ```
+
+### Slicing
+
+#### Character Slicing Syntax
+
+```bash
+echo "$string" | cut -c 3  # Extract character 3 (1-indexed)
+```
+
+#### Byte Slicing Syntax
+
+```bash
+echo "${string:2:1}"  # Extract 1 byte starting at index 2
+```
+
+#### When to Use One Over the Other
+
+- **Character slicing:** UTF-8 or multi-byte characters (é, —, 😀)
+- **Byte slicing:** Pure ASCII text only
+  - Multi-byte characters cause *byte slicing* to split characters incorrectly, returning garbage like �.
+
+## Writing CLI tools
+
+### Usage/Help Message
+
+Here is an example based on the NetBSD source code style guide:
+
+`Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]`
+
+This would indicate that "program" should be called with:
+
+- options without operands: a, D, d, e (any of which may be omitted). Note that in this case some parameters are case-sensitive
+- exclusive options: f, g (denoted by the vertical bar)
+- options with operands: n
+- exclusive options with operands: b, c
+- required arguments: req1, req2
+- optional argument opt1, which may be used with or without opt2 (marked optional within the group by using another set of square brackets)
+- optional argument opt2, which requires opt1
+
+```bash
+usage() {
+  echo "Usage: $0 [OPTIONS]"
+  echo "Options:"
+  echo " -h, --help      Display this help message"
+  echo " -v, --verbose   Enable verbose mode"
+  echo " -f, --file      FILE Specify an output file"
+}
+```
+
+## References
+
+[W3Schools Bash Tutorial](https://www.w3schools.com/bash/)
