@@ -1,0 +1,75 @@
+---
+title: SQL Cheatsheet
+description: Personal reference for concepts and code snippets.
+image: '@assets/blog/sql-cheatsheet/image.png'
+publishDate: 2026-01-25
+tags:
+  - Cheatsheet
+---
+### Level 1: Basic Queries
+
+`SELECT`, `WHERE`, `ORDER BY`
+
+`SELECT * FROM users WHERE age > 18;`
+
+### Level 2: Aggregations
+
+`GROUP BY`, `HAVING`, `COUNT`, `SUM`, `AVG`
+
+`SELECT department, COUNT(*)`
+
+`FROM employees GROUP BY department;`
+
+#### Level 2.5: Order of Operations
+
+`FROM`, `WHERE`, `GROUP BY`, `HAVING`, `SELECT`, `ORDER BY,` `LIMIT`
+
+### Level 3: Joins
+
+##### Common
+
+`INNER JOIN`, `LEFT JOIN`
+
+##### Uncommon
+
+`FULL OUTER JOIN`
+
+##### Rare
+
+`RIGHT JOIN`, `CROSS JOIN`
+
+- ##### Variable use
+
+`SELECT u.name, o.total FROM users u`
+
+`JOIN orders o ON u.id = o.uder_id:`
+
+### Level 4: Subqueries & Common Table Expressions (CTEs)
+
+`WITH top_users AS`
+
+`SELECT user_id GROUP BY user_id`
+
+`FROM orders GROUP BY user_id`
+
+`SELECT * FROM top_users WHERE spent`
+
+`> 1000;`
+
+#### Recursive CTEs
+
+### Level 5: Window Functions
+
+`SELECT name, RANK() OVER (ORDER BY`
+
+`score DESC) AS rank FROM students`
+
+### Level 6: Advanced Concepts
+
+Table scans, indices, partitioning,
+
+### References
+
+[SQL Data Analytics - Learn SQL Activity *Zazish Khalid*](https://www.linkedin.com/posts/nazishkhalid11_sql-dataanalytics-learnsql-activity-7355294044643598336-c0z_?utm_source=share&utm_medium=member_desktop&rcm=ACoAACkel7MBRqljbAjCnIJlCIfsoy_6Myp19nY)
+
+[Master the 5 levels of SQL *Data with Zach*](https://www.youtube.com/watch?v=OcRFwqj_we4)
