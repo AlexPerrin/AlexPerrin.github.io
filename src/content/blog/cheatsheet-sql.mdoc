@@ -23,13 +23,13 @@ FROM table_name;
 > **Example**  
 > Get your own SQL Server  
 > Select all the different countries from the "Customers" table:
+>
+>```sql
+>SELECT * 
+>FROM Customers;
+>```
 
-```sql
-SELECT * 
-FROM Customers;
-```
-
-### `DISTINCT`
+#### `DISTINCT`
 
 The `SELECT DISTINCT` statement is used to return only distinct (unique) values.
 
@@ -40,11 +40,11 @@ FROM table_name;
 
 > **Example**  
 > Select all the different countries from the "Customers" table:
-
-```sql
-SELECT DISTINCT Country 
-FROM Customers;
-```
+>
+>```sql
+>SELECT DISTINCT Country 
+>FROM Customers;
+>```
 
 ### `WHERE`
 
@@ -59,14 +59,14 @@ WHERE condition;
 
 > **Example**  
 > Select all customers from Mexico:
+>
+>```sql
+>SELECT * 
+>FROM Customers
+>WHERE Country='Mexico';
+>```
 
-```sql
-SELECT * 
-FROM Customers
-WHERE Country='Mexico';
-```
-
-#### `AND`, `OR`, `NOT`
+### `AND`, `OR`, `NOT`
 
 The `WHERE` clause can contain one or many boolean operators.
 
@@ -88,13 +88,113 @@ ORDER BY column1, column2, ... ASC|DESC;
 
 > **Example**  
 > Sort the products by price:
+>
+>```sql
+>SELECT * FROM Products
+>ORDER BY Price;
+>```
+
+### `LIKE`
+
+The `LIKE` operator is used in a `WHERE` clause to search for a specified pattern in a column.
+
+There are two wildcards often used in conjunction with the `LIKE` operator:
+
+The percent sign `%` represents zero, one, or multiple characters
+The underscore sign `_` represents one, single character
 
 ```sql
-SELECT * FROM Products
-ORDER BY Price;
+SELECT column1, column2, ...
+FROM table_name
+WHERE columnN LIKE pattern;
 ```
 
-## Level 2: Aggregations
+> **Example**  
+> Select all customers that starts with the letter "a":
+>
+>```sql
+>SELECT * 
+>FROM Customers
+>WHERE CustomerName LIKE 'a%';
+>```
+
+#### Wildcard Characters
+
+|Symbol|Description|
+|-|-|
+|`%`|Represents zero or more characters|
+|`_`|Represents a single character|
+|`[]`|Represents any single character within the brackets[^1]|
+|`^`|Represents any character not in the brackets[^1]|
+|`-`|Represents any single character within the specified range[^1]|
+|`{}`|Represents any escaped character[^2]|
+
+[^1]: Not supported in PostgreSQL and MySQL databases.  
+[^2]: Supported only in Oracle databases.  
+
+### `RLIKE`, `REGEXP`
+
+In MySQL, `RLIKE` and `REGEXP` operators check whether the string matches pattern containing a regular expression.
+
+`RLIKE` and `REGEXP` are synonyms.
+
+```sql
+SELECT column1, column2, ...
+FROM table_name
+WHERE columnN RLIKE regular_expression;
+```
+
+> **Example**  
+> Select all customers that starts with a vowal.
+>
+>```sql
+>SELECT * 
+>FROM Customers
+>WHERE CustomerName RLIKE '^[AEIOU]';
+>```
+
+## Level 2: Advanced Queries
+
+### String Functions
+
+### `LEFT`, `RIGHT`
+
+The `LEFT()` function extracts a number of characters from a string (starting from left).
+
+```sql
+LEFT(string, number_of_chars)
+```
+
+> **Example**  
+> Extract 3 characters from a string (starting from right):
+>
+>```sql
+>SELECT RIGHT('SQL Tutorial', 3) AS ExtractString;
+>```
+
+### `SUBSTRING`
+
+The `SUBSTRING()` function extracts some characters from a string.
+
+```sql
+SUBSTRING(string, start, length)
+```
+
+> **Example**  
+> Extract 5 characters from the "CustomerName" column, starting in position 1:
+>
+>```sql
+>SELECT SUBSTRING(CustomerName, 1, 5) AS ExtractString
+>FROM Customers;
+>```
+
+### Math Functions
+
+### `FLOOR`, `CEILING`
+
+### `ROUND`
+
+### Aggregate Functions
 
 An aggregate function is a function that performs a calculation on a set of values, and returns a single value.
 
@@ -117,11 +217,11 @@ WHERE condition;
 
 > **Example**  
 > Find the lowest price in the Price column:
-
-```sql
-SELECT MAX(Price)
-FROM Products;
-```
+>
+>```sql
+>SELECT MAX(Price)
+>FROM Products;
+>```
 
 ### `COUNT()`
 
@@ -135,54 +235,167 @@ WHERE condition;
 
 > **Example**  
 > Find the total number of rows in the `Products` table:
+>
+>```sql
+>SELECT COUNT(*)
+>FROM Products;
+>```
+
+### `GROUP BY`
+
+The `GROUP BY` statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+
+The `GROUP BY` statement is often used with aggregate functions (`COUNT()`, `MAX()`, `MIN()`, `SUM()`, `AVG()`) to group the result-set by one or more columns.
 
 ```sql
-SELECT COUNT(*)
-FROM Products;
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
 ```
 
-### Level 2.5: Order of Operations
+> **Example**  
+> The following SQL statement lists the number of customers in each country:
+>
+> ```sql
+> SELECT COUNT(CustomerID), Country
+> FROM Customers
+> GROUP BY Country;
+> ```
+>
+> **Example**  
+> The following SQL statement lists the number of customers in each country, sorted high to low:
+>
+>```sql
+>SELECT COUNT(CustomerID), Country
+>FROM Customers
+>GROUP BY Country
+>ORDER BY COUNT(CustomerID) DESC;
+>```
+
+### `HAVING`
+
+The `HAVING` clause was added to SQL because the `WHERE` keyword cannot be used with aggregate functions.
+
+```sql
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+```
+
+### Order of Operations
 
 `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `SELECT`, `ORDER BY,` `LIMIT`
 
 ## Level 3: Joins
 
-#### Common
+### `JOIN`
 
-`INNER JOIN`, `LEFT JOIN`
-
-#### Uncommon
-
-`FULL OUTER JOIN`
-
-#### Rare
-
-`RIGHT JOIN`, `CROSS JOIN`
-
-### Variable use
+A `JOIN` clause is used to combine rows from two or more tables, based on a related column between them.
 
 ```sql
-SELECT t.id, t.name
-FROM table_name t;
+SELECT column_name(s)
+FROM table1
+JOIN table2
+ON table1.column_name = table2.column_name;
 ```
 
-#### Example
+### Naming the Columns
+
+It is a good practice to include the table name when specifying columns in the SQL statement.
 
 ```sql
-SELECT u.name, o.total 
-FROM users u
-JOIN orders o ON u.id = o.uder_id;
+SELECT Products.ProductID, Products.ProductName, Categories.CategoryName
+FROM Products
+INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;
 ```
+
+### `AS`
+
+The AS command is used to rename a column or table with an alias.
+An alias only exists for the duration of the query.
+
+> **Example**  
+> Alias for Columns
+>
+>```sql
+>SELECT CustomerID AS ID, CustomerName AS c
+>FROM Customers
+>ORDER BY c
+>```
+>
+> **Example**  
+> Alias for Tables
+>
+>```sql
+>SELECT o.OrderID, o.OrderDate, c.CustomerName
+>FROM Customers AS c, Orders AS o
+>WHERE c.CustomerName="Around the Horn" AND c.CustomerID=o.CustomerID;
+>```
+
+### `GROUP BY` With `JOIN`
+
+> **Example**  
+> The following SQL statement lists the number of orders sent by each shipper:
+>
+>```sql
+>SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+>JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+>GROUP BY ShipperName;
+>```
+
+###
+ Different Types of SQL JOINs
+
+Here are the different types of the JOINs in SQL:
+
+`(INNER) JOIN`: Returns records that have matching values in both tables.  
+`LEFT (OUTER) JOIN`: Returns all records from the left table, and the matched records from the right table  
+`RIGHT (OUTER) JOIN`: Returns all records from the right table, and the matched records from the left table  
+`FULL (OUTER) JOIN`: Returns all records when there is a match in either left or right table'
+
+![Inner Join](https://www.w3schools.com/sql/img_inner_join.png)
+![Left Join](https://www.w3schools.com/sql/img_left_join.png)
+![Right Join](https://www.w3schools.com/sql/img_right_join.png)
+![Full Outer Join](https://www.w3schools.com/sql/img_full_outer_join.png)
+
+### `INNER JOIN`
+
+> `JOIN` and `INNER JOIN` will return the same result.  
+> `INNER` is the default join type for `JOIN`, so when you write `JOIN` the parser actually writes `INNER JOIN`.
+
+### `LEFT JOIN`
+
+### `FULL OUTER JOIN`
+
+### `RIGHT JOIN`
+
+### `CROSS JOIN`
 
 ## Level 4: Subqueries & Common Table Expressions (CTEs)
 
-```sql
-WITH top_users AS
-SELECT user_id GROUP BY user_id
-FROM orders GROUP BY user_id
-  SELECT * FROM top_users WHERE spent
-  > 1000;
-```
+A Common Table Expression (CTE) is a temporary result set in SQL that you can reference within a single query. CTEs simplify complex queries, make them easier to read, and can be reused multiple times within the same query. It is used for:
+
+Split big queries into smaller, reusable pieces.
+Makes the query easier to read and understand.
+Can handle recursive queries, useful for things like employee–manager hierarchies.
+
+> **Example**
+> Use a CTE to find the average salary of each department, making the query simpler and easier to read.
+>
+>```sql
+>WITH AvgSalaryByDept AS (
+>    SELECT Department, AVG(Salary) AS AvgSalary
+>    FROM Employees
+>    GROUP BY Department
+>)
+>SELECT *
+>FROM AvgSalaryByDept;
+>```
 
 ### Recursive CTEs
 
@@ -190,11 +403,7 @@ TODO
 
 ## Level 5: Window Functions
 
-```sql
-SELECT name, RANK()
-OVER (ORDER BY score DESC) AS rank
-FROM students;
-```
+TODO
 
 ## Level 6: Advanced Concepts
 
