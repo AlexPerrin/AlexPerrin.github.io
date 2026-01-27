@@ -287,6 +287,16 @@ HAVING condition
 ORDER BY column_name(s);
 ```
 
+> **Example**
+> The following SQL statement lists the number of customers in each country. Only include countries with more than 5 customers:
+>
+>```sql
+>SELECT COUNT(CustomerID), Country
+>FROM Customers
+>GROUP BY Country
+>HAVING COUNT(CustomerID) > 5;
+>```
+
 ### Order of Operations
 
 `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `SELECT`, `ORDER BY,` `LIMIT`
@@ -396,6 +406,25 @@ Can handle recursive queries, useful for things like employee–manager hierarch
 >SELECT *
 >FROM AvgSalaryByDept;
 >```
+>
+> **Example**  
+> [Ollivander's Inventory *HackerRank*](https://www.hackerrank.com/challenges/harry-potter-and-wands/problem?isFullScreen=true)
+>
+>```sql
+>SELECT w.id, wp.age, w.coins_needed, w.power
+>FROM Wands w
+>JOIN Wands_Property wp ON w.code = wp.code
+>WHERE wp.is_evil = 0
+>  AND w.coins_needed = (
+>    SELECT MIN(w2.coins_needed)
+>    FROM Wands w2
+>    JOIN Wands_Property wp2 ON w2.code = wp2.code
+>    WHERE wp2.age = wp.age
+>      AND w2.power = w.power
+>      AND wp2.is_evil = 0
+>  )
+>ORDER BY w.power DESC, wp.age DESC;
+>```
 
 ### Recursive CTEs
 
@@ -403,7 +432,21 @@ TODO
 
 ## Level 5: Window Functions
 
-TODO
+> **Example**  
+> [Ollivander's Inventory *HackerRank*](https://www.hackerrank.com/challenges/harry-potter-and-wands/problem?isFullScreen=true)
+>
+>```sql
+>SELECT id, age, coins_needed, power
+>FROM (
+>  SELECT w.id, wp.age, w.coins_needed, w.power,
+>         MIN(w.coins_needed) OVER (PARTITION BY w.power, wp.age) AS min_coins
+>  FROM Wands w
+>  JOIN Wands_Property wp ON w.code = wp.code
+>  WHERE wp.is_evil = 0
+>) AS subquery
+>WHERE coins_needed = min_coins
+>ORDER BY power DESC, age DESC;
+>```
 
 ## Level 6: Advanced Concepts
 
