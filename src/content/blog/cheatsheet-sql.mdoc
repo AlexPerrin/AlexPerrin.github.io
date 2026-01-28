@@ -363,28 +363,23 @@ An alias only exists for the duration of the query.
 
 Here are the different types of the JOINs in SQL:
 
-`(INNER) JOIN`: Returns records that have matching values in both tables.  
-`LEFT (OUTER) JOIN`: Returns all records from the left table, and the matched records from the right table  
-`RIGHT (OUTER) JOIN`: Returns all records from the right table, and the matched records from the left table  
-`FULL (OUTER) JOIN`: Returns all records when there is a match in either left or right table'
-
-![Inner Join](https://www.w3schools.com/sql/img_inner_join.png)
-![Left Join](https://www.w3schools.com/sql/img_left_join.png)
-![Right Join](https://www.w3schools.com/sql/img_right_join.png)
-![Full Outer Join](https://www.w3schools.com/sql/img_full_outer_join.png)
-
-### `INNER JOIN`
+`(INNER) JOIN`: Returns records that have matching values in both tables.
 
 > `JOIN` and `INNER JOIN` will return the same result.  
 > `INNER` is the default join type for `JOIN`, so when you write `JOIN` the parser actually writes `INNER JOIN`.
 
-### `LEFT JOIN`
+`LEFT (OUTER) JOIN`: Returns all records from the left table, and the matched records from the right table  
 
-### `FULL OUTER JOIN`
+`RIGHT (OUTER) JOIN`: Returns all records from the right table, and the matched records from the left table  
 
-### `RIGHT JOIN`
+`FULL (OUTER) JOIN`: Returns all records when there is a match in either left or right table'
 
-### `CROSS JOIN`
+![Inner Join](https://www.w3schools.com/sql/img_inner_join.png)![Left Join](https://www.w3schools.com/sql/img_left_join.png)  
+![Right Join](https://www.w3schools.com/sql/img_right_join.png)![Full Outer Join](https://www.w3schools.com/sql/img_full_outer_join.png)
+
+`CROSS JOIN`
+
+TODO
 
 ## Level 4: Subqueries & Common Table Expressions (CTEs)
 
@@ -393,6 +388,14 @@ A Common Table Expression (CTE) is a temporary result set in SQL that you can re
 Split big queries into smaller, reusable pieces.
 Makes the query easier to read and understand.
 Can handle recursive queries, useful for things like employee–manager hierarchies.
+
+```sql
+WITH cte_name AS (
+    SELECT query
+)
+SELECT *
+FROM cte_name;
+```
 
 > **Example**
 > Use a CTE to find the average salary of each department, making the query simpler and easier to read.
@@ -428,9 +431,65 @@ Can handle recursive queries, useful for things like employee–manager hierarch
 
 ### Recursive CTEs
 
-TODO
+A recursive CTE references itself and is useful for querying hierarchical data, such as employees and their managers stored in the same table. It repeatedly executes until the full hierarchy is returned. To avoid infinite loops from incorrect definitions, use the `MAXRECURSION` hint in the query’s `OPTION` clause.
+
+Recursive CTEs consist of two parts:
+
+**Anchor member**: The initial query that selects the base case (e.g., top-level managers).  
+**Recursive member**: The query that references the CTE itself, pulling the next level of data.  
+
+> **Example**
+> Hierarchical Employee Data
+> 
+> ```sql
+>WITH
+>  cteReports (EmpID, FirstName, LastName, MgrID, EmpLevel)
+>  AS
+>  (
+>    SELECT EmployeeID, FirstName, LastName, ManagerID, 1
+>    FROM Employees
+>    WHERE ManagerID IS NULL
+>    UNION ALL
+>    SELECT e.EmployeeID, e.FirstName, e.LastName, e.ManagerID, 
+>      r.EmpLevel + 1
+>    FROM Employees e
+>      INNER JOIN cteReports r
+>        ON e.ManagerID = r.EmpID
+>  )
+>
+>SELECT
+>  FirstName + ' ' + LastName AS FullName, 
+>  EmpLevel,
+>  (SELECT FirstName + ' ' + LastName FROM Employees 
+>    WHERE EmployeeID = cteReports.MgrID) AS Manager
+>FROM cteReports 
+>ORDER BY EmpLevel, MgrID;
+>```
 
 ## Level 5: Window Functions
+
+SQL window functions allow performing calculations across a set of rows that are related to the current row, without collapsing the result into a single value. They are commonly used for tasks like aggregates, rankings and running totals.
+
+The `OVER` clause defines the “window” of rows for the calculation. It can:
+
+`PARTITION BY`: It divides the data into groups using `PARTITION BY`.  
+`ORDER BY`: It specifies the order of rows within each group using `ORDER BY`.  
+With this, functions such as `SUM()`, `AVG()`, `ROW_NUMBER()`, `RANK()` and `DENSE_RANK()` can be applied in a controlled way.  
+
+```sql
+SELECT column_name1, 
+       window_function(column_name2) 
+       OVER ([PARTITION BY column_name3] [ORDER BY column_name4]) AS new_column
+FROM table_name;
+```
+
+**window_function**: Aggregate or ranking function (SUM(), AVG(), ROW_NUMBER(), etc.)  
+**column_name1**: Column(s) to display  
+**column_name2**: Column used by the window function  
+**column_name3**: Column for grouping (PARTITION BY)  
+**column_name4**: Column for ordering (ORDER BY)  
+**new_column**: Alias for the window function result  
+**table_name**: Table to select data from  
 
 > **Example**  
 > [Ollivander's Inventory *HackerRank*](https://www.hackerrank.com/challenges/harry-potter-and-wands/problem?isFullScreen=true)
