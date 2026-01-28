@@ -6,3 +6,49 @@ publishDate: 2026-01-26
 tags:
   - Cheatsheet
 ---
+
+The following are my modifactions to [Regular expression syntax cheat sheet *MDN Web Docs*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) for a more concise cheatsheet.
+
+## Character Classes
+
+|Character|Meaning|
+|-|-|
+|`[xyz]`<br>`[a-c]`|**Character class**: Matches any one of the enclosed characters. You can specify a range of characters by using a hyphen.<br>*If the hyphen appears as the first or last character enclosed in the square brackets, it is taken as a literal hyphen to be included in the character class as a normal character.*|
+|`[^xyz]`<br>`[^a-c]`|**Negated character class**: Matches anything that is not enclosed in the square brackets.<br>*If the hyphen appears as the first character after the `^` or the last character enclosed in the square brackets, it is taken as a literal hyphen to be included in the character class as a normal character.*|
+|`.`|**Wildcard**: Matches any single character except line terminators.<br>*Equivalent to* `[0-9]`|
+|`\d`|**Digit character class escape**: Matches any digit<br>*Equivalent to* `[^0-9]`|
+|`\D`|**Non-digit character class escape**: Matches any character that is not a digit.<br>*Equivalent to* `[A-Za-z0-9_]`|
+|`\w`|**Word character class escape**: Matches any alphanumeric character from the basic Latin alphabet, including the underscore.<br>*Equivalent to* `[^A-Za-z0-9_]`|
+|`\s`|**White space character class escape**: Matches a single white space character, including space, tab, form feed, line feed, and other Unicode spaces.<br>*Equivalent to* `[\f\n\r\t\v\u0020\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]`|
+|`\S`|**Non-white space character class escape**: Matches a single character other than white space.<br>*Equivalent to* `[^\f\n\r\t\v\u0020\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]`|
+|`\t`|Matches a horizontal tab.||
+|`\r`|Matches a carriage return.||
+|`\n`|Matches a linefeed.||
+|`\v`|Matches a vertical tab.||
+|`\f`|Matches a form-feed.||
+|`[\b]`|Matches a backspace.<br>`\b` *without square brackets is a word-boundary assertion.*||
+|`\0`|Matches a NUL character.<br>*Do not follow this with another digit.*||
+|`\cX`|Matches a control character using **caret notation** where "X" is a letter from A–Z or a–z (corresponding to code points `U+0001`–`U+001A`). <br>For example, `/\cM\cJ/` matches "\r\n".||
+|`\xhh`|Matches the character with the code hh (two hexadecimal digits).||
+|`\uhhhh`|Matches a UTF-16 code-unit with the value hhhh (four hexadecimal digits).||
+
+## Assertions
+
+|Characters|Meaning|
+|-|-|
+|`^`|**Input boundary beginning assertion**: Matches the beginning of input.|
+|`$`|**Input boundary end assertion**: Matches the end of input.|
+|`\b`|**Word boundary assertion**: Matches a word boundary.<br>This is the position where a word character is not followed or preceded by another word-character, such as between a letter and a space.<br>*Note that a matched word boundary is not included in the match. In other words, the length of a matched word boundary is zero.*|
+|`\B`|**Non-word-boundary assertion**: Matches a non-word boundary.<br>This is a position where the previous and next character are of the same type: Either both must be words, or both must be non-words, for example between two letters or between two spaces.<br>*The beginning and end of a string are considered non-words.*<br>*Same as the matched word boundary, the matched non-word boundary is also not included in the match.*|
+
+## Groups and Backreferences
+
+|Characters|Meaning|
+|-|-|
+|`(abc)`|**Capturing group**: Matches a group of characters `abc` and remembers the match.<br>*Can be used to apply quantifiers to multiple characters.*<br>*Special characters will need to be escaped unlike character classes.*|
+|`(?<Name>x)`|**Named capturing group**: Matches "x" and stores it on the groups property of the returned matches under the name specified by \<Name>.<br>*The angle brackets (< and >) are required for group name.*|
+|`(?:x)`|**Non-capturing group**: Matches "x" but does not remember the match.|
+
+## References
+
+[Regular expression syntax cheat sheet *MDN Web Docs*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet)
