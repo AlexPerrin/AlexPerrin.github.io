@@ -1,0 +1,124 @@
+---
+title: Java Cheatsheet
+description: Personal reference for concepts and code snippets.
+image: '@assets/blog/cheatsheet-java/image.png'
+publishDate: 2026-02-11
+tags:
+  - Cheatsheet
+---
+## Hello World
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+## Compiler
+
+```bash
+$ javac Hello.java
+$ java Hello
+Hello, world!
+```
+
+## Data Types
+
+Java is ***statically-typed***, so it expects its variables to be declared before they can be assigned values.
+
+|Data|Type|Size|Default	Range|
+|-|-|-|-|
+|byte|1 byte|0|-128 to 127|
+|short|2 byte|0|-215 to 215-1|
+|int|4 byte|0|-231 to 231-1|
+|long|8 byte|0|-263 to 263-1|
+|float|4 byte|0.0f|N/A|
+|double|8 byte|0.0d|N/A|
+|char|2 byte|\u0000|0 to 65535|
+|boolean|N/A|false|true / false|
+
+### Strings
+
+`String` in Java are ***immutable*** sequences of characters.
+
+`==` tests for **reference** equality (whether they are the same object).
+
+`.equals()` tests for **value** equality (whether they contain the same data).
+
+```java
+String s1 = new String("QuickRef"); 
+String s2 = new String("QuickRef"); 
+
+s1 == s2          // false
+s1.equals(s2)     // true
+
+"AB".equalsIgnoreCase("ab")  // true
+```
+
+#### Scanner
+
+The `Scanner` class is used to get user input.
+
+**Note:** If you use the `nextLine()` method immediately following the `nextInt()` method, recall that `nextInt()` reads integer tokens; because of this, the last newline character for that line of integer input is still queued in the input buffer and the next `nextLine()` will be reading the remainder of the integer line (which is empty).
+
+```java
+Scanner scan = new Scanner(System.in);
+int i = scan.nextInt();
+double d = scan.nextDouble();
+String s = scan.nextLine();
+s = scan.nextLine();
+scan.close();
+
+System.out.println("String: " + s);
+System.out.println("Double: " + d);
+System.out.println("Int: " + i);
+```
+
+#### printf
+
+## Arrays
+
+## Loops
+
+### For Loop *(C style index for loop)*
+
+
+
+```java
+for (int i = 0; i < 10; i++) {
+  System.out.print(i);
+}
+// Outputs: 0123456789
+```
+
+
+### Enhanced for loop *(Python-style iterable for loop)*
+
+Since Java 5, the Java Collections framework has had the `java.lang.Iterable` interface, which is the parent interface of `java.util.Collection`. In Java 5, the enhanced for loop was added that would work with any implementation of `Iterable`.
+
+```java
+int[] numbers = {1,2,3,4,5};
+
+for (int number: numbers) {
+  System.out.print(number);
+}
+// Outputs: 12345
+```
+
+## Object Oriented
+
+### Inheritence
+
+### Abstract
+
+### Interface
+
+### @Override
+
+### Factory Pattern
+
+### Singleton Pattern 
+
+## Exception Handling
