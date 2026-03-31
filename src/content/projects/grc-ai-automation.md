@@ -6,10 +6,10 @@ description: |-
 image: '@assets/projects/grc-ai-automation/image.png'
 startDate: 2026-02-24
 skills:
-  - AI
-  - RAG
+  - Artificial Intelligence
   - Python
   - FastAPI
+  - RAG
   - LangChain
   - ChromaDB
   - LiteLLM

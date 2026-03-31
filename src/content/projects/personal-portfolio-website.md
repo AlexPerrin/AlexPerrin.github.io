@@ -10,12 +10,12 @@ image: '@assets/projects/personal-portfolio-website/image.png'
 startDate: 2026-01-16
 endDate: 2026-01-19
 skills:
-  - Github Actions
   - Astro
   - JSX
   - HTML
   - Tailwind CSS
   - DaisyUI
+  - Github Actions
   - Claude Code
   - MCP
 demoLink: https://alexperr.in
